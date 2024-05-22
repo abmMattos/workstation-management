@@ -9,6 +9,73 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+
+  reservation Reservation[]
+
+  @@map("user")
+}
+
+model Admin {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+
+  @@map("admin")
+}
+
+model MeetingRoom {
+  id String @id @default(uuid())
+  identifier Int
+  name String
+  description String
+  photo String
+
+  reservation Reservation[]
+
+  @@map("meeting_room")
+}
+
+model Workstation {
+  id String @id @default(uuid())
+  identifier Int
+  name String
+  screens Int
+  mouse Boolean
+  keyboard Boolean
+  webcam Boolean
+  description String
+  isBlocked Boolean
+
+  reservation Reservation[]
+
+  @@map("workstation")
+}
+
+model Reservation {
+  id String @id @default(uuid())
+  dateStart DateTime
+  dateEnd DateTime
+  
+  user_id String
+  fk_user_id User @relation(fields: [user_id], references: [id])
+
+  workstation_id String
+  fk_workstation_id Workstation? @relation(fields: [workstation_id], references: [id])
+
+  meetingroom_id String
+  fk_meetingroom_id MeetingRoom? @relation(fields: [meetingroom_id], references: [id])
+
+
+  @@map("reservation")
+}
+

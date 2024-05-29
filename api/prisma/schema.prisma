@@ -35,7 +35,7 @@ model Admin {
 
 model MeetingRoom {
   id String @id @default(uuid())
-  identifier Int
+  identifier Int @unique
   name String
   description String
   photo String
@@ -47,7 +47,7 @@ model MeetingRoom {
 
 model Workstation {
   id String @id @default(uuid())
-  identifier Int
+  identifier Int @unique
   name String
   screens Int
   mouse Boolean

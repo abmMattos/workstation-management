@@ -9,7 +9,7 @@ class MeetingRoomController {
     async create(request, response) {
         try {
             const { name, identifier, description, photo } = request.body
-            const meeting_rooms = await prisma.meeting_room.create({
+            const meetingRoom = await prisma.meetingRoom.create({
                 data: {
                     identifier,
                     name,
@@ -17,7 +17,7 @@ class MeetingRoomController {
                     photo
                 }
             })
-            return response.json(meeting_rooms)
+            return response.json(meetingRoom)
         } catch (err) {
             return response.status(409).send()
         }
@@ -26,7 +26,7 @@ class MeetingRoomController {
     async update(request, response) {
         try {
             const { id, name, identifier, description, photo } = request.body
-            const meeting_rooms = await prisma.meeting_room.update({
+            const meetingRoom = await prisma.meetingRoom.update({
                 where: {
                     id: id
                 },
@@ -38,7 +38,7 @@ class MeetingRoomController {
 
                 }
             })
-            return response.json(meeting_rooms)
+            return response.json(meetingRoom)
         } catch (err) {
             return response.status(409).send()
         }
@@ -47,21 +47,21 @@ class MeetingRoomController {
     async delete(request, response) {
         try {
             const { id } = request.body
-            const meeting_rooms = await prisma.meeting_room.delete({
+            const meetingRoom = await prisma.meetingRoom.delete({
                 where: {
                     id: id
                 }
             })
-            return response.json(meeting_rooms)
+            return response.json(meetingRoom)
         } catch (err) {
             return response.status(409).send()
         }
     }
 
-    async findMany(response) {
+    async findMany(request, response) {
         try {
-            const meeting_rooms = await prisma.meeting_room.findMany();
-            return response.json(meeting_rooms)
+            const meetingRoom = await prisma.meetingRoom.findMany();
+            return response.json(meetingRoom)
         } catch (err) {
             return response.status(409).send()
         }
@@ -70,12 +70,12 @@ class MeetingRoomController {
     async findUnique(request, response) {
         try {
             const { identifier } = request.body
-            const meeting_rooms = await prisma.meeting_room.findUnique({
+            const meetingRoom = await prisma.meetingRoom.findUnique({
                 where: {
                     identifier: identifier
                 }
             })
-            return response.json(meeting_rooms)
+            return response.json(meetingRoom)
         } catch (err) {
             return response.status(409).send()
         }

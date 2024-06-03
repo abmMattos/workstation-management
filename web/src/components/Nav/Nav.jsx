@@ -1,11 +1,12 @@
 import { DivItem, RegisterButton, NavItem } from "./NavStyle";
 import Logo from "../../img/logo.png"
+import { Link } from "react-router-dom";
 
 export function NavMenu(props) {
     return (
         <NavItem>
             <DivItem>
-                <img src={Logo} alt="Senai" />
+                <Link to="/"><img src={Logo} alt="Senai" /></Link>
                 {props.text}
             </DivItem>
             <DivItem>
@@ -13,7 +14,7 @@ export function NavMenu(props) {
                     <li>SERVIÇOS</li>
                     <li>SOBRE</li>
                 </ul>
-                <RegisterButton>CADASTRAR</RegisterButton>
+                <Link to="/login"><RegisterButton>LOGIN</RegisterButton></Link>
             </DivItem>
         </NavItem>
     )

@@ -1,27 +1,24 @@
 import { NavMenu } from "../../components/Nav/Nav";
 import { Container, Form, Main, Title, Input, ButtonArea } from "./LoginStyle";
-import { LoginButton, RegisterButton } from "../../components/Button/Button";
-import { Link } from "react-router-dom";
+import { LoginButton } from "../../components/Button/Button";
 
-
-export function Login() {
-    return (
+export function Register() {
+    return(
         <>
             <NavMenu text="Meeting & Work" />
             <Main>
                 <Container>
-                    <Title>ENTRE NA SUA CONTA</Title>
+                    <Title>CRIE SUA CONTA</Title>
                     <Form action="">
                         <Input id="login" type="text" placeholder="Usuário" />
+                        <Input id="email" type="email" placeholder="Email" />
                         <Input id="password" type="password" placeholder="Senha" />
                     </Form>
                     <ButtonArea>
-                        <Link to="/cadastro"><RegisterButton text="CADASTRAR" /></Link>
-                        <LoginButton text="LOGIN" />
+                        <LoginButton text="CADASTRAR" />
                     </ButtonArea>
                 </Container>
             </Main>
         </>
-
     )
 }

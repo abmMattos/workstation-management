@@ -5,7 +5,6 @@ export const Main = styled.div`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    background-color: ${theme.COLORS.BACKGROUND};
     height: 100vh;
     text-align: center;
     align-items: center;

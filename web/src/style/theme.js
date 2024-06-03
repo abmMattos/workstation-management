@@ -7,7 +7,7 @@ export default {
         
         GRAY: "#7D98B1",
         
-        WHITE: "FFFFFF"
+        WHITE: "white"
     
     }
 }

@@ -1,12 +1,9 @@
-import { Button } from "./Button"
+import { HomeButton } from "./ButtonStyle"
 
-function Button() {
-    console.log("chamou");
-}
-
-export function HomeButton() {
+export function Button(props) {
     return(
-        <Button onClick={Button()}>
-        </Button>
+        <HomeButton>
+            {props.text}
+        </HomeButton>
     )
 }

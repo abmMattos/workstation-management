@@ -13,7 +13,7 @@ export function NavMenu(props) {
                     <li>SERVIÇOS</li>
                     <li>SOBRE</li>
                 </ul>
-                <RegisterButton>REGISTER</RegisterButton>
+                <RegisterButton>CADASTRAR</RegisterButton>
             </DivItem>
         </NavItem>
     )

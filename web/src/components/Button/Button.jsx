@@ -1,9 +1,25 @@
-import { HomeButton } from "./ButtonStyle"
+import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent } from "./ButtonStyle"
 
-export function Button(props) {
+export function HomeButton(props) {
     return(
-        <HomeButton>
+        <HomeButtonComponent>
             {props.text}
-        </HomeButton>
+        </HomeButtonComponent>
+    )
+}
+
+export function LoginButton(props) {
+    return(
+        <LoginButtonComponent>
+            {props.text}
+        </LoginButtonComponent>
+    )
+}
+
+export function RegisterButton(props) {
+    return(
+        <RegisterButtonComponent> 
+            {props.text}
+        </RegisterButtonComponent>
     )
 }

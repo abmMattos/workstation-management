@@ -33,3 +33,39 @@ color: ${theme.COLORS.BACKGROUND};
 border-radius: 5px;
 border: 2px solid ${theme.COLORS.GRAY};
 `
+
+export const SmallButtonComponent = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${theme.COLORS.WHITE};
+
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid ${theme.COLORS.GRAY};
+    border-radius: 4px;
+`
+
+export const UserButtonComponent = styled.button`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    background-color: ${theme.COLORS.WHITE};
+    width: 153px;
+    height: 40px;
+    color: ${theme.COLORS.BACKGROUND};
+
+    border: 1px solid ${theme.COLORS.GRAY};
+    border-radius: 4px;
+
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        gap: 5px;
+
+    }
+`

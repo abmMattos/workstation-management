@@ -53,19 +53,19 @@ export const UserButtonComponent = styled.button`
     align-items: center;
     padding: 0px 10px;
     background-color: ${theme.COLORS.WHITE};
-    width: 153px;
+    width: fit-content;
     height: 40px;
     color: ${theme.COLORS.BACKGROUND};
 
     border: 1px solid ${theme.COLORS.GRAY};
     border-radius: 4px;
-
+    gap: 40px;
     div {
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: bold;
-        gap: 5px;
+        gap: 10px;
 
     }
 `

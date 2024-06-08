@@ -11,8 +11,8 @@ class MeetingRoomController {
             const { name, identifier, description, photo } = request.body
             const meetingRoom = await prisma.meetingRoom.create({
                 data: {
-                    identifier,
                     name,
+                    identifier,
                     description,
                     photo
                 }

@@ -23,4 +23,4 @@ async function startServer() {
     }
 }
 
-startServer().then(r => console.log("Server started successfully", r));
+startServer().then(() => console.log("Server started successfully"));

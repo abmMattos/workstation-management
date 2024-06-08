@@ -4,8 +4,6 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient()
 
 class UserController {
-
-
     async create(request, response) {
         try {
             const { name, email, password } = request.body

@@ -13,5 +13,8 @@ app.use(routes)
 app.use(cors)
 
 const PORT = 3333
+
+console.log('DATABASE: ',process.env.DATABASE_URL)
+
 app.listen(PORT, () => console.log(`Server is runing on Port ${PORT}`)
 )

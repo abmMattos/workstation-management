@@ -69,3 +69,18 @@ export const UserButtonComponent = styled.button`
 
     }
 `
+
+export const AddButtonComponent = styled.button`
+display: flex;
+justify-content: flex-start;
+align-items: center;
+width: 200px;
+padding: 15px 15px;
+font-size: 1.5em;
+font-weight: bold;
+background-color: ${theme.COLORS.WHITE};
+color: ${theme.COLORS.BACKGROUND};
+border-radius: 5px;
+border: 2px solid ${theme.COLORS.GRAY};
+gap: 15px;
+`

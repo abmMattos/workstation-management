@@ -1,4 +1,4 @@
-import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent } from "./ButtonStyle"
+import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent } from "./ButtonStyle"
 import arrow from "../../img/arrow-down.png"
 import user from "../../img/userGray.png"
 
@@ -45,5 +45,14 @@ export function UserButton(props) {
             <img src={arrow} alt="" />
 
         </UserButtonComponent>
+    )
+}
+
+export function AddButton(props) {
+    return(
+        <AddButtonComponent>
+            <img src={props.img} alt="" />
+            {props.text}
+        </AddButtonComponent>
     )
 }

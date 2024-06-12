@@ -1,14 +1,14 @@
-import { Main, Section, Title, LineDiv } from "./roomStyle"
-import { Link } from "react-router-dom";
+import { Main, Section, Title, LineDiv, } from "./roomStyle"
 import { Side } from "../../components/Side/side"
 import notification from "../../img/notification.png"
-import { SmallButton, UserButton, AddButton } from "../../components/Button/Button"
+import { SmallButton, UserButton } from "../../components/Button/Button"
 import mail from "../../img/mail.png"
-import plus from "../../img/plus.png"
 import axios from "axios"
 import { useState } from 'react';
+import { NewRoomModal } from "../../components/Modal/NewRoomModal"
 
-export function Rooms() {
+
+export function FormRooms() {
     const [meetingRoom, setMeetingRoom] = useState();
 
     function add() {
@@ -34,18 +34,16 @@ export function Rooms() {
             <Side />
             <Section>
                 <LineDiv>
-                    <Title>Salas</Title>
+                    <Title>Nova Sala</Title>
                     <LineDiv>
                         <SmallButton img={notification} />
                         <SmallButton img={mail} />
                         <UserButton text="Admin" />
                     </LineDiv>
                 </LineDiv>
-                <Section>
-                <Link to="/novaSala"><AddButton text="Nova Sala" img={plus} /></Link>
+                <NewRoomModal>
                     
-
-                </Section>
+                </NewRoomModal>
             </Section>
         </Main>
     )

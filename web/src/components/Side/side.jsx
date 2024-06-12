@@ -21,7 +21,7 @@ export function Side() {
         const path = location.pathname;
 
         let newBackgrounds;
-        if (path === "/salas") {
+        if (path === "/salas" || path === "/novaSala") {
             newBackgrounds = {
                 link1: theme.COLORS.BACKGROUND2,
                 link2: theme.COLORS.BACKGROUND,

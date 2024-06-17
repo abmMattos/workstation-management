@@ -35,10 +35,9 @@ model Admin {
 
 model MeetingRoom {
   id String @id @default(uuid())
-  identifier Int @unique
   name String
+  capacity Int
   description String
-  photo String
 
   reservation Reservation[]
 

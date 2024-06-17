@@ -8,13 +8,12 @@ class MeetingRoomController {
 
     async create(request, response) {
         try {
-            const { name, identifier, description, photo } = request.body
+            const { name, capacity, description } = request.body
             const meetingRoom = await prisma.meetingRoom.create({
                 data: {
                     name,
-                    identifier,
-                    description,
-                    photo
+                    capacity,
+                    description
                 }
             })
             return response.json(meetingRoom)
@@ -25,17 +24,15 @@ class MeetingRoomController {
 
     async update(request, response) {
         try {
-            const { id, name, identifier, description, photo } = request.body
+            const { id, name, capacity, description } = request.body
             const meetingRoom = await prisma.meetingRoom.update({
                 where: {
                     id: id
                 },
                 data: {
-                    identifier,
+                    capacity,
                     name,
                     description,
-                    photo
-
                 }
             })
             return response.json(meetingRoom)
@@ -72,7 +69,7 @@ class MeetingRoomController {
             const { identifier } = request.body
             const meetingRoom = await prisma.meetingRoom.findUnique({
                 where: {
-                    identifier: identifier
+                    id: id
                 }
             })
             return response.json(meetingRoom)

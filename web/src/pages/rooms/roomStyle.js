@@ -26,8 +26,5 @@ export const Title = styled.h1`
     color: ${theme.COLORS.BACKGROUND};
 `
 
-export const Paragraph = styled.p`
-    font-size: 1.5em;
-    width: 652px;
-    color: black
-` 
+
+

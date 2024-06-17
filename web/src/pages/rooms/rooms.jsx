@@ -1,32 +1,19 @@
-import { Main, Section, Title, LineDiv, Paragraph } from "./roomStyle"
+import { Main, Section, Title, LineDiv } from "./roomStyle"
 import { Side } from "../../components/Side/side"
 import notification from "../../img/notification.png"
 import { SmallButton, UserButton, AddButton } from "../../components/Button/Button"
 import mail from "../../img/mail.png"
 import plus from "../../img/plus.png"
-import axios from "axios"
-import { useState } from 'react';
+import { NewRoomModal } from "../../components/Modal/NewRoomModal";
+import { useState } from "react"
 
 export function Rooms() {
-    const [meetingRoom, setMeetingRoom] = useState();
-
-    function add() {
-        axios
-            .post("http://localhost:3333/meetingRoom/create", {
-                name: "Nome teste",
-                identifier: 123,
-                description: "Descrição teste",
-                photo: "foto teste",
-            })
-            .then((response) => {
-                setMeetingRoom(response.data)
-            })
-            .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
-            });
-
+    const [open, setOpen] = useState(false);
+    if (open === true) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
     }
-
 
     return (
         <Main>
@@ -41,14 +28,10 @@ export function Rooms() {
                     </LineDiv>
                 </LineDiv>
                 <Section>
-                    <AddButton onClick={add()} text="Nova Sala" img={plus} />
+                <AddButton click={() => setOpen(!open)} text="Nova Sala" img={plus} />
+                <NewRoomModal isOpen={open} setOpen={setOpen} />
 
                 </Section>
-
-                <Paragraph>Nome: {meetingRoom?.name}</Paragraph>
-                <Paragraph>Identificador: {meetingRoom?.identifier}</Paragraph>
-                <Paragraph>Descrição: {meetingRoom?.description}</Paragraph>
-                <Paragraph>Foto: {meetingRoom?.photo}</Paragraph>
             </Section>
         </Main>
     )

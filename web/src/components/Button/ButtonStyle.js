@@ -84,3 +84,17 @@ border-radius: 5px;
 border: 2px solid ${theme.COLORS.GRAY};
 gap: 15px;
 `
+
+export const SubmitButtonComponent = styled.button`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 109px;
+height: 32px;
+padding: 15px;
+font-weight: bold;
+background-color: ${theme.COLORS.GREEN};
+color: black;
+border-radius: 8px;
+align-self: center;
+`

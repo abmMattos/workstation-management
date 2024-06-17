@@ -12,6 +12,7 @@ export default function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Register />} />
                 <Route path="/salas" element={<Rooms />} />
+                <Route path="/estacoes-de-trabalho" element={<Rooms />} />
             </Routes>
         </>
     )

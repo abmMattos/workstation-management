@@ -10,6 +10,10 @@ export const Main = styled.div`
     align-items: center;
     position: relative;
     left: 0px;
+
+    .link:hover {
+        background-color: ${theme.COLORS.BACKGROUND2};
+    }
 `
 
 export const Logo = styled.div`
@@ -39,6 +43,7 @@ export const UnitLink = styled.div`
     font-size: 0.75em;
     background-color: ${(props) => props.bg || 'none'};
 
+    
     img {
         width: 16px;
         height: 16px;

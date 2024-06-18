@@ -6,6 +6,7 @@ import mail from "../../img/mail.png"
 import plus from "../../img/plus.png"
 import { NewRoomModal } from "../../components/Modal/NewRoomModal";
 import { useState } from "react"
+import { Table } from "../../components/Table/Table"
 
 export function Rooms() {
     const [open, setOpen] = useState(false);
@@ -30,7 +31,7 @@ export function Rooms() {
                 <Section>
                 <AddButton click={() => setOpen(!open)} text="Nova Sala" img={plus} />
                 <NewRoomModal isOpen={open} setOpen={setOpen} />
-
+                <Table />
                 </Section>
             </Section>
         </Main>

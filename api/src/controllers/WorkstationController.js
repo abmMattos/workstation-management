@@ -8,15 +8,16 @@ class WorkstationController {
 
     async create(request, response) {
         try {
-            const { name, identifier, screens, mouse, keyboard, webcam, description, isBlocked } = request.body
+            const { name, screens, capacity, mouse, keyboard, webcam, headset, description, isBlocked } = request.body
             const workstations = await prisma.workstation.create({
                 data: {
-                    identifier,
                     name,
                     screens,
+                    capacity,
                     mouse,
                     keyboard,
                     webcam,
+                    headset,
                     description,
                     isBlocked
                 }
@@ -29,18 +30,19 @@ class WorkstationController {
 
     async update(request, response) {
         try {
-            const { id, name, identifier, screens, mouse, keyboard, webcam, description, isBlocked } = request.body
+            const { id, name, capacity, screens, mouse, keyboard, webcam, headset, description, isBlocked } = request.body
             const workstations = await prisma.workstation.update({
                 where: {
                     id: id
                 },
                 data: {
-                    identifier,
                     name,
+                    capacity,
                     screens,
                     mouse,
                     keyboard,
                     webcam,
+                    headset,
                     description,
                     isBlocked
 
@@ -77,10 +79,10 @@ class WorkstationController {
 
     async findUnique(request, response) {
         try {
-            const { identifier } = request.body
+            const { id } = request.body
             const workstation = await prisma.workstation.findUnique({
                 where: {
-                    identifier
+                    id
                 },
             })
             return response.json(workstation)

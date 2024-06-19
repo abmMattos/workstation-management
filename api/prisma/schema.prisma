@@ -46,12 +46,13 @@ model MeetingRoom {
 
 model Workstation {
   id String @id @default(uuid())
-  identifier Int @unique
   name String
   screens Int
+  capacity Int
   mouse Boolean
   keyboard Boolean
   webcam Boolean
+  headset Boolean
   description String
   isBlocked Boolean
 

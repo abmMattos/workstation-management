@@ -1,4 +1,16 @@
 import * as React from "react";
+import {
+  Container,
+  StyledTable,
+  HeaderRow,
+  HeaderCell,
+  BodyRow,
+  BodyCell,
+  Actions
+} from "./TableStyle";
+import { SmallButton } from "../Button/Button";
+import search from "../../img/search.png";
+import clock from "../../img/clock.png";
 
 import {
   createColumnHelper,
@@ -39,7 +51,7 @@ const columnHelper = createColumnHelper();
 const columns = [
   columnHelper.accessor("id", {
     cell: (info) => info.getValue(),
-    header: () => <strong>id</strong>,
+    header: () => <strong>#</strong>,
   }),
   columnHelper.accessor((row) => row.status, {
     id: "status",
@@ -66,56 +78,43 @@ export function Table() {
   });
 
   return (
-    <div className="p-2">
-      <table>
+    <Container>
+      <StyledTable>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <HeaderCell key={header.id}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                </th>
+                </HeaderCell>
               ))}
-            </tr>
+              <HeaderCell />
+            </HeaderRow>
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+          {table.getRowModel().rows.map((row, index) => (
+            <BodyRow key={row.id} index={index}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <BodyCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+                </BodyCell>
               ))}
-            </tr>
+              <BodyCell>
+                <Actions>
+                  <SmallButton img={search} />
+                  <SmallButton img={clock} />
+                </Actions>
+              </BodyCell>
+            </BodyRow>
           ))}
         </tbody>
-        <tfoot>
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
-      </table>
-      <div className="h-4" />
-      <button onClick={() => rerender()} className="border p-2">
-        Rerender
-      </button>
-    </div>
+      </StyledTable>
+    </Container>
   );
 }

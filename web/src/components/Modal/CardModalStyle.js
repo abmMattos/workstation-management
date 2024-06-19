@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../style/theme";
 
 export const Main = styled.div`
     background-color: #E5E3E3;
@@ -13,8 +14,16 @@ export const Main = styled.div`
     box-sizing: border-box;
 `
 
-export const Input = styled.input`
+export const Input = styled.input` 
     background-color: #E5E3E3;
     width: 100%; 
-    border: 0px solid black;
+    border: 0px solid ${theme.COLORS.GRAY};
+    padding: 5px;
+    &:focus{
+       outline: none;
+       border: 1px solid ${theme.COLORS.GRAY};
+    }
 `
+export const Checkbox = styled.input.attrs({type: 'checkbox'})`
+    padding: 5px;
+`;

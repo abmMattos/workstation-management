@@ -3,6 +3,7 @@ import { Register } from "./pages/Login/Register";
 import { Home } from "./pages/home/Home";
 import { Route, Routes } from "react-router-dom"
 import { Rooms } from "./pages/rooms/rooms";
+import { Workstations } from "./pages/workstations/workstations";
 
 export default function App() {
     return(
@@ -12,7 +13,7 @@ export default function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Register />} />
                 <Route path="/salas" element={<Rooms />} />
-                <Route path="/estacoes-de-trabalho" element={<Rooms />} />
+                <Route path="/estacoes-de-trabalho" element={<Workstations />} />
             </Routes>
         </>
     )

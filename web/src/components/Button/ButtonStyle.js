@@ -74,7 +74,7 @@ export const AddButtonComponent = styled.button`
 display: flex;
 justify-content: flex-start;
 align-items: center;
-width: 200px;
+width: fit-content;
 padding: 15px 15px;
 font-size: 1.5em;
 font-weight: bold;

@@ -11,6 +11,8 @@ import {
 import { SmallButton } from "../Button/Button";
 import search from "../../img/search.png";
 import clock from "../../img/clock.png";
+import trash from "../../img/trash.png";
+import pencil from "../../img/pencil.png";
 
 import {
   createColumnHelper,
@@ -105,10 +107,12 @@ export function Table() {
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </BodyCell>
               ))}
-              <BodyCell>
+              <BodyCell width={'22%'}>
                 <Actions>
                   <SmallButton img={search} />
                   <SmallButton img={clock} />
+                  <SmallButton img={pencil} />
+                  <SmallButton img={trash} />
                 </Actions>
               </BodyCell>
             </BodyRow>

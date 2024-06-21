@@ -29,7 +29,7 @@ export function RegisterButton(props) {
 
 export function SmallButton(props) {
     return(
-        <SmallButtonComponent>
+        <SmallButtonComponent onClick={props.event} >
             <img src={props.img} alt="" />
         </SmallButtonComponent>
     )

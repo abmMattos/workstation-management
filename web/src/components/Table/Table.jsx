@@ -30,21 +30,21 @@ const dataTable = [
   },
   {
     id: "2",
-    status: "Disponível",
-    description: "2 Monitores",
-    local: "2º andar - Sala 1",
+    status: "Ocupado",
+    description: "1 Monitores",
+    local: "2º andar - Sala 4",
   },
   {
     id: "3",
     status: "Disponível",
-    description: "2 Monitores",
-    local: "2º andar - Sala 1",
+    description: "1 Notebook",
+    local: "2º andar - Sala 3",
   },
   {
     id: "4",
-    status: "Disponível",
-    description: "2 Monitores",
-    local: "2º andar - Sala 1",
+    status: "Bloqueado",
+    description: "Manutenção",
+    local: "2º andar - Sala 2",
   },
 ];
 
@@ -70,7 +70,7 @@ const columns = [
 ];
 
 export function Table() {
-  const [data, _setData] = React.useState(() => [...dataTable]);
+  const [data, setData] = React.useState(() => [...dataTable]);
   const rerender = React.useReducer(() => ({}), {})[1];
 
   const table = useReactTable({
@@ -78,6 +78,16 @@ export function Table() {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  function handleGetObject(id) {
+    const obj = data.find(obj => obj.id === id);
+    return obj;
+  }
+  
+  function handleDelete(id) {
+    const updatedData = data.filter(obj => obj.id !== id);
+    setData(updatedData);
+  }
 
   return (
     <Container>
@@ -109,10 +119,10 @@ export function Table() {
               ))}
               <BodyCell width={'22%'}>
                 <Actions>
-                  <SmallButton img={search} />
-                  <SmallButton img={clock} />
-                  <SmallButton img={pencil} />
-                  <SmallButton img={trash} />
+                  <SmallButton img={search} event={() => handleGetObject(row.original.id)} />
+                  <SmallButton img={clock} event={() => handleGetObject(row.original.id)} />
+                  <SmallButton img={pencil} event={() => handleGetObject(row.original.id)} />
+                  <SmallButton img={trash} event={() => handleDelete(row.original.id)} />
                 </Actions>
               </BodyCell>
             </BodyRow>

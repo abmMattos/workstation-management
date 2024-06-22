@@ -21,10 +21,9 @@ CREATE TABLE "admin" (
 -- CreateTable
 CREATE TABLE "meeting_room" (
     "id" TEXT NOT NULL,
-    "identifier" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
+    "capacity" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
-    "photo" TEXT NOT NULL,
 
     CONSTRAINT "meeting_room_pkey" PRIMARY KEY ("id")
 );
@@ -32,12 +31,13 @@ CREATE TABLE "meeting_room" (
 -- CreateTable
 CREATE TABLE "workstation" (
     "id" TEXT NOT NULL,
-    "identifier" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "screens" INTEGER NOT NULL,
+    "capacity" INTEGER NOT NULL,
     "mouse" BOOLEAN NOT NULL,
     "keyboard" BOOLEAN NOT NULL,
     "webcam" BOOLEAN NOT NULL,
+    "headset" BOOLEAN NOT NULL,
     "description" TEXT NOT NULL,
     "isBlocked" BOOLEAN NOT NULL,
 
@@ -61,12 +61,6 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "admin_email_key" ON "admin"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "meeting_room_identifier_key" ON "meeting_room"("identifier");
-
--- CreateIndex
-CREATE UNIQUE INDEX "workstation_identifier_key" ON "workstation"("identifier");
 
 -- AddForeignKey
 ALTER TABLE "reservation" ADD CONSTRAINT "reservation_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

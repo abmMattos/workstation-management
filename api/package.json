@@ -12,6 +12,9 @@
     "migrate": "knex migrate:latest",
     "test": "jest"
   },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,7 +24,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
-    "pm2": "^5.4.0"
+    "pm2": "^5.4.1"
   },
   "description": ""
 }

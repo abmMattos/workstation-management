@@ -1,14 +1,23 @@
 import { Checkbox, Input, Main } from "./CardModalStyle";
 
 export function CardModal(props) {
-    if (props.type == "checkbox") {
+    if (props.type === "checkbox") {
         return (
             <Main>
                 <label htmlFor={props.name}>{props.text}</label>
                 <Checkbox onChange={props.change} type={props.type} name={props.name} value={true} />
             </Main>
         )
-    } else {
+    } else if (props.required === true) {
+        return (
+            <Main>
+                <label htmlFor={props.name}>{props.text}</label>
+                <Input onChange={props.change} type={props.type} name={props.name} required />
+            </Main>
+        )
+    }
+    
+    else {
         return (
             <Main>
                 <label htmlFor={props.name}>{props.text}</label>

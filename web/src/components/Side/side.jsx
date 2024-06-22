@@ -8,6 +8,7 @@ import theme from "../../style/theme";
 import config from "../../img/config.png"
 import help from "../../img/help.png"
 import computer from "../../img/computer.png"
+import user from "../../img/userGray.png"
 
 export function Side() {
     const location = useLocation();
@@ -15,20 +16,23 @@ export function Side() {
         link1: theme.COLORS.BACKGROUND, // Cor padrão do tema ou qualquer outra cor inicial
         link2: theme.COLORS.BACKGROUND,
         link3: theme.COLORS.BACKGROUND,
-        link4: theme.COLORS.BACKGROUND
+        link4: theme.COLORS.BACKGROUND,
+        link5: theme.COLORS.BACKGROUND,
+        link6: theme.COLORS.BACKGROUND
     });
 
     useEffect(() => {
         const path = location.pathname;
 
         let newBackgrounds;
-        if (path === "/salas" || path === "/novaSala") {
+        if (path === "/salas") {
             newBackgrounds = {
                 link1: theme.COLORS.BACKGROUND2,
                 link2: theme.COLORS.BACKGROUND,
                 link3: theme.COLORS.BACKGROUND,
                 link4: theme.COLORS.BACKGROUND,
-                link5: theme.COLORS.BACKGROUND
+                link5: theme.COLORS.BACKGROUND,
+                link6: theme.COLORS.BACKGROUND
             };
         } else if (path === "/estacoes-de-trabalho") {
             newBackgrounds = {
@@ -36,7 +40,8 @@ export function Side() {
                 link2: theme.COLORS.BACKGROUND2,
                 link3: theme.COLORS.BACKGROUND,
                 link4: theme.COLORS.BACKGROUND,
-                link5: theme.COLORS.BACKGROUND
+                link5: theme.COLORS.BACKGROUND,
+                link6: theme.COLORS.BACKGROUND
             };
         } else if (path === "/mensagens") {
             newBackgrounds = {
@@ -44,7 +49,8 @@ export function Side() {
                 link2: theme.COLORS.BACKGROUND,
                 link3: theme.COLORS.BACKGROUND2,
                 link4: theme.COLORS.BACKGROUND,
-                link5: theme.COLORS.BACKGROUND
+                link5: theme.COLORS.BACKGROUND,
+                link6: theme.COLORS.BACKGROUND
             };
         } else if(path === "/configuracoes") {
             newBackgrounds = {
@@ -52,7 +58,8 @@ export function Side() {
                 link2: theme.COLORS.BACKGROUND,
                 link3: theme.COLORS.BACKGROUND,
                 link4: theme.COLORS.BACKGROUND2,
-                link5: theme.COLORS.BACKGROUND
+                link5: theme.COLORS.BACKGROUND,
+                link6: theme.COLORS.BACKGROUND
             };
         } else if(path === "/ajuda") {
             newBackgrounds = {
@@ -60,9 +67,19 @@ export function Side() {
                 link2: theme.COLORS.BACKGROUND,
                 link3: theme.COLORS.BACKGROUND,
                 link4: theme.COLORS.BACKGROUND,
-                link5: theme.COLORS.BACKGROUND2
+                link5: theme.COLORS.BACKGROUND2,
+                link6: theme.COLORS.BACKGROUND
         };
-    }
+    }else if(path === "/usuarios") {
+        newBackgrounds = {
+            link1: theme.COLORS.BACKGROUND,
+            link2: theme.COLORS.BACKGROUND,
+            link3: theme.COLORS.BACKGROUND,
+            link4: theme.COLORS.BACKGROUND,
+            link5: theme.COLORS.BACKGROUND,
+            link6: theme.COLORS.BACKGROUND2
+    };
+}
 
         setBackgrounds(newBackgrounds);
     }, [location.pathname]);
@@ -73,6 +90,12 @@ export function Side() {
                 <img src={logo} alt="" />
                 <p>Meeting & Work</p>
             </Logo>
+            <Link to="/usuarios">
+                <UnitLink bg={backgrounds.link6} className="link">
+                    <img src={user} alt="Usuário" />
+                    <p>USUÁRIOS</p>
+                </UnitLink>
+            </Link>
             <Link to="/salas">
                 <UnitLink bg={backgrounds.link1} className="link">
                     <img src={chair} alt="Cadeira" />
@@ -93,13 +116,13 @@ export function Side() {
             </Link>
             <Link to="/configuracoes">
                 <UnitLink bg={backgrounds.link4} className="link">
-                    <img src={config} alt="Cadeira" />
+                    <img src={config} alt="Engrenagem" />
                     <p>CONFIGURAÇÕES</p>
                 </UnitLink>
             </Link>
             <Link to="/ajuda">
                 <UnitLink bg={backgrounds.link5} className="link">
-                    <img src={help} alt="Cadeira" />
+                    <img src={help} alt="Interrogação" />
                     <p>AJUDA</p>
                 </UnitLink>
             </Link>

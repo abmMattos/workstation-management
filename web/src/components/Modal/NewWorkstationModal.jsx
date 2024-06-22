@@ -66,14 +66,14 @@ export function NewWorkstationModal({ isOpen, setOpen }) {
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Criar Estação de Trabalho" />
-                    <CardModal text="Nome:" type="text" name="name" change={handleChange} />
-                    <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} />
-                    <CardModal text="Monitores:" type="number" name="screens" change={handleChange} />
+                    <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
+                    <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
+                    <CardModal text="Monitores:" type="number" name="screens" change={handleChange} required={true} />
                     <CardModal text="Teclado:" type="checkbox" name="keyboard" change={handleChange} />
                     <CardModal text="Mouse:" type="checkbox" name="mouse" change={handleChange} />
                     <CardModal text="WebCam:" type="checkbox" name="webcam" change={handleChange} />
                     <CardModal text="Headset:" type="checkbox" name="headset" change={handleChange} />
-                    <CardModal text="Equipamentos:" type="text" name="description" change={handleChange} />
+                    <CardModal text="Equipamentos:" type="text" name="description" change={handleChange} required={true} />
                     <SubmitButton text="CRIAR" />
                 </Form>
             </BackgroundModal>

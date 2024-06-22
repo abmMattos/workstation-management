@@ -5,12 +5,12 @@ import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
 
-export function NewRoomModal({ isOpen, setOpen }) {
+export function NewUserModal({ isOpen, setOpen }) {
 
     const [data, setData] = useState({
         name: "",
-        capacity: 0,
-        description: ""
+        email: "",
+        password: ""
     });
 
     const handleChange = (e) => {
@@ -28,34 +28,34 @@ export function NewRoomModal({ isOpen, setOpen }) {
 
     const add = (e) => {
         e.preventDefault();
-        if (data.name.trim().length <= 3 || data.capacity == null || data.description.trim().length <= 3) {
+        if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        const meetingRoom = {
+        const user = {
             name: data.name,
-            capacity: parseInt(data.capacity),
-            description: data.description
+            email: data.email,
+            password: data.password
         };
-        axios.post("http://localhost:3333/meetingRoom/create", meetingRoom)
+        axios.post("http://localhost:3333/user/create", user)
             .then((response) => {
                 //atualizar tabela
                 console.log("deu certo");
                 setOpen(!isOpen)
             })
             .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
+                alert("Email já utilizado!")
             });
     };
     if (isOpen) {
         return (
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Criar Sala" />
+                    <HeaderModal click={fecharModal} titulo="Cadastrar Usuário" />
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
-                    <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
-                    <CardModal text="Equipamentos:" type="text" name="description" change={handleChange} required={true} />
-                    <SubmitButton text="CRIAR" />
+                    <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} />
+                    <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} />
+                    <SubmitButton text="CADASTRAR" />
                 </Form>
             </BackgroundModal>
         )

@@ -15,61 +15,15 @@ import trash from "../../img/trash.png";
 import pencil from "../../img/pencil.png";
 
 import {
-  createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
-const dataTable = [
-  {
-    id: "1",
-    status: "Disponível",
-    description: "2 Monitores",
-    local: "2º andar - Sala 1",
-  },
-  {
-    id: "2",
-    status: "Ocupado",
-    description: "1 Monitores",
-    local: "2º andar - Sala 4",
-  },
-  {
-    id: "3",
-    status: "Disponível",
-    description: "1 Notebook",
-    local: "2º andar - Sala 3",
-  },
-  {
-    id: "4",
-    status: "Bloqueado",
-    description: "Manutenção",
-    local: "2º andar - Sala 2",
-  },
-];
-
-const columnHelper = createColumnHelper();
-
-const columns = [
-  columnHelper.accessor("id", {
-    cell: (info) => info.getValue(),
-    header: () => <strong>#</strong>,
-  }),
-  columnHelper.accessor((row) => row.status, {
-    id: "status",
-    cell: (info) => <i>{info.getValue()}</i>,
-    header: () => <strong>Status</strong>,
-  }),
-  columnHelper.accessor("description", {
-    header: () => <strong>Descrição</strong>,
-    cell: (info) => info.renderValue(),
-  }),
-  columnHelper.accessor("local", {
-    header: () => <strong>Localização</strong>,
-  }),
-];
-
-export function Table() {
+export function Table(props) {
+  const dataTable = props.dataTable
+  const columns = props.dataColumns
+  console.log(dataTable);
   const [data, setData] = React.useState(() => [...dataTable]);
   const rerender = React.useReducer(() => ({}), {})[1];
 

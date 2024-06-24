@@ -19,6 +19,26 @@ class AdminController {
     }
   }
 
+  async login(request, response) {
+    try {
+      const { email, password } = request.body;
+      const admin = await prisma.admin.findUnique({
+        where: {
+          email: email,
+          password: password,
+        },
+      });
+
+      if (!admin) {
+        return response.status(400).send('Admin não existe!');
+      }
+
+      return response.status(200).send('Login realizado com sucesso!');
+    } catch {
+      return response.status(401).send('Login falhou!');
+    }
+  }
+
   async delete(request, response) {
     try {
       const { id } = request.body;

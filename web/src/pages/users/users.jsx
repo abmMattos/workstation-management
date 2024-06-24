@@ -37,6 +37,16 @@ export function Users() {
     }),
   ];
 
+  const userType = localStorage.getItem('userType');
+
+  if (userType !== 'ADMIN') {
+    return (
+      <Main>
+        <Side />
+      </Main>
+    )
+  }
+
   return (
     <Main>
       <Side />

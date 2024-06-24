@@ -20,6 +20,26 @@ class UserController {
         }
     }
 
+    async login(request, response) {
+        try {
+          const { email, password } = request.body;
+          const user = await prisma.admin.findUnique({
+            where: {
+              email: email,
+              password: password,
+            },
+          });
+    
+          if (!user) {
+            return response.status(400).send('Usuário não existe!');
+          }
+    
+          return response.status(200).send('Login realizado com sucesso!');
+        } catch {
+          return response.status(401).send('Login falhou!');
+        }
+      }
+
     async update(request, response) {
         try {
             const { id, name, email, password } = request.body

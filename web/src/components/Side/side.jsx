@@ -11,6 +11,9 @@ import computer from "../../img/computer.png"
 import user from "../../img/userGray.png"
 
 export function Side() {
+
+    const userType = localStorage.getItem('userType');
+
     const location = useLocation();
     const [backgrounds, setBackgrounds] = useState({
         link1: theme.COLORS.BACKGROUND, // Cor padrão do tema ou qualquer outra cor inicial
@@ -90,12 +93,14 @@ export function Side() {
                 <img src={logo} alt="" />
                 <p>Meeting & Work</p>
             </Logo>
-            <Link to="/usuarios">
+            {userType === 'ADMIN' && (
+                <Link to="/usuarios">
                 <UnitLink bg={backgrounds.link6} className="link">
                     <img src={user} alt="Usuário" />
                     <p>USUÁRIOS</p>
                 </UnitLink>
             </Link>
+            )}
             <Link to="/salas">
                 <UnitLink bg={backgrounds.link1} className="link">
                     <img src={chair} alt="Cadeira" />

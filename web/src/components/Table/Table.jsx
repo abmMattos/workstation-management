@@ -21,6 +21,9 @@ import {
 } from "@tanstack/react-table";
 
 export function Table(props) {
+
+  const userType = localStorage.getItem('userType');
+
   const dataTable = props.dataTable
   const columns = props.dataColumns
   console.log(dataTable);
@@ -37,7 +40,7 @@ export function Table(props) {
     const obj = data.find(obj => obj.id === id);
     return obj;
   }
-  
+
   function handleDelete(id) {
     const updatedData = data.filter(obj => obj.id !== id);
     setData(updatedData);
@@ -54,9 +57,9 @@ export function Table(props) {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                 </HeaderCell>
               ))}
               <HeaderCell />
@@ -71,12 +74,17 @@ export function Table(props) {
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </BodyCell>
               ))}
-              <BodyCell width={'22%'}>
+              <BodyCell width={'10%'}>
                 <Actions>
                   <SmallButton img={search} event={() => handleGetObject(row.original.id)} />
                   <SmallButton img={clock} event={() => handleGetObject(row.original.id)} />
-                  <SmallButton img={pencil} event={() => handleGetObject(row.original.id)} />
-                  <SmallButton img={trash} event={() => handleDelete(row.original.id)} />
+                  {userType === 'ADMIN' && (
+                    <>
+                      <SmallButton img={pencil} event={() => handleGetObject(row.original.id)} />
+                      <SmallButton img={trash} event={() => handleDelete(row.original.id)} />
+                    </>
+                  )}
+
                 </Actions>
               </BodyCell>
             </BodyRow>

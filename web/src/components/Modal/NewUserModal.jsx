@@ -4,8 +4,15 @@ import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
+import { Label, Select } from "./NewUserModalStyle";
 
 export function NewUserModal({ isOpen, setOpen }) {
+
+    const [userType, setUserType] = useState('ADMIN');
+
+    const handleUserTypeChange = (e) => {
+        setUserType(e.target.value);
+      };
 
     const [data, setData] = useState({
         name: "",
@@ -26,27 +33,36 @@ export function NewUserModal({ isOpen, setOpen }) {
         setOpen(!isOpen);
     }
 
-    const add = (e) => {
+    const add = async (e) => {
         e.preventDefault();
         if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        const user = {
-            name: data.name,
-            email: data.email,
-            password: data.password
-        };
-        axios.post("http://localhost:3333/user/create", user)
-            .then((response) => {
-                //atualizar tabela
-                console.log("deu certo");
+        try{
+            if (userType === 'ADMIN') {
+                const response = await axios.post(
+                  `https://workstation-management.onrender.com/admin/create`,
+                  data,
+                );
+                console.log(response.data);
                 setOpen(!isOpen)
-            })
-            .catch((err) => {
-                alert("Email já utilizado!")
-            });
+              }
+        
+              if (userType === 'USER') {
+                const response = await axios.post(
+                    `https://workstation-management.onrender.com/user/create`,
+                    data,
+                );
+                console.log(response.data);
+                setOpen(!isOpen)
+              }
+        } catch (error) {
+          console.error(error);
+          alert('Erro criar usuário!');
+        }
     };
+
     if (isOpen) {
         return (
             <BackgroundModal onClick={fecharModal}>
@@ -55,6 +71,11 @@ export function NewUserModal({ isOpen, setOpen }) {
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
                     <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} />
                     <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} />
+                    <Label htmlFor="selectUser">Tipo de Usuário</Label>
+                    <Select name="selectUser" value={userType} onChange={handleUserTypeChange}>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="USER">USUÁRIO</option>
+                        </Select>
                     <SubmitButton text="CADASTRAR" />
                 </Form>
             </BackgroundModal>

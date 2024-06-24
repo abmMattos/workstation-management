@@ -13,7 +13,7 @@ export function HomeButton(props) {
 
 export function LoginButton(props) {
     return(
-        <LoginButtonComponent>
+        <LoginButtonComponent type="submit">
             {props.text}
         </LoginButtonComponent>
     )

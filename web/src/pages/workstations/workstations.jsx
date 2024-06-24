@@ -10,6 +10,9 @@ import { createColumnHelper } from "@tanstack/react-table"
 import { dataTable } from "../../api/workstations/api"
 
 export function Workstations() {
+
+  const userType = localStorage.getItem('userType');
+
   const [open, setOpen] = useState(false);
   if (open === true) {
     document.body.style.overflow = 'hidden';
@@ -44,8 +47,12 @@ export function Workstations() {
       <Section>
         <Header title="Estações de Trabalho" />
         <Section>
-          <AddButton click={() => setOpen(!open)} text="Nova estação" img={plus} />
-          <NewWorkstationModal isOpen={open} setOpen={setOpen} />
+          {userType === 'ADMIN' && (
+            <>
+              <AddButton id="addButton" click={() => setOpen(!open)} text="Nova Sala" img={plus} />
+              <NewWorkstationModal isOpen={open} setOpen={setOpen} />
+            </>
+          )}
           <Table dataTable={dataTable} dataColumns={columns} />
         </Section>
       </Section>

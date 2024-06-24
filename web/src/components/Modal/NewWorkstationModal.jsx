@@ -51,7 +51,7 @@ export function NewWorkstationModal({ isOpen, setOpen }) {
             isBlocked: data.isBlocked
         };
 
-        axios.post("http://localhost:3333/workstation/create", workstation)
+        axios.post("https://workstation-management.onrender.com/workstation/create", workstation)
             .then((response) => {
                 //atualizar tabela
                 console.log("deu certo");

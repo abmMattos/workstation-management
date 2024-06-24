@@ -40,9 +40,24 @@ export const Input = styled.input`
     width: 350px;    
 `
 
+export const Select = styled.select`
+    padding: 15px;
+    border: 2px solid ${theme.COLORS.GRAY};
+    border-radius: 10px;
+    font-size: 1.25em;
+    width: 350px;    
+`
+
+export const Label = styled.label`
+    font-size: 1em;
+    font-weight: bold;
+    color: ${theme.COLORS.BACKGROUND};
+`
+
 export const ButtonArea = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    gap: 20px;
 `

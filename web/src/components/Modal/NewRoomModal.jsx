@@ -37,7 +37,7 @@ export function NewRoomModal({ isOpen, setOpen }) {
             capacity: parseInt(data.capacity),
             description: data.description
         };
-        axios.post("http://localhost:3333/meetingRoom/create", meetingRoom)
+        axios.post("https://workstation-management.onrender.com/meetingRoom/create", meetingRoom)
             .then((response) => {
                 //atualizar tabela
                 console.log("deu certo");

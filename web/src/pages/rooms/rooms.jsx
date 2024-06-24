@@ -10,6 +10,9 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { apiData } from "../../api/rooms/api";
 
 export function Rooms() {
+
+  const userType = localStorage.getItem('userType');
+
   const [open, setOpen] = useState(false);
   if (open === true) {
     document.body.style.overflow = 'hidden';
@@ -44,8 +47,13 @@ export function Rooms() {
       <Section>
         <Header title="Salas" />
         <Section>
-          <AddButton id="addButton" click={() => setOpen(!open)} text="Nova Sala" img={plus} />
-          <NewRoomModal isOpen={open} setOpen={setOpen} />
+          {userType === 'ADMIN' && (
+            <>
+              <AddButton id="addButton" click={() => setOpen(!open)} text="Nova Sala" img={plus} />
+              <NewRoomModal isOpen={open} setOpen={setOpen} />
+            </>
+          )}
+
           <Table dataTable={apiData} dataColumns={columns} />
         </Section>
       </Section>

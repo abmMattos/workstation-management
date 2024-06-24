@@ -14,7 +14,7 @@ export function Login() {
 
     const handleUserTypeChange = (e) => {
         setUserType(e.target.value);
-      };
+    };
 
     const [data, setData] = useState({
         email: "",
@@ -35,29 +35,38 @@ export function Login() {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        try{
+        try {
             if (userType === 'ADMIN') {
-                const response = await axios.post(
-                  `https://workstation-management.onrender.com/admin/login`,
-                  data,
+                const response = await axios.get(
+                    `https://workstation-management.onrender.com/admin/login`,
+                    {
+                        params: {
+                            email: data.email,
+                            password: data.password
+                        }
+                    }
                 );
                 console.log(response.data);
                 localStorage.setItem('userType', userType);
                 navigate('/usuarios');
-              }
-        
-              if (userType === 'USER') {
-                const response = await axios.post(
-                    `https://workstation-management.onrender.com/user/login`,
-                    data,
+            }
+
+            if (userType === 'USER') {
+                const response = await axios.get(
+                    `https://workstation-management.onrender.com/user/login`, {
+                    params: {
+                        email: data.email,
+                        password: data.password
+                    }
+                }
                 );
                 console.log(response.data);
                 localStorage.setItem('userType', userType);
                 navigate('/salas');
-              }
+            }
         } catch (error) {
-          console.error(error);
-          alert('Erro ao fazer login. Verifique suas credenciais.');
+            console.error(error);
+            alert('Erro ao fazer login. Verifique suas credenciais.');
         }
     };
 
@@ -75,10 +84,10 @@ export function Login() {
                             <option value="ADMIN">ADMIN</option>
                             <option value="USER">USUÁRIO</option>
                         </Select>
-                    <ButtonArea>
-                        <Link to="/cadastro"><RegisterButton text="CADASTRAR" /></Link>
-                        <LoginButton text="LOGIN" />
-                    </ButtonArea>
+                        <ButtonArea>
+                            <Link to="/cadastro"><RegisterButton text="CADASTRAR" /></Link>
+                            <LoginButton text="LOGIN" />
+                        </ButtonArea>
                     </Form>
                 </Container>
             </Main>

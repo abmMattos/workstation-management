@@ -21,7 +21,7 @@ class AdminController {
 
   async login(request, response) {
     try {
-      const { email, password } = request.body;
+      const { email, password } = request.query;
       const admin = await prisma.admin.findUnique({
         where: {
           email: email,

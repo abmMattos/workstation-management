@@ -25,7 +25,7 @@ export function Workstations() {
   const columnHelper = createColumnHelper();
 
   const columns = [
-    columnHelper.accessor("id", {
+    columnHelper.accessor("index", {
       cell: (info) => info.getValue(),
       header: () => <strong>#</strong>,
     }),
@@ -58,6 +58,14 @@ export function Workstations() {
     fetchData();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
+
   return (
     <Main>
       <Side />
@@ -70,7 +78,7 @@ export function Workstations() {
               <NewWorkstationModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-          <Table dataTable={data} dataColumns={columns} />
+          <Table dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/workstation/delete'} />
         </Section>
       </Section>
     </Main>

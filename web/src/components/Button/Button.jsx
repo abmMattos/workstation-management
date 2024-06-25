@@ -1,6 +1,7 @@
 import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent } from "./ButtonStyle"
 import arrow from "../../img/arrow-down.png"
 import user from "../../img/userGray.png"
+import axios from "axios"
 
 
 export function HomeButton(props) {
@@ -30,6 +31,19 @@ export function RegisterButton(props) {
 export function SmallButton(props) {
     return(
         <SmallButtonComponent onClick={props.event} >
+            <img src={props.img} alt="" />
+        </SmallButtonComponent>
+    )
+}
+
+export function DeleteButton(props) {    
+
+    async function deleteData(id, url) {
+        const response = await axios.delete("" + url + "", {data: {id: id}});
+        return response.data;
+    }
+    return(
+        <SmallButtonComponent onClick={() => deleteData(props.id, props.url)} >
             <img src={props.img} alt="" />
         </SmallButtonComponent>
     )

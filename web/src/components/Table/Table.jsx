@@ -8,7 +8,7 @@ import {
   BodyCell,
   Actions
 } from "./TableStyle";
-import { SmallButton } from "../Button/Button";
+import { DeleteButton, SmallButton } from "../Button/Button";
 import search from "../../img/search.png";
 import clock from "../../img/clock.png";
 import trash from "../../img/trash.png";
@@ -28,7 +28,6 @@ export function Table(props) {
   const columns = props.dataColumns
   console.log(dataTable);
   const [data, setData] = React.useState(() => [...dataTable]);
-  const rerender = React.useReducer(() => ({}), {})[1];
 
   const table = useReactTable({
     data,
@@ -39,11 +38,6 @@ export function Table(props) {
   function handleGetObject(id) {
     const obj = data.find(obj => obj.id === id);
     return obj;
-  }
-
-  function handleDelete(id) {
-    const updatedData = data.filter(obj => obj.id !== id);
-    setData(updatedData);
   }
 
   return (
@@ -80,8 +74,8 @@ export function Table(props) {
                   <SmallButton img={clock} event={() => handleGetObject(row.original.id)} />
                   {userType === 'ADMIN' && (
                     <>
-                      <SmallButton img={pencil} event={() => handleGetObject(row.original.id)} />
-                      <SmallButton img={trash} event={() => handleDelete(row.original.id)} />
+                      <SmallButton img={pencil} event={() => (row.original.id)} />
+                      <DeleteButton img={trash} id={row.original.id} url={props.url} />
                     </>
                   )}
 

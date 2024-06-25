@@ -26,7 +26,7 @@ export function Rooms() {
   const columnHelper = createColumnHelper();
 
   const columns = [
-    columnHelper.accessor("id", {
+    columnHelper.accessor("index", {
       cell: (info) => info.getValue(),
       header: () => <strong>#</strong>,
     }),
@@ -79,7 +79,7 @@ export function Rooms() {
               <NewRoomModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-          <Table dataTable={data} dataColumns={columns} />
+          <Table dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/meetingRoom/delete'} />
         </Section>
       </Section>
     </Main>

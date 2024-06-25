@@ -3,7 +3,7 @@ import { Side } from "../../components/Side/side";
 import { AddButton } from "../../components/Button/Button";
 import plus from "../../img/plus.png";
 import { NewUserModal } from "../../components/Modal/NewUserModal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -22,7 +22,7 @@ export function Users() {
   const columnHelper = createColumnHelper();
 
   const columns = [
-    columnHelper.accessor("id", {
+    columnHelper.accessor("index", {
       cell: (info) => info.getValue(),
       header: () => <strong>#</strong>,
     }),
@@ -35,9 +35,6 @@ export function Users() {
       header: () => <strong>Email</strong>,
       cell: (info) => info.renderValue(),
     }),
-    columnHelper.accessor("userType", {
-      header: () => <strong>Tipo de Usuário</strong>,
-    }),
   ];
 
   const userType = localStorage.getItem("userType");
@@ -46,7 +43,7 @@ export function Users() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://workstation-management.onrender.com/user/"
+          "https://workstation-management.onrender.com/user"
         );
         setData(response.data);
         setLoading(false);
@@ -58,6 +55,14 @@ export function Users() {
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
 
   if (userType !== "ADMIN") {
     return (
@@ -79,7 +84,7 @@ export function Users() {
             img={plus}
           />
           <NewUserModal isOpen={open} setOpen={setOpen} />
-          <Table dataTable={data} dataColumns={columns} />
+          <Table dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/user/delete'} />
         </Section>
       </Section>
     </Main>

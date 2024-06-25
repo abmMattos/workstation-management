@@ -58,14 +58,6 @@ export function Workstations() {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching data</div>;
-  }
-
   return (
     <Main>
       <Side />
@@ -74,7 +66,7 @@ export function Workstations() {
         <Section>
           {userType === 'ADMIN' && (
             <>
-              <AddButton id="addButton" click={() => setOpen(!open)} text="Nova Sala" img={plus} />
+              <AddButton id="addButton" click={() => setOpen(!open)} text="Nova Estação" img={plus} />
               <NewWorkstationModal isOpen={open} setOpen={setOpen} />
             </>
           )}

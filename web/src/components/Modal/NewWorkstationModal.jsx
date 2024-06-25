@@ -6,24 +6,23 @@ import { CardModal } from "./CardModal";
 import { useState } from "react";
 
 export function NewWorkstationModal({ isOpen, setOpen }) {
-
     const [data, setData] = useState({
         name: "",
         capacity: 0,
-        screens:0,
-        keyboard:false,
-        mouse:false,    
-        webcam:false,
-        headset:false,
+        screens: 0,
+        keyboard: false,
+        mouse: false,
+        webcam: false,
+        headset: false,
         description: "",
         isBlocked: false
     });
 
     const handleChange = (e) => {
-        const value = e.target.value;
+        const { name, value, type, checked } = e.target;
         setData({
             ...data,
-            [e.target.name]: value
+            [name]: type === 'checkbox' ? checked : value
         });
     };
 
@@ -32,35 +31,38 @@ export function NewWorkstationModal({ isOpen, setOpen }) {
         setOpen(!isOpen);
     }
 
-    const add = (e) => {
+    const add = async (e) => {
         e.preventDefault();
         if (data.name.trim().length <= 3 || parseInt(data.capacity) == null || data.description.trim().length <= 3 || parseInt(data.screens) == null) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        
+
         const workstation = {
             name: data.name,
             capacity: parseInt(data.capacity),
-            screens:parseInt(data.screens),
-            keyboard:data.keyboard,
-            mouse:data.mouse,    
-            webcam:data.webcam,
-            headset:data.headset,
+            screens: parseInt(data.screens),
+            keyboard: data.keyboard,
+            mouse: data.mouse,
+            webcam: data.webcam,
+            headset: data.headset,
             description: data.description,
             isBlocked: data.isBlocked
         };
 
-        axios.post("https://workstation-management.onrender.com/workstation/create", workstation)
-            .then((response) => {
-                //atualizar tabela
-                console.log("deu certo");
-                setOpen(!isOpen)
-            })
-            .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
-            });
+        try {
+            const response = await axios.post(
+                `https://workstation-management.onrender.com/workstation/create`,
+                workstation,
+            );
+            console.log(response.data);
+            setOpen(!isOpen);
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao criar estação!');
+        }
     };
+
     if (isOpen) {
         return (
             <BackgroundModal onClick={fecharModal}>

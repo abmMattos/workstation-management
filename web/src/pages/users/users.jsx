@@ -55,15 +55,7 @@ export function Users() {
 
     fetchData();
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching data</div>;
-  }
-
+  
   if (userType !== "ADMIN") {
     return (
       <Main>

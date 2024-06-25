@@ -1,7 +1,7 @@
 import { NavMenu } from "../../components/Nav/Nav";
 import { Container, Form, Main, Title, Input, ButtonArea, Select, Label } from "./LoginStyle";
-import { LoginButton, RegisterButton } from "../../components/Button/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { LoginButton } from "../../components/Button/Button";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -85,7 +85,6 @@ export function Login() {
                             <option value="USER">USUÁRIO</option>
                         </Select>
                         <ButtonArea>
-                            <Link to="/cadastro"><RegisterButton text="CADASTRAR" /></Link>
                             <LoginButton text="LOGIN" />
                         </ButtonArea>
                     </Form>

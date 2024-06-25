@@ -1,20 +1,23 @@
-import { Main, Section } from "./usersStyle"
-import { Side } from "../../components/Side/side"
-import { AddButton } from "../../components/Button/Button"
-import plus from "../../img/plus.png"
+import { Main, Section } from "./usersStyle";
+import { Side } from "../../components/Side/side";
+import { AddButton } from "../../components/Button/Button";
+import plus from "../../img/plus.png";
 import { NewUserModal } from "../../components/Modal/NewUserModal";
-import { useState } from "react"
-import { Table } from "../../components/Table/Table"
-import { Header } from "../../components/Header/Header"
+import { useEffect, useState } from "react";
+import { Table } from "../../components/Table/Table";
+import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
-import { dataTable } from "../../api/users/api";
+import axios from "axios";
 
 export function Users() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   if (open === true) {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   } else {
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   }
   const columnHelper = createColumnHelper();
 
@@ -37,14 +40,31 @@ export function Users() {
     }),
   ];
 
-  const userType = localStorage.getItem('userType');
+  const userType = localStorage.getItem("userType");
 
-  if (userType !== 'ADMIN') {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://workstation-management.onrender.com/user/"
+        );
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (userType !== "ADMIN") {
     return (
       <Main>
         <Side />
       </Main>
-    )
+    );
   }
 
   return (
@@ -53,11 +73,15 @@ export function Users() {
       <Section>
         <Header title="Usuários" />
         <Section>
-          <AddButton click={() => setOpen(!open)} text="Cadastrar Usuário" img={plus} />
+          <AddButton
+            click={() => setOpen(!open)}
+            text="Cadastrar Usuário"
+            img={plus}
+          />
           <NewUserModal isOpen={open} setOpen={setOpen} />
-          <Table dataTable={dataTable} dataColumns={columns} />
+          <Table dataTable={data} dataColumns={columns} />
         </Section>
       </Section>
     </Main>
-  )
+  );
 }

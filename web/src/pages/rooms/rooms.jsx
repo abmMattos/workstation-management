@@ -1,19 +1,22 @@
-import { Main, Section } from "./roomStyle"
-import { Side } from "../../components/Side/side"
-import { AddButton } from "../../components/Button/Button"
-import plus from "../../img/plus.png"
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Main, Section } from "./roomStyle";
+import { Side } from "../../components/Side/side";
+import { AddButton } from "../../components/Button/Button";
+import plus from "../../img/plus.png";
 import { NewRoomModal } from "../../components/Modal/NewRoomModal";
-import { useState } from "react"
-import { Table } from "../../components/Table/Table"
-import { Header } from "../../components/Header/Header"
+import { Table } from "../../components/Table/Table";
+import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
-import { apiData } from "../../api/rooms/api";
 
 export function Rooms() {
-
   const userType = localStorage.getItem('userType');
 
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   if (open === true) {
     document.body.style.overflow = 'hidden';
   } else {
@@ -41,6 +44,29 @@ export function Rooms() {
     }),
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://workstation-management.onrender.com/meetingRoom/');
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
+
   return (
     <Main>
       <Side />
@@ -53,10 +79,9 @@ export function Rooms() {
               <NewRoomModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-
-          <Table dataTable={apiData} dataColumns={columns} />
+          <Table dataTable={data} dataColumns={columns} />
         </Section>
       </Section>
     </Main>
-  )
+  );
 }

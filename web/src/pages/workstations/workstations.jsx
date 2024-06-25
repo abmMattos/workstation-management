@@ -2,15 +2,17 @@ import { Main, Section } from "../rooms/roomStyle"
 import { Side } from "../../components/Side/side"
 import { AddButton } from "../../components/Button/Button"
 import plus from "../../img/plus.png"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Table } from "../../components/Table/Table"
 import { Header } from "../../components/Header/Header"
 import { NewWorkstationModal } from "../../components/Modal/NewWorkstationModal";
 import { createColumnHelper } from "@tanstack/react-table"
-import { dataTable } from "../../api/workstations/api"
+import axios from "axios"
 
 export function Workstations() {
-
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const userType = localStorage.getItem('userType');
 
   const [open, setOpen] = useState(false);
@@ -41,6 +43,21 @@ export function Workstations() {
     }),
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://workstation-management.onrender.com/workstation/');
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Main>
       <Side />
@@ -53,7 +70,7 @@ export function Workstations() {
               <NewWorkstationModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-          <Table dataTable={dataTable} dataColumns={columns} />
+          <Table dataTable={data} dataColumns={columns} />
         </Section>
       </Section>
     </Main>

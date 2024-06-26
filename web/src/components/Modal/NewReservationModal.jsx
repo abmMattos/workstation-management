@@ -9,7 +9,6 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
 
     const idUser = localStorage.getItem('idUser');
 
-
     const [data, setData] = useState({
         dateReserve: "",
         guests: "",
@@ -37,8 +36,8 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             return;
         }
 
-        const reservation = {
-            dateReserve: data.dateReserve,
+        var reservation = {
+            dateReserve: new Date(data.dateReserve).toJSON(),
             guests: data.guests,
             motive: data.motive,
             meetingroom_id: id,
@@ -46,8 +45,8 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
         };
 
         if (type === "Workstation") {
-            const reservation = {
-                dateReserve: data.dateReserve,
+            reservation = {
+                dateReserve: new Date(data.dateReserve).toJSON(),
                 guests: data.guests,
                 motive: data.motive,
                 workstation_id: id,

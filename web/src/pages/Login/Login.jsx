@@ -64,6 +64,8 @@ export function Login() {
                 );
                 console.log(response.data);
                 localStorage.setItem('userType', userType);
+                localStorage.setItem('idUser', response.data.id);
+                localStorage.setItem('nameUser', response.data.name);
                 navigate('/salas');
             }
         } catch (error) {

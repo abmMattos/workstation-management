@@ -2,10 +2,12 @@ import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, Sma
 import arrow from "../../img/arrow-down.png"
 import user from "../../img/userGray.png"
 import axios from "axios"
+import { useState } from "react"
+import { NewReservationModal } from "../Modal/NewReservationModal"
 
 
 export function HomeButton(props) {
-    return(
+    return (
         <HomeButtonComponent>
             {props.text}
         </HomeButtonComponent>
@@ -13,7 +15,7 @@ export function HomeButton(props) {
 }
 
 export function LoginButton(props) {
-    return(
+    return (
         <LoginButtonComponent type="submit">
             {props.text}
         </LoginButtonComponent>
@@ -21,28 +23,46 @@ export function LoginButton(props) {
 }
 
 export function RegisterButton(props) {
-    return(
-        <RegisterButtonComponent> 
+    return (
+        <RegisterButtonComponent>
             {props.text}
         </RegisterButtonComponent>
     )
 }
 
+export function ReservationButton(props) {
+
+    const [open, setOpen] = useState(false);
+
+    function abrirModal() {
+        setOpen(!open)
+    }
+
+    return (
+        <>
+            <NewReservationModal id={props.id} type={props.type} isOpen={open} setOpen={setOpen} />
+            <SmallButtonComponent onClick={abrirModal} >
+                <img src={props.img} alt="" />
+            </SmallButtonComponent>
+        </>
+    )
+}
+
 export function SmallButton(props) {
-    return(
-        <SmallButtonComponent onClick={props.event} >
+    return (
+        <SmallButtonComponent onClick={props.click} >
             <img src={props.img} alt="" />
         </SmallButtonComponent>
     )
 }
 
-export function DeleteButton(props) {    
+export function DeleteButton(props) {
 
     async function deleteData(id, url) {
-        const response = await axios.delete("" + url + "", {data: {id: id}});
+        const response = await axios.delete("" + url + "", { data: { id: id } });
         return response.data;
     }
-    return(
+    return (
         <SmallButtonComponent onClick={() => deleteData(props.id, props.url)} >
             <img src={props.img} alt="" />
         </SmallButtonComponent>
@@ -50,7 +70,7 @@ export function DeleteButton(props) {
 }
 
 export function UserButton(props) {
-    return(
+    return (
         <UserButtonComponent>
             <div>
                 <img src={user} alt="" />
@@ -63,7 +83,7 @@ export function UserButton(props) {
 }
 
 export function AddButton(props) {
-    return(
+    return (
         <AddButtonComponent onClick={props.click}>
             <img src={props.img} alt="" />
             {props.text}
@@ -72,7 +92,7 @@ export function AddButton(props) {
 }
 
 export function SubmitButton(props) {
-    return(
+    return (
         <SubmitButtonComponent type="submit">
             {props.text}
         </SubmitButtonComponent>

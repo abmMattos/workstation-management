@@ -34,7 +34,7 @@ class UserController {
             return response.status(400).send('Usuário não existe!');
           }
     
-          return response.status(200).send('Login realizado com sucesso!');
+          return response.status(200).send(user);
         } catch {
           return response.status(401).send('Login falhou!');
         }

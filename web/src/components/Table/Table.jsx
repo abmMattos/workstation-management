@@ -8,7 +8,7 @@ import {
   BodyCell,
   Actions
 } from "./TableStyle";
-import { DeleteButton, SmallButton } from "../Button/Button";
+import { DeleteButton, ReservationButton, SmallButton } from "../Button/Button";
 import search from "../../img/search.png";
 import clock from "../../img/clock.png";
 import trash from "../../img/trash.png";
@@ -70,8 +70,8 @@ export function Table(props) {
               ))}
               <BodyCell width={'10%'}>
                 <Actions>
-                  <SmallButton img={search} event={() => handleGetObject(row.original.id)} />
-                  <SmallButton img={clock} event={() => handleGetObject(row.original.id)} />
+                  <SmallButton img={search}  />
+                  <ReservationButton type={props.type} img={clock} id={row.original.id} />
                   {userType === 'ADMIN' && (
                     <>
                       <SmallButton img={pencil} event={() => (row.original.id)} />

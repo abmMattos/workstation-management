@@ -63,8 +63,9 @@ model Workstation {
 
 model Reservation {
   id String @id @default(uuid())
-  dateStart DateTime
-  dateEnd DateTime
+  dateReserve DateTime
+  motive String
+  guests String
   
   user_id String
   fk_user_id User @relation(fields: [user_id], references: [id])

@@ -71,7 +71,7 @@ export function Rooms() {
               <NewRoomModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-          <Table dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/meetingRoom/delete'} />
+          <Table type="MeetingRoom" dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/meetingRoom/delete'} />
         </Section>
       </Section>
     </Main>

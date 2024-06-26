@@ -70,7 +70,7 @@ export function Workstations() {
               <NewWorkstationModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-          <Table dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/workstation/delete'} />
+          <Table type="Workstation" dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/workstation/delete'} />
         </Section>
       </Section>
     </Main>

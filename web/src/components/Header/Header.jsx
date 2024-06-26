@@ -6,13 +6,16 @@ import mail from "../../img/mail.png"
 
 export function Header(props) {
 
+    const nameUser = localStorage.getItem('nameUser');
+
+
     return (
         <LineDiv>
             <Title>{props.title}</Title>
             <LineDiv>
                 <SmallButton img={notification} />
                 <SmallButton img={mail} />
-                <UserButton text="Admin" />
+                <UserButton text={nameUser} />
             </LineDiv>
         </LineDiv>
     )

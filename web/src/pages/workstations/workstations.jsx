@@ -10,9 +10,8 @@ import { createColumnHelper } from "@tanstack/react-table"
 import axios from "axios"
 
 export function Workstations() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [workstation, setWorkstation] = useState([]);
+  const [reservation, setReservation] = useState([]);
   const userType = localStorage.getItem('userType');
 
   const [open, setOpen] = useState(false);
@@ -47,16 +46,37 @@ export function Workstations() {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://workstation-management.onrender.com/workstation/');
-        setData(response.data);
-        setLoading(false);
+        setWorkstation(response.data);
       } catch (error) {
-        setError(error);
-        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
+        );
+        setReservation(response.data);
+      } catch (error) {
+        console.error('Não foi possível consultar salas');
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  let data = workstation.map(room => {
+    const date = new Date()
+    date.setUTCHours(0,0,0,0);
+    if(date === reservation.dateReserve) {
+      return { ...room, status: 'Indisponível'}
+    }
+    return { ...room, status: 'Disponível'}
+  })
 
   return (
     <Main>

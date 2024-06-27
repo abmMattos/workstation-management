@@ -10,17 +10,15 @@ import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
 
 export function Rooms() {
-  const userType = localStorage.getItem('userType');
-
+  const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [room, setRoom] = useState([]);
+  const [reservation, setReservation] = useState([]);
 
   if (open === true) {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   } else {
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   }
 
   const columnHelper = createColumnHelper();
@@ -47,17 +45,41 @@ export function Rooms() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://workstation-management.onrender.com/meetingRoom/');
-        setData(response.data);
-        setLoading(false);
+        const response = await axios.get(
+          "https://workstation-management.onrender.com/meetingRoom/"
+        );
+        setRoom(response.data);
       } catch (error) {
-        setError(error);
-        setLoading(false);
+        console.error('Não foi possível consultar salas');
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
+        );
+        setReservation(response.data);
+      } catch (error) {
+        console.error('Não foi possível consultar salas');
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  let data = room.map(room => {
+    const date = new Date()
+    date.setUTCHours(0,0,0,0);
+    if(date === reservation.dateReserve) {
+      return { ...room, status: 'Indisponível'}
+    }
+    return { ...room, status: 'Disponível'}
+  })     
 
   return (
     <Main>
@@ -65,13 +87,25 @@ export function Rooms() {
       <Section>
         <Header title="Salas" />
         <Section>
-          {userType === 'ADMIN' && (
+          {userType === "ADMIN" && (
             <>
-              <AddButton id="addButton" click={() => setOpen(!open)} text="Nova Sala" img={plus} />
+              <AddButton
+                id="addButton"
+                click={() => setOpen(!open)}
+                text="Nova Sala"
+                img={plus}
+              />
               <NewRoomModal isOpen={open} setOpen={setOpen} />
             </>
           )}
-          <Table type="MeetingRoom" dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/meetingRoom/delete'} />
+          <Table
+            type="MeetingRoom"
+            dataTable={data}
+            dataColumns={columns}
+            url={
+              "https://workstation-management.onrender.com/meetingRoom/delete"
+            }
+          />
         </Section>
       </Section>
     </Main>

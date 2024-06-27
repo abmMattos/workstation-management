@@ -13,6 +13,8 @@ export function Rooms() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
   const [room, setRoom] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [reservation, setReservation] = useState([]);
 
   if (open === true) {
@@ -49,8 +51,10 @@ export function Rooms() {
           "https://workstation-management.onrender.com/meetingRoom/"
         );
         setRoom(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error('Não foi possível consultar salas');
+        setError(error);
+        setLoading(false);
       }
     };
 
@@ -80,6 +84,14 @@ export function Rooms() {
     }
     return { ...room, status: 'Disponível'}
   })     
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
 
   return (
     <Main>

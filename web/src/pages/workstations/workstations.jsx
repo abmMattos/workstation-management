@@ -12,6 +12,8 @@ import axios from "axios"
 export function Workstations() {
   const [workstation, setWorkstation] = useState([]);
   const [reservation, setReservation] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const userType = localStorage.getItem('userType');
 
   const [open, setOpen] = useState(false);
@@ -47,7 +49,10 @@ export function Workstations() {
       try {
         const response = await axios.get('https://workstation-management.onrender.com/workstation/');
         setWorkstation(response.data);
+        setLoading(false);
       } catch (error) {
+        setError(error);
+        setLoading(false);
       }
     };
 
@@ -77,6 +82,14 @@ export function Workstations() {
     }
     return { ...room, status: 'Disponível'}
   })
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
 
   return (
     <Main>

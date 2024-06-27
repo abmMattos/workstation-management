@@ -7,32 +7,34 @@ class ReservationController {
 
     async reserveWorkstation(request, response) {
         try {
-            const { dateReserve, motive, guests, user_id, workstation_id } = request.body
+            const { dateReserve, motive, guests, user_id, workstation_id, status } = request.body
             const reservation = await prisma.reservation.create({
                 data: {
                     dateReserve,
                     motive,
                     guests,
                     user_id,
-                    workstation_id
+                    workstation_id,
+                    status
                 }
             })
             return response.json(reservation)
         } catch (err) {
-            return response.status(409).send()
+            return response.status(409).send(err)
         }
     }
 
     async reserveMeetingRoom(request, response) {
         try {
-            const { dateReserve, motive, guests, user_id, meetingroom_id } = request.body
+            const { dateReserve, motive, guests, user_id, meetingroom_id, status } = request.body
             const reservation = await prisma.reservation.create({
                 data: {
                     dateReserve,
                     motive,
                     guests,
                     user_id,
-                    meetingroom_id
+                    meetingroom_id,
+                    status
                 }
             })
             return response.json(reservation)
@@ -43,7 +45,7 @@ class ReservationController {
 
     async update(request, response) {
         try {
-            const { id, dateReserve, motive, guests } = request.body
+            const { id, dateReserve, motive, guests, status } = request.body
             const reservation = await prisma.reservation.update({
                 where: {
                     id: id
@@ -51,7 +53,8 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guests
+                    guests,
+                    status
 
                 }
             })
@@ -85,10 +88,12 @@ class ReservationController {
     }
 
     async findManyWorkstation(request, response) {
+        var dataAtual = new Date();
+        dataAtual.setUTCHours(0,0,0,0);
         try {
             const reservation = await prisma.reservation.findMany({
-                include: {
-                    fk_workstation_id
+                where: {
+                    dateReserve: dataAtual
                 }
             });
             return response.json(reservation)
@@ -98,10 +103,12 @@ class ReservationController {
     }
 
     async findManyMeetingRoom(request, response) {
+        var dataAtual = new Date();
+        dataAtual.setUTCHours(0,0,0,0);
         try {
             const reservation = await prisma.reservation.findMany({
-                include: {
-                    fk_meetingroom_id
+                where: {
+                    dateReserve: dataAtual
                 }
             });
             return response.json(reservation)

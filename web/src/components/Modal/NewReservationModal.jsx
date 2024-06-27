@@ -35,6 +35,12 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
+        var dataAtual = new Date();
+        dataAtual.setUTCHours(0,0,0,0);
+        if (new Date(data.dateReserve).toJSON() < dataAtual.toJSON()) {
+            alert("Data inválida! A data de agendamento tem que ser posterior a data atual!");
+            return;
+        }
 
         var reservation = {
             dateReserve: new Date(data.dateReserve).toJSON(),

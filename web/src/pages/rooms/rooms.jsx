@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Main, Section } from "./roomStyle";
+import { Center, Main, Section, Spinner } from "./roomStyle";
 import { Side } from "../../components/Side/side";
 import { AddButton } from "../../components/Button/Button";
 import plus from "../../img/plus.png";
@@ -86,7 +86,7 @@ export function Rooms() {
   })     
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Center><Spinner /></Center>;
   }
 
   if (error) {

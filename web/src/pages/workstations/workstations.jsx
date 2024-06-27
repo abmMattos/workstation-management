@@ -1,4 +1,4 @@
-import { Main, Section } from "../rooms/roomStyle"
+import { Center, Main, Section, Spinner } from "../rooms/roomStyle"
 import { Side } from "../../components/Side/side"
 import { AddButton } from "../../components/Button/Button"
 import plus from "../../img/plus.png"
@@ -84,7 +84,7 @@ export function Workstations() {
   })
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Center><Spinner /></Center>;
   }
 
   if (error) {

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import theme from "../../style/theme";
 
 export const Main = styled.div`
@@ -12,6 +12,31 @@ export const Section = styled.div`
     padding: 60px 20px 0px 20px;
     width: 100%;
 `
+export const rotation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const Center = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+`
+export const Spinner = styled.span`
+  width: 60px;
+  height: 60px;
+  border: 5px solid;
+  border-color: ${theme.COLORS.GREEN} transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: ${rotation} 1s linear infinite;
+`;
 
 
 

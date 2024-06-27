@@ -8,6 +8,7 @@ import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
 import axios from "axios";
+import { Center, Spinner } from "../rooms/roomStyle";
 
 export function Users() {
   const [data, setData] = useState([]);
@@ -65,7 +66,7 @@ export function Users() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Center><Spinner /></Center>;
   }
 
   if (error) {

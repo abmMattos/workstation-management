@@ -30,8 +30,7 @@ export function Rooms() {
       cell: (info) => info.getValue(),
       header: () => <strong>#</strong>,
     }),
-    columnHelper.accessor((row) => row.status, {
-      id: "name",
+    columnHelper.accessor("name", {
       cell: (info) => <i>{info.getValue()}</i>,
       header: () => <strong>Nome</strong>,
     }),

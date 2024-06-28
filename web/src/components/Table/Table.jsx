@@ -19,8 +19,12 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { useLocation } from "react-router-dom";
 
 export function Table(props) {
+
+  const location = useLocation();
+  const path = location.pathname;
 
   const userType = localStorage.getItem('userType');
 
@@ -68,10 +72,12 @@ export function Table(props) {
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </BodyCell>
               ))}
-              <BodyCell width={'10%'}>
+              <BodyCell width={'5%'}>
                 <Actions>
                   {/* <SmallButton img={search}  /> */}
+                  {path !== '/usuarios' && (
                   <ReservationButton type={props.type} img={clock} id={row.original.id} />
+                  )}
                   {userType === 'ADMIN' && (
                     <>
                       {/* <SmallButton img={pencil} event={() => (row.original.id)} /> */}

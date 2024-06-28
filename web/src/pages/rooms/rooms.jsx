@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Main, Section } from "./roomStyle";
+import { Center, Main, Section, Spinner } from "./roomStyle";
 import { Side } from "../../components/Side/side";
 import { AddButton } from "../../components/Button/Button";
 import plus from "../../img/plus.png";
@@ -13,6 +13,8 @@ export function Rooms() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
   const [room, setRoom] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [reservation, setReservation] = useState([]);
 
   if (open === true) {
@@ -29,43 +31,37 @@ export function Rooms() {
       header: () => <strong>#</strong>,
     }),
     columnHelper.accessor((row) => row.status, {
-      id: "status",
+      id: "name",
       cell: (info) => <i>{info.getValue()}</i>,
+      header: () => <strong>Nome</strong>,
+    }),
+    columnHelper.accessor("status", {
       header: () => <strong>Status</strong>,
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor("capacity", {
+      header: () => <strong>Capacidade</strong>,
     }),
     columnHelper.accessor("description", {
       header: () => <strong>Descrição</strong>,
-      cell: (info) => info.renderValue(),
-    }),
-    columnHelper.accessor("local", {
-      header: () => <strong>Localização</strong>,
     }),
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const rooms = await axios.get(
           "https://workstation-management.onrender.com/meetingRoom/"
         );
-        setRoom(response.data);
-      } catch (error) {
-        console.error('Não foi possível consultar salas');
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
+        const reservations = await axios.get(
           "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
         );
-        setReservation(response.data);
+        setReservation(reservations.data);
+        setRoom(rooms.data);
+        setLoading(false);
       } catch (error) {
-        console.error('Não foi possível consultar salas');
+        setError(error);
+        setLoading(false);
       }
     };
 
@@ -74,12 +70,28 @@ export function Rooms() {
 
   let data = room.map(room => {
     const date = new Date()
-    date.setUTCHours(0,0,0,0);
-    if(date === reservation.dateReserve) {
-      return { ...room, status: 'Indisponível'}
+    date.setUTCHours(0, 0, 0, 0);
+    const [reserved] = reservation.map(res => {
+      if (room.id === res.meetingroom_id) {
+        return res;
+      }
+      return false
+    })
+    if (reserved) {
+      if (reserved.dateReserve === date) {
+        return { ...room, status: 'Indisponível' }
+      }
     }
-    return { ...room, status: 'Disponível'}
-  })     
+    return { ...room, status: 'Disponível' }
+  })
+
+  if (loading) {
+    return <Center><Spinner /></Center>;
+  }
+
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
 
   return (
     <Main>

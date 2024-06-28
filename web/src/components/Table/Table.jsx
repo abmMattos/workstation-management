@@ -35,10 +35,10 @@ export function Table(props) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  function handleGetObject(id) {
-    const obj = data.find(obj => obj.id === id);
-    return obj;
-  }
+  // function handleGetObject(id) {
+  //   const obj = data.find(obj => obj.id === id);
+  //   return obj;
+  // }
 
   return (
     <Container>
@@ -70,11 +70,11 @@ export function Table(props) {
               ))}
               <BodyCell width={'10%'}>
                 <Actions>
-                  <SmallButton img={search}  />
+                  {/* <SmallButton img={search}  /> */}
                   <ReservationButton type={props.type} img={clock} id={row.original.id} />
                   {userType === 'ADMIN' && (
                     <>
-                      <SmallButton img={pencil} event={() => (row.original.id)} />
+                      {/* <SmallButton img={pencil} event={() => (row.original.id)} /> */}
                       <DeleteButton img={trash} id={row.original.id} url={props.url} />
                     </>
                   )}

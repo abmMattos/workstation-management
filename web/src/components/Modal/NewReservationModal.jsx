@@ -60,14 +60,13 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                 console.log(response.data);
                 return;
             }
-            window.location.reload();
+           
         } catch (error) {
             console.error(error);
             alert('Erro ao Reservar!');
             return;
         }
         
-
         var reservation = {
             dateReserve: new Date(data.dateReserve).toJSON(),
             guests: data.guests,
@@ -93,7 +92,7 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             );
             console.log(response.data);
             setOpen(!isOpen)
-            
+            window.location.reload();
         } catch (error) {
             console.log(reservation);
             console.error(error);

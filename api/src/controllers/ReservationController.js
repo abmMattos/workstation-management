@@ -7,15 +7,14 @@ class ReservationController {
 
     async reserveWorkstation(request, response) {
         try {
-            const { dateReserve, motive, guests, user_id, workstation_id, status } = request.body
+            const { dateReserve, motive, guests, user_id, workstation_id } = request.body
             const reservation = await prisma.reservation.create({
                 data: {
                     dateReserve,
                     motive,
                     guests,
                     user_id,
-                    workstation_id,
-                    status
+                    workstation_id
                 }
             })
             return response.json(reservation)
@@ -26,15 +25,14 @@ class ReservationController {
 
     async reserveMeetingRoom(request, response) {
         try {
-            const { dateReserve, motive, guests, user_id, meetingroom_id, status } = request.body
+            const { dateReserve, motive, guests, user_id, meetingroom_id } = request.body
             const reservation = await prisma.reservation.create({
                 data: {
                     dateReserve,
                     motive,
                     guests,
                     user_id,
-                    meetingroom_id,
-                    status
+                    meetingroom_id
                 }
             })
             return response.json(reservation)
@@ -45,7 +43,7 @@ class ReservationController {
 
     async update(request, response) {
         try {
-            const { id, dateReserve, motive, guests, status } = request.body
+            const { id, dateReserve, motive, guests } = request.body
             const reservation = await prisma.reservation.update({
                 where: {
                     id: id
@@ -53,8 +51,7 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guests,
-                    status
+                    guests
 
                 }
             })

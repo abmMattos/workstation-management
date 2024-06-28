@@ -12,7 +12,7 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
     const [data, setData] = useState({
         dateReserve: "",
         guests: "",
-        motive:""
+        motive: ""
     });
 
 
@@ -35,11 +35,12 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        var dataAtual = new Date();
+        var dataA = new Date();
+        var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
+        console.log('Antes de setar' + dataAtual.toJSON());
         dataAtual.setUTCHours(0,0,0,0);
         if (new Date(data.dateReserve).toJSON() < dataAtual.toJSON()) {
             alert("Data inválida! A data de agendamento tem que ser posterior a data atual!");
-            return;
         }
 
         var reservation = {
@@ -58,11 +59,11 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                 workstation_id: id,
                 user_id: idUser
             };
-        } 
-            
+        }
+
         try {
             const response = await axios.post(
-                `https://workstation-management.onrender.com/reservation/reserve`+ type,
+                `https://workstation-management.onrender.com/reservation/reserve` + type,
                 reservation,
             );
             console.log(response.data);

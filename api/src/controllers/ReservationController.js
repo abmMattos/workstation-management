@@ -88,14 +88,14 @@ class ReservationController {
     async findManyWorkstation(request, response) {
         var dataA = new Date();
         var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
-        dataAtual.setUTCHours(0,0,0,0);
+        dataAtual.setUTCHours(0, 0, 0, 0);
         dataAtual = dataAtual.toJSON();
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {
                     dateReserve: {
                         equals: dataAtual
-                    } ,
+                    },
                     meetingroom_id: {
                         equals: null
                     }
@@ -110,14 +110,60 @@ class ReservationController {
     async findManyMeetingRoom(request, response) {
         var dataA = new Date();
         var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
-        dataAtual.setUTCHours(0,0,0,0);
+        dataAtual.setUTCHours(0, 0, 0, 0);
         dataAtual = dataAtual.toJSON();
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {
                     dateReserve: {
                         equals: dataAtual
-                    } ,
+                    },
+                    workstation_id: {
+                        equals: null
+                    }
+                }
+            });
+            return response.json(reservation)
+        } catch (err) {
+            return response.status(409).send()
+        }
+    }
+
+    async findReservedWorkstationByDate(request, response) {
+        const { id, date } = request.query;
+
+        dataAtual = dataAtual.toJSON();
+        try {
+            const reservation = await prisma.reservation.findMany({
+                where: {
+                    workstation_id: {
+                        equals: id
+                    },
+                    dateReserve: {
+                        equals: date
+                    },
+                    meetingroom_id: {
+                        equals: null
+                    }
+                }
+            });
+            return response.json(reservation)
+        } catch (err) {
+            return response.status(409).send()
+        }
+    }
+
+    async findReservedMeetingRoomByDate(request, response) {
+        const { id,date } = request.query;
+        try {
+            const reservation = await prisma.reservation.findMany({
+                where: {
+                    meetingroom_id: {
+                        equals: id
+                    },
+                    dateReserve: {
+                        equals: date
+                    },
                     workstation_id: {
                         equals: null
                     }

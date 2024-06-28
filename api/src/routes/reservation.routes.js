@@ -13,6 +13,8 @@ reservationRoutes.get('/', reservationController.findMany)
 reservationRoutes.delete('/delete', reservationController.delete)
 reservationRoutes.get('/findReservedMeetingRoom', reservationController.findManyMeetingRoom)
 reservationRoutes.get('/findReservedWorkstation', reservationController.findManyWorkstation)
+reservationRoutes.get('/findReservedDateWorkstation', reservationController.findReservedWorkstationByDate)
+reservationRoutes.get('/findReservedDateMeetingRoomByDate', reservationController.findReservedMeetingRoomByDate)
 
 
 module.exports = reservationRoutes

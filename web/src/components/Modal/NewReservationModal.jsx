@@ -43,6 +43,22 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
         dataAtual.setUTCHours(0,0,0,0);
         if (new Date(data.dateReserve).toJSON() < dataAtual.toJSON()) {
             alert("Data inválida! A data de agendamento tem que ser posterior a data atual!");
+            return;
+        }
+
+        const response = await axios.get(
+            `https://workstation-management.onrender.com/reservation/findReservedDate` + type,
+            {
+                params: {
+                    id: id,
+                    date: dataAtual.toJSON()
+                }
+            }
+        );
+
+        if (response.data) {
+            alert("Data inválida! A" + (type === "Workstation" ? 'Estação de trabalho' : 'Sala') + "já está agendada par está data!");
+            return;
         }
 
         var reservation = {

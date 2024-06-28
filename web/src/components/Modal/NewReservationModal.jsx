@@ -56,7 +56,7 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                 }
             );
             if (response.data) {
-                alert("Data inválida! A" + (type === "Workstation" ? 'Estação de trabalho' : 'Sala') + "já está agendada par está data!");
+                alert("Data inválida! Esta " + (type === "Workstation" ? 'estação de trabalho' : 'sala') + " já está agendada para data selecionada!");
                 return;
             }
         } catch (error) {

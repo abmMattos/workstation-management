@@ -132,7 +132,6 @@ class ReservationController {
     async findReservedWorkstationByDate(request, response) {
         const { id, date } = request.query;
 
-        dataAtual = dataAtual.toJSON();
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {

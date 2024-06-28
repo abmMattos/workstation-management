@@ -43,6 +43,7 @@ export function NewRoomModal({ isOpen, setOpen }) {
         axios.post("https://workstation-management.onrender.com/meetingRoom/create", meetingRoom)
             .then((response) => {
                 setOpen(!isOpen);
+                window.location.reload();
             })
             .catch((err) => {
                 console.error("ops! ocorreu um erro" + err);

@@ -60,6 +60,7 @@ export function DeleteButton(props) {
 
     async function deleteData(id, url) {
         const response = await axios.delete("" + url + "", { data: { id: id } });
+        window.location.reload();
         return response.data;
     }
     return (

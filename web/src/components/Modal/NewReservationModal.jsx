@@ -60,6 +60,7 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                 console.log(response.data);
                 return;
             }
+            window.location.reload();
         } catch (error) {
             console.error(error);
             alert('Erro ao Reservar!');

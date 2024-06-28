@@ -60,6 +60,7 @@ export function NewWorkstationModal({ isOpen, setOpen }) {
                 workstation,
             );
             setOpen(!isOpen);
+            window.location.reload();
         } catch (error) {
             console.error(error);
             alert('Erro ao criar estação!');

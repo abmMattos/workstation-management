@@ -4,8 +4,12 @@ import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function NewWorkstationModal({ isOpen, setOpen }) {
+
+    const navigate = useNavigate();
+
     const [data, setData] = useState({
         name: "",
         capacity: 0,
@@ -55,7 +59,6 @@ export function NewWorkstationModal({ isOpen, setOpen }) {
                 `https://workstation-management.onrender.com/workstation/create`,
                 workstation,
             );
-            console.log(response.data);
             setOpen(!isOpen);
         } catch (error) {
             console.error(error);

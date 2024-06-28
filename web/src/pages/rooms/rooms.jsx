@@ -67,9 +67,12 @@ export function Rooms() {
     fetchData();
   }, []);
 
+  var dataA = new Date();
+  var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
+  dataAtual.setUTCHours(0,0,0,0);
+  dataAtual = dataAtual.toJSON();
+
   let data = room.map(room => {
-    const date = new Date()
-    date.setUTCHours(0, 0, 0, 0);
     const [reserved] = reservation.map(res => {
       if (room.id === res.meetingroom_id) {
         return res;
@@ -77,7 +80,7 @@ export function Rooms() {
       return false
     })
     if (reserved) {
-      if (reserved.dateReserve === date) {
+      if (reserved.dateReserve === dataAtual) {
         return { ...room, status: 'Indisponível' }
       }
     }

@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 
 
+
 const prisma = new PrismaClient()
 
 class ReservationController {
@@ -85,12 +86,19 @@ class ReservationController {
     }
 
     async findManyWorkstation(request, response) {
-        var dataAtual = new Date();
+        var dataA = new Date();
+        var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
         dataAtual.setUTCHours(0,0,0,0);
+        dataAtual = dataAtual.toJSON();
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {
-                    dateReserve: dataAtual
+                    dateReserve: {
+                        equals: dataAtual
+                    } ,
+                    meetingroom_id: {
+                        equals: null
+                    }
                 }
             });
             return response.json(reservation)
@@ -100,12 +108,19 @@ class ReservationController {
     }
 
     async findManyMeetingRoom(request, response) {
-        var dataAtual = new Date();
+        var dataA = new Date();
+        var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
         dataAtual.setUTCHours(0,0,0,0);
+        dataAtual = dataAtual.toJSON();
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {
-                    dateReserve: dataAtual
+                    dateReserve: {
+                        equals: dataAtual
+                    } ,
+                    workstation_id: {
+                        equals: null
+                    }
                 }
             });
             return response.json(reservation)

@@ -48,7 +48,7 @@ export function Workstations() {
         const fetchData = async () => {
             try {
                 const reservation = await axios.get(
-                    "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
+                    "https://workstation-management.onrender.com/reservation/findReservedWorkstation"
                 );
                 const workstation = await axios.get(
                     'https://workstation-management.onrender.com/workstation/'
@@ -65,22 +65,25 @@ export function Workstations() {
         fetchData();
     }, []);
 
+    var dataA = new Date();
+    var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
+    dataAtual.setUTCHours(0,0,0,0);
+    dataAtual = dataAtual.toJSON();
+
     let data = workstation.map(work => {
-        let date = new Date("2024-06-27T00:00:00.000Z")
-        date = date.toISOString()
         const [reserved] = reservation.map(res => {
-            if (work.id === res.workstation_id) {
-                return res;
-            }
-            return false
+          if (work.id === res.workstation_id) {
+            return res;
+          }
+          return false
         })
         if (reserved) {
-            if (reserved.dateReserve === date) {
-                return { ...work, status: 'Indisponível' }
-            }
+          if (reserved.dateReserve === dataAtual) {
+            return { ...work, status: 'Indisponível' }
+          }
         }
         return { ...work, status: 'Disponível' }
-    })
+      })
 
     if (loading) {
         return <Center><Spinner /></Center>;

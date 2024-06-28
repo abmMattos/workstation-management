@@ -4,8 +4,11 @@ import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function NewReservationModal({ isOpen, setOpen, type, id }) {
+
+    const navigate = useNavigate();
 
     const idUser = localStorage.getItem('idUser');
 
@@ -37,7 +40,6 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
         }
         var dataA = new Date();
         var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
-        console.log('Antes de setar' + dataAtual.toJSON());
         dataAtual.setUTCHours(0,0,0,0);
         if (new Date(data.dateReserve).toJSON() < dataAtual.toJSON()) {
             alert("Data inválida! A data de agendamento tem que ser posterior a data atual!");
@@ -68,7 +70,7 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             );
             console.log(response.data);
             setOpen(!isOpen)
-
+            
         } catch (error) {
             console.log(reservation);
             console.error(error);

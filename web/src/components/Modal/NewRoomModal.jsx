@@ -4,8 +4,11 @@ import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function NewRoomModal({ isOpen, setOpen }) {
+
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         name: "",
@@ -39,9 +42,7 @@ export function NewRoomModal({ isOpen, setOpen }) {
         };
         axios.post("https://workstation-management.onrender.com/meetingRoom/create", meetingRoom)
             .then((response) => {
-                //atualizar tabela
-                console.log("deu certo");
-                setOpen(!isOpen)
+                setOpen(!isOpen);
             })
             .catch((err) => {
                 console.error("ops! ocorreu um erro" + err);

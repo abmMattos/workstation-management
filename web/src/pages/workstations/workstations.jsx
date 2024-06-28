@@ -30,6 +30,10 @@ export function Workstations() {
             cell: (info) => info.getValue(),
             header: () => <strong>#</strong>,
         }),
+        columnHelper.accessor("name", {
+            header: () => <strong>Nome</strong>,
+            cell: (info) => info.renderValue(),
+        }),
         columnHelper.accessor((row) => row.status, {
             id: "status",
             cell: (info) => <i>{info.getValue()}</i>,
@@ -37,10 +41,6 @@ export function Workstations() {
         }),
         columnHelper.accessor("description", {
             header: () => <strong>Descrição</strong>,
-            cell: (info) => info.renderValue(),
-        }),
-        columnHelper.accessor("local", {
-            header: () => <strong>Localização</strong>,
         }),
     ];
 

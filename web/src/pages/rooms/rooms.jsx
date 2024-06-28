@@ -31,16 +31,19 @@ export function Rooms() {
       header: () => <strong>#</strong>,
     }),
     columnHelper.accessor((row) => row.status, {
-      id: "status",
+      id: "name",
       cell: (info) => <i>{info.getValue()}</i>,
+      header: () => <strong>Nome</strong>,
+    }),
+    columnHelper.accessor("status", {
       header: () => <strong>Status</strong>,
+      cell: (info) => info.renderValue(),
+    }),
+    columnHelper.accessor("capacity", {
+      header: () => <strong>Capacidade</strong>,
     }),
     columnHelper.accessor("description", {
       header: () => <strong>Descrição</strong>,
-      cell: (info) => info.renderValue(),
-    }),
-    columnHelper.accessor("local", {
-      header: () => <strong>Localização</strong>,
     }),
   ];
 

@@ -47,10 +47,14 @@ export function Rooms() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const rooms = await axios.get(
           "https://workstation-management.onrender.com/meetingRoom/"
         );
-        setRoom(response.data);
+        const reservations = await axios.get(
+          "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
+        );
+        setReservation(reservations.data);
+        setRoom(rooms.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -61,29 +65,22 @@ export function Rooms() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
-        );
-        setReservation(response.data);
-      } catch (error) {
-        console.error('Não foi possível consultar salas');
-      }
-    };
-
-    fetchData();
-  }, []);
-
   let data = room.map(room => {
     const date = new Date()
-    date.setUTCHours(0,0,0,0);
-    if(date === reservation.dateReserve) {
-      return { ...room, status: 'Indisponível'}
+    date.setUTCHours(0, 0, 0, 0);
+    const [reserved] = reservation.map(res => {
+      if (room.id === res.meetingroom_id) {
+        return res;
+      }
+      return false
+    })
+    if (reserved) {
+      if (reserved.dateReserve === date) {
+        return { ...room, status: 'Indisponível' }
+      }
     }
-    return { ...room, status: 'Disponível'}
-  })     
+    return { ...room, status: 'Disponível' }
+  })
 
   if (loading) {
     return <Center><Spinner /></Center>;

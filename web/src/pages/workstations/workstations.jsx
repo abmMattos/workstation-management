@@ -47,27 +47,18 @@ export function Workstations() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://workstation-management.onrender.com/workstation/');
-                setWorkstation(response.data);
+                const reservation = await axios.get(
+                    "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
+                );
+                const workstation = await axios.get(
+                    'https://workstation-management.onrender.com/workstation/'
+                );
+                setWorkstation(workstation.data);
+                setReservation(reservation.data);
                 setLoading(false);
             } catch (error) {
                 setError(error);
                 setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
-                );
-                setReservation(response.data);
-            } catch (error) {
-                console.error('Não foi possível consultar salas');
             }
         };
 
@@ -83,8 +74,10 @@ export function Workstations() {
             }
             return false
         })
-        if(reserved.dateReserve === date) {
-            return { ...work, status: 'Indisponível' }
+        if (reserved) {
+            if (reserved.dateReserve === date) {
+                return { ...work, status: 'Indisponível' }
+            }
         }
         return { ...work, status: 'Disponível' }
     })

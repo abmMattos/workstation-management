@@ -5,7 +5,7 @@ export const Main = styled.div`
     background-color: ${theme.COLORS.BACKGROUND};
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: fit-screen;
     width: 200px;
     align-items: center;
     position: relative;

@@ -41,7 +41,8 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
         var dataA = new Date();
         var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
         dataAtual.setUTCHours(0,0,0,0);
-        if (new Date(data.dateReserve).toJSON() < dataAtual.toJSON()) {
+        var dataReserva = new Date(data.dateReserve).toJSON();
+        if (dataReserva < dataAtual.toJSON()) {
             alert("Data inválida! A data de agendamento tem que ser posterior a data atual!");
             return;
         }
@@ -51,13 +52,12 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                 {
                     params: {
                         id: id,
-                        date: dataAtual.toJSON()
+                        date: dataReserva
                     }
                 }
             );
-            if (response.data === null) {
+            if (response.data.length) {
                 alert("Data inválida! Esta " + (type === "Workstation" ? 'estação de trabalho' : 'sala') + " já está agendada para data selecionada!");
-                console.log(response.data);
                 return;
             }
            

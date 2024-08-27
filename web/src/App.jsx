@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom"
 import { Rooms } from "./pages/rooms/rooms";
 import { Workstations } from "./pages/workstations/workstations";
 import { Users } from "./pages/users/users";
+import { Reservation } from "./pages/reservation/reservation"
 
 export default function App() {
     return(
@@ -14,6 +15,7 @@ export default function App() {
                 <Route path="/salas" element={<Rooms />} />
                 <Route path="/estacoes-de-trabalho" element={<Workstations />} />
                 <Route path="/usuarios" element={<Users />} />
+                <Route path="/reservas" element={<Reservation />} />
             </Routes>
         </>
     )

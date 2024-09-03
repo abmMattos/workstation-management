@@ -117,6 +117,14 @@ export function Side() {
           </UnitLink>
         </Link>
       )}
+      {userType === "ADMIN" && (
+        <Link to="/reservas">
+          <UnitLink bg={backgrounds.link7} className="link">
+            <img src={user} alt="Reservas" />
+            <p>Reservas</p>
+          </UnitLink>
+        </Link>
+      )}
       <Link to="/salas">
         <UnitLink bg={backgrounds.link1} className="link">
           <img src={chair} alt="Cadeira" />

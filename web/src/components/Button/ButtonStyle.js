@@ -95,6 +95,7 @@ padding: 15px;
 font-weight: bold;
 background-color: ${theme.COLORS.GREEN};
 color: black;
-border-radius: 8px;
+border-radius: 6px;
+border: solid 1.5px;
 align-self: center;
 `

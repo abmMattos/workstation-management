@@ -6,7 +6,8 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Header } from "../../components/Header/Header";
 import { Side } from "../../components/Side/side";
-import { Center, Spinner, Main, Section, Card, CardContainer } from "./reservationStyle";
+import { Center, Spinner, Main, Section } from "./reservationStyle";
+import { Cards } from "../../components/Cards/card";
 import './date-picker.css';
 
 export function Reservation() {
@@ -24,7 +25,7 @@ export function Reservation() {
         const workstations = await axios.get("https://workstation-management.onrender.com/workstation/");
         const reservedRooms = await axios.get("https://workstation-management.onrender.com/reservation/findReservedMeetingRoom");
         const reservedWorkStation = await axios.get("https://workstation-management.onrender.com/reservation/findReservedWorkstation");
-        
+
         setItems([...rooms.data, ...workstations.data]);
         setReservedItems([...reservedRooms.data, ...reservedWorkStation.data]);
         setLoading(false);
@@ -72,18 +73,11 @@ export function Reservation() {
             dateFormat="dd/MM/yyyy"
             locale={ptBR}
           />
-          <CardContainer>
-            {filteredItems.length > 0 ? (
-              filteredItems.map(item => (
-                <Card key={item.id}>
-                  <h3>{item.name}</h3>
-                  <p>{item.description}</p>
-                </Card>
-              ))
-            ) : (
-              <p>No available houses for the selected date.</p>
-            )}
-          </CardContainer>
+          {filteredItems.length > 0 ? (
+            <Cards filteredItems={filteredItems} />
+          ) : (
+            <Center>No available items for the selected date</Center>
+          )}
         </Section>
       </Section>
     </Main>

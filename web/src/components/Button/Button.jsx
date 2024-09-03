@@ -41,9 +41,9 @@ export function ReservationButton(props) {
     return (
         <>
             <NewReservationModal id={props.id} type={props.type} isOpen={open} setOpen={setOpen} />
-            <SmallButtonComponent onClick={abrirModal} >
-                <img src={props.img} alt="" />
-            </SmallButtonComponent>
+            <SubmitButtonComponent onClick={abrirModal} >
+                <h4>{props.text}</h4>
+            </SubmitButtonComponent>
         </>
     )
 }

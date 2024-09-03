@@ -9,7 +9,9 @@ export default {
 
         GRAY: "#7D98B1",
         
-        WHITE: "white"
-    
+        WHITE: "white",
+
+        BLACK: "black"
+        
     }
 }

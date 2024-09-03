@@ -37,17 +37,3 @@ export const Spinner = styled.span`
   box-sizing: border-box;
   animation: ${rotation} 1s linear infinite;
 `;
-
-export const CardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-`;
-
-export const Card = styled.div`
-  background-color: ${theme.COLORS.LIGHT_GRAY};
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 200px;
-`;

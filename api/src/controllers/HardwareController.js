@@ -8,22 +8,13 @@ class HardwareController {
 
     async create(request, response) {
         try {
-            const { screens, mouse, keyboard, webcam, headset, pliers, weldingMachine, antiStaticMat, socket110v, benchMagnifyingGlass} = request.body
-            const workstations = await prisma.hardware.create({
+            const { name } = request.body
+            const hardware = await prisma.hardware.create({
                 data: {
-                    screens,
-                    mouse,
-                    keyboard,
-                    webcam,
-                    headset,
-                    pliers,
-                    weldingMachine,
-                    antiStaticMat,
-                    socket110v,
-                    benchMagnifyingGlass,
+                   name
                 }
             })
-            return response.json(workstations)
+            return response.json(hardware)
         } catch (err) {
             return response.status(409).send()
         }
@@ -31,25 +22,16 @@ class HardwareController {
 
     async update(request, response) {
         try {
-            const { id, screens, mouse, keyboard, webcam, headset,pliers, weldingMachine, antiStaticMat, socket110v, benchMagnifyingGlass} = request.body
-            const workstations = await prisma.hardware.update({
+            const { id, name} = request.body
+            const hardware = await prisma.hardware.update({
                 where: {
                     id: id
                 },
                 data: {                 
-                    screens,
-                    mouse,
-                    keyboard,
-                    webcam,
-                    headset,
-                    pliers,
-                    weldingMachine,
-                    antiStaticMat,
-                    socket110v,
-                    benchMagnifyingGlass,
+                   name
                 }
             })
-            return response.json(workstations)
+            return response.json(hardware)
         } catch (err) {
             return response.status(409).send()
         }
@@ -58,12 +40,12 @@ class HardwareController {
     async delete(request, response) {
         try {
             const { id } = request.body
-            const workstations = await prisma.hardware.delete({
+            const hardware = await prisma.hardware.delete({
                 where: {
                     id: id
                 }
             })
-            return response.json(workstations)
+            return response.json(hardware)
         } catch (err) {
             return response.status(409).send()
         }
@@ -71,8 +53,8 @@ class HardwareController {
 
     async findMany(request, response) {
         try {
-            const workstations = await prisma.hardware.findMany();
-            return response.json(workstations)
+            const hardware = await prisma.hardware.findMany();
+            return response.json(hardware)
         } catch (err) {
             return response.status(409).send()
         }

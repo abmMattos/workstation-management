@@ -14,6 +14,9 @@ export const Main = styled.div`
     .link:hover {
         background-color: ${theme.COLORS.BACKGROUND2};
     }
+    .active div{
+        background-color: ${theme.COLORS.BACKGROUND2}
+    }
 `
 
 export const Logo = styled.div`
@@ -41,9 +44,8 @@ export const UnitLink = styled.div`
     align-items: center;
     margin-bottom: 10px;
     font-size: 0.75em;
-    background-color: ${(props) => props.bg || 'none'};
+    background-color: ${theme.COLORS.BACKGROUND};
 
-    
     img {
         width: 16px;
         height: 16px;

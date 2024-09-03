@@ -8,7 +8,7 @@ class WorkstationController {
 
     async create(request, response) {
         try {
-            const { name, screens, capacity, mouse, keyboard, webcam, headset, description, isBlocked } = request.body
+            const { name, screens, capacity, mouse, keyboard, webcam, headset,  isBlocked } = request.body
             const workstations = await prisma.workstation.create({
                 data: {
                     name,
@@ -18,7 +18,6 @@ class WorkstationController {
                     keyboard,
                     webcam,
                     headset,
-                    description,
                     isBlocked
                 }
             })
@@ -30,7 +29,7 @@ class WorkstationController {
 
     async update(request, response) {
         try {
-            const { id, name, capacity, screens, mouse, keyboard, webcam, headset, description, isBlocked } = request.body
+            const { id, name, capacity, screens, mouse, keyboard, webcam, headset, isBlocked } = request.body
             const workstations = await prisma.workstation.update({
                 where: {
                     id: id
@@ -43,7 +42,6 @@ class WorkstationController {
                     keyboard,
                     webcam,
                     headset,
-                    description,
                     isBlocked
 
                 }

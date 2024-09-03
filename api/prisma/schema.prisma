@@ -53,7 +53,6 @@ model Workstation {
   keyboard Boolean
   webcam Boolean
   headset Boolean
-  description String
   isBlocked Boolean
 
   reservation Reservation[]

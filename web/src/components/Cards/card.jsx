@@ -3,7 +3,6 @@ import { Card, CardContainer, Title, Description } from './cardStyle'
 
 export function Cards(props) {
     const { filteredItems } = props
-    console.log(filteredItems);
     return (
         <CardContainer>
             {filteredItems.length > 0 ? (

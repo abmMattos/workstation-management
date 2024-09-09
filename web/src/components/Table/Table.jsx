@@ -30,7 +30,6 @@ export function Table(props) {
 
   const dataTable = props.dataTable
   const columns = props.dataColumns
-  console.log(dataTable);
   const [data, setData] = React.useState(() => [...dataTable]);
 
   const table = useReactTable({

@@ -90,11 +90,9 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                 `https://workstation-management.onrender.com/reservation/reserve` + type,
                 reservation,
             );
-            console.log(response.data);
             setOpen(!isOpen)
             window.location.reload();
         } catch (error) {
-            console.log(reservation);
             console.error(error);
             alert('Erro ao Reservar!');
         }

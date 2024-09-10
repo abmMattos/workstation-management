@@ -72,18 +72,9 @@ export function Table(props) {
                 </BodyCell>
               ))}
               <BodyCell width={'5%'}>
-                <Actions>
-                  {/* <SmallButton img={search}  /> */}
-                  {path !== '/usuarios' && (
-                  <ReservationButton type={props.type} img={clock} id={row.original.id} />
-                  )}
-                  {userType === 'ADMIN' && (
-                    <>
-                      {/* <SmallButton img={pencil} event={() => (row.original.id)} /> */}
+                <Actions>              
+                      <SmallButton img={pencil} event={() => (row.original.id)} />
                       <DeleteButton img={trash} id={row.original.id} url={props.url} />
-                    </>
-                  )}
-
                 </Actions>
               </BodyCell>
             </BodyRow>

@@ -1,5 +1,7 @@
 import { ReservationButton } from '../Button/Button';
+import { Main } from '../Modal/HeaderModalStyle';
 import { Card, CardContainer, Title, Description } from './cardStyle'
+import { Header } from "../../components/Header/Header";
 
 export function Cards(props) {
     const { filteredItems } = props

@@ -23,11 +23,9 @@ export function Reservation() {
       try {
         const rooms = await axios.get("https://workstation-management.onrender.com/meetingRoom/");
         const workstations = await axios.get("https://workstation-management.onrender.com/workstation/");
-        const reservedRooms = await axios.get("https://workstation-management.onrender.com/reservation/findReservedMeetingRoom");
-        const reservedWorkStation = await axios.get("https://workstation-management.onrender.com/reservation/findReservedWorkstation");
-
+        const reservations = await axios.get("https://workstation-management.onrender.com/reservation/");
         setItems([...rooms.data, ...workstations.data]);
-        setReservedItems([...reservedRooms.data, ...reservedWorkStation.data]);
+        setReservedItems([...reservations.data]);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -38,13 +36,15 @@ export function Reservation() {
   }, []);
 
   useEffect(() => {
-    const dateString = format(selectedDate, "yyyy-MM-dd"); // Formata a data para YYYY-MM-DD
+    const dateString = format(selectedDate, "yyyy-MM-dd");
     const filtered = items.filter(item => {
       const isReserved = reservedItems.some(reserved => {
-        return reserved.itemId === item.id && reserved.dateReserve.slice(0, 10) === dateString;
+        console.log('item', item, 'reserved', reserved);
+        return reserved.id === item.id && reserved.dateReserve.slice(0, 10) === dateString; // mudar query de id após atualização do back
       });
       return !isReserved;
     });
+    console.log(filtered);
     setFilteredItems(filtered);
   }, [selectedDate, items, reservedItems]);
 

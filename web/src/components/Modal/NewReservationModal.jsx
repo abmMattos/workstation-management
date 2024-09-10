@@ -107,7 +107,7 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
                     <CardModal text="Convidados:" type="text" name="guests" change={handleChange} required={true} />
                     <small>Separe os emails por virgula</small>
-                    <SubmitButton text="CONFIRMAR AGENDAMENTO" />
+                    <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>
         )

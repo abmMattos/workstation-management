@@ -33,31 +33,25 @@ model Admin {
   @@map("admin")
 }
 
-model MeetingRoom {
+model Station {
   id String @id @default(uuid())
   name String
-  capacity Int
-  description String
+  type String
+  status String
+  capacity Int?
+  hardwares Hardware[]
+  reservations Reservation[]
 
-  reservation Reservation[]
-
-  @@map("meeting_room")
+  @@map("station")
 }
 
-model Workstation {
+model Hardware {
   id String @id @default(uuid())
   name String
-  screens Int
-  capacity Int
-  mouse Boolean
-  keyboard Boolean
-  webcam Boolean
-  headset Boolean
-  isBlocked Boolean
 
-  reservation Reservation[]
+  stations Station[]
 
-  @@map("workstation")
+   @@map("hardware")
 }
 
 model Reservation {
@@ -69,12 +63,8 @@ model Reservation {
   user_id String
   fk_user_id User @relation(fields: [user_id], references: [id])
 
-  workstation_id String?
-  fk_workstation_id Workstation? @relation(fields: [workstation_id], references: [id])
-
-  meetingroom_id String?
-  fk_meetingroom_id MeetingRoom? @relation(fields: [meetingroom_id], references: [id])
-
+  station_id String
+  fk_station_id Station @relation(fields: [station_id], references: [id])
 
   @@map("reservation")
 }

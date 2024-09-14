@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Center, Main, Section, Spinner } from "./roomStyle";
+import { Center, Main, Section, Spinner } from "./stationsStyle";
 import { Side } from "../../components/Side/side";
 import { AddButton } from "../../components/Button/Button";
 import plus from "../../img/plus.png";
@@ -9,13 +9,12 @@ import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
 
-export function Rooms() {
+export function Stations() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
   const [room, setRoom] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [reservation, setReservation] = useState([]);
 
   if (open === true) {
     document.body.style.overflow = "hidden";
@@ -50,12 +49,8 @@ export function Rooms() {
     const fetchData = async () => {
       try {
         const rooms = await axios.get(
-          "https://workstation-management.onrender.com/meetingRoom/"
+          "https://workstation-management.onrender.com/station/"
         );
-        const reservations = await axios.get(
-          "https://workstation-management.onrender.com/reservation/findReservedMeetingRoom"
-        );
-        setReservation(reservations.data);
         setRoom(rooms.data);
         setLoading(false);
       } catch (error) {
@@ -66,21 +61,6 @@ export function Rooms() {
 
     fetchData();
   }, []);
-
-  var dataA = new Date();
-  var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
-  dataAtual.setUTCHours(0, 0, 0, 0);
-  dataAtual = dataAtual.toJSON();
-
-  let data = room.map(room => {
-    const reservationsForRoom = reservation.filter(res => room.id === res.meetingroom_id);
-    const isReserved = reservationsForRoom.some(res => res.dateReserve === dataAtual);
-    if (isReserved) {
-      return { ...room, status: 'Indisponível' }
-    } else {
-      return { ...room, status: 'Disponível' }
-    }
-  })
 
   if (loading) {
     return <Center><Spinner /></Center>;
@@ -109,7 +89,7 @@ export function Rooms() {
           )}
           <Table
             type="MeetingRoom"
-            dataTable={data}
+            dataTable={room}
             dataColumns={columns}
             url={
               "https://workstation-management.onrender.com/meetingRoom/delete"

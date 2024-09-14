@@ -8,7 +8,7 @@ import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
 import axios from "axios";
-import { Center, Spinner } from "../rooms/roomStyle";
+import { Center, Spinner } from "../stations/stationsStyle";
 
 export function Users() {
   const [data, setData] = useState([]);

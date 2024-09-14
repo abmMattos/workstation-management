@@ -28,19 +28,12 @@ export function Side() {
             {userType === "ADMIN" && (
                 <NavLink to="/reservas">
                     <UnitLink className="link">
-                        <img src={user} alt="Reservas" />
+                        <img src={chair} alt="Reservas" />
                         <p>RESERVAS</p>
                     </UnitLink>
                 </NavLink>
             )}
-
-            <NavLink to="/salas">
-                <UnitLink className="link" >
-                    <img src={chair} alt="Cadeira" />
-                    <p>SALAS</p>
-                </UnitLink>
-            </NavLink>
-            <NavLink to="/estacoes-de-trabalho">
+            <NavLink to="/estacoes">
                 <UnitLink className="link" >
                     <img src={computer} alt="Computador" />
                     <p>ESTAÇÕES</p>

@@ -1,15 +1,15 @@
 const { Router } = require('express')
 
-const AdminController = require('../controllers/StationController')
+const StationController = require('../controllers/StationController')
 
-const adminRoutes = Router()
+const stationRoutes = Router()
 
-const adminController = new AdminController()
+const stationController = new StationController()
 
-adminRoutes.post('/create', adminController.create)
-adminRoutes.put('/update', adminController.update)
-adminRoutes.get('/', adminController.findMany)
-adminRoutes.delete('/delete', adminController.delete)
-adminRoutes.get('/findunique', adminController.findUnique)
+stationRoutes.post('/create', stationController.create)
+stationRoutes.put('/update', stationController.update)
+stationRoutes.get('/', stationController.findMany)
+stationRoutes.delete('/delete', stationController.delete)
+stationRoutes.get('/findunique', stationController.findUnique)
 
-module.exports = adminRoutes
+module.exports = stationRoutes

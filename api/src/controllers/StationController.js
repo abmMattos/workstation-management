@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 class StationController {
   async findMany(request, response) {
     try {
-      const station = await prisma.station.findMany();
+      const station = await prisma.station.findMany({
+        include: {
+          hardwares: true,
+        }
+      });
       return response.json(station);
     } catch (err) {
       return response.status(409).send();
@@ -21,7 +25,9 @@ class StationController {
           type,
           status,
           capacity,
-          hardwares, // verificar se banco está correto e como fazer a inserção de chave estrangeira
+          hardwares: {
+            connect: hardwares
+          }
         },
       });
       return response.json(station);
@@ -36,6 +42,9 @@ class StationController {
       const station = await prisma.station.findUnique({
         where: {
           id
+        },
+        include: {
+          hardwares: true
         }
       });
       return response.json(station);
@@ -70,7 +79,10 @@ class StationController {
             type,
             status,
             capacity,
-            hardwares, // verificar se banco está correto e como fazer a inserção de chave estrangeira
+            hardwares: {
+              set: [],
+              connect: hardwares
+            }
           },
       });
       return response.json(station);

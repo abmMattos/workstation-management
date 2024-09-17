@@ -40,8 +40,8 @@ export function Stations() {
     columnHelper.accessor("capacity", {
       header: () => <strong>Capacidade</strong>,
     }),
-    columnHelper.accessor("description", {
-      header: () => <strong>Descrição</strong>,
+    columnHelper.accessor("hardware", {
+      header: () => <strong>Equipamentos</strong>,
     }),
   ];
 

@@ -6,15 +6,11 @@ const reservationRoutes = Router()
 
 const reservationController = new ReservationController()
 
-reservationRoutes.post('/reserveWorkstation', reservationController.reserveWorkstation)
-reservationRoutes.post('/reserveMeetingRoom', reservationController.reserveMeetingRoom)
+reservationRoutes.post('/reserveStation', reservationController.reserveStation)
 reservationRoutes.put('/update', reservationController.update)
 reservationRoutes.get('/', reservationController.findMany)
 reservationRoutes.delete('/delete', reservationController.delete)
-reservationRoutes.get('/findReservedMeetingRoom', reservationController.findManyMeetingRoom)
-reservationRoutes.get('/findReservedWorkstation', reservationController.findManyWorkstation)
-reservationRoutes.get('/findReservedDateWorkstation', reservationController.findReservedWorkstationByDate)
-reservationRoutes.get('/findReservedDateMeetingRoom', reservationController.findReservedMeetingRoomByDate)
+reservationRoutes.get('/findReservedByDate', reservationController.findReservedByDate)
 
 
 module.exports = reservationRoutes

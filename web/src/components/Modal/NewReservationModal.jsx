@@ -48,11 +48,11 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
         }
         try {
             const response = await axios.get(
-                `https://workstation-management.onrender.com/reservation/findReservedDate` + type,
+                `https://workstation-management.onrender.com/reservation/findReservedDate` + 
                 {
                     params: {
                         id: id,
-                        date: dataReserva
+                        date: dataReserva,
                     }
                 }
             );
@@ -68,26 +68,16 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
         }
         
         var reservation = {
-            dateReserve: new Date(data.dateReserve).toJSON(),
+            dateReserve: new Date(data.dateReserve).toISOString(),
             guests: data.guests,
             motive: data.motive,
-            meetingroom_id: id,
+            station_id: id,
             user_id: idUser
         };
 
-        if (type === "Workstation") {
-            reservation = {
-                dateReserve: new Date(data.dateReserve).toJSON(),
-                guests: data.guests,
-                motive: data.motive,
-                workstation_id: id,
-                user_id: idUser
-            };
-        }
-
         try {
             const response = await axios.post(
-                `https://workstation-management.onrender.com/reservation/reserve` + type,
+                `https://workstation-management.onrender.com/reservation/reserveStation` +
                 reservation,
             );
             setOpen(!isOpen)

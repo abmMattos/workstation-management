@@ -21,10 +21,9 @@ export function Reservation() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const rooms = await axios.get("https://workstation-management.onrender.com/meetingRoom/");
-        const workstations = await axios.get("https://workstation-management.onrender.com/workstation/");
+        const stations = await axios.get("https://workstation-management.onrender.com/station/");
         const reservations = await axios.get("https://workstation-management.onrender.com/reservation/");
-        setItems([...rooms.data, ...workstations.data]);
+        setItems([...stations.data]);
         setReservedItems([...reservations.data]);
         setLoading(false);
       } catch (error) {
@@ -39,12 +38,10 @@ export function Reservation() {
     const dateString = format(selectedDate, "yyyy-MM-dd");
     const filtered = items.filter(item => {
       const isReserved = reservedItems.some(reserved => {
-        console.log('item', item, 'reserved', reserved);
-        return reserved.id === item.id && reserved.dateReserve.slice(0, 10) === dateString; // mudar query de id após atualização do back
+        return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString; // mudar query de id após atualização do back
       });
       return !isReserved;
     });
-    console.log(filtered);
     setFilteredItems(filtered);
   }, [selectedDate, items, reservedItems]);
 

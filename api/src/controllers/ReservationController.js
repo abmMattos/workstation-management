@@ -59,13 +59,13 @@ class ReservationController {
     }
 
     async findMany(request, response) {
-        var dataA = new Date();
-        var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
+        const currentDate = new Date().toISOString();
+        const currentDateWithoutHours = new Date(currentDate.setHours(0, 0, 0, 0));
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {
                     dateReserve: {
-                        gt: dataAtual
+                        gte: currentDateWithoutHours
                     }
                 }
             });

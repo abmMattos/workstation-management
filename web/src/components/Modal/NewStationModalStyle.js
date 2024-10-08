@@ -3,6 +3,7 @@ import theme from "../../style/theme";
 
 export const Form = styled.form`
     display: flex;
+    color: black;
     flex-direction: column;
     align-items: flex-start;
     background-color: ${theme.COLORS.WHITE};
@@ -27,4 +28,11 @@ export const BackgroundModal = styled.div`
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, .75);
+`
+
+export const Select = styled.select`
+    padding: 5px;
+    border: 2px solid ${theme.COLORS.GRAY};
+    border-radius: 10px;
+    width: 200px;    
 `

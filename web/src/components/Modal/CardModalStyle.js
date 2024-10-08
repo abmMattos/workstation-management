@@ -24,6 +24,3 @@ export const Input = styled.input`
        border: 1px solid ${theme.COLORS.GRAY};
     }
 `
-export const Checkbox = styled.input.attrs({type: 'checkbox'})`
-    padding: 5px;
-`;

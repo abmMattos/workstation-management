@@ -4,7 +4,7 @@ import { Center, Main, Section, Spinner } from "./stationsStyle";
 import { Side } from "../../components/Side/side";
 import { AddButton } from "../../components/Button/Button";
 import plus from "../../img/plus.png";
-import { NewRoomModal } from "../../components/Modal/NewRoomModal";
+import { NewStationModal } from "../../components/Modal/NewStationModal";
 import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -12,7 +12,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 export function Stations() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
-  const [room, setRoom] = useState([]);
+  const [station, setStation] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -48,10 +48,10 @@ export function Stations() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const rooms = await axios.get(
+        const station = await axios.get(
           "https://workstation-management.onrender.com/station/"
         );
-        setRoom(rooms.data);
+        setStation(station.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -67,32 +67,32 @@ export function Stations() {
   }
 
   if (error) {
-    return <div>Error fetching data</div>;
+    return <div>Erro</div>;
   }
 
   return (
     <Main>
       <Side />
       <Section>
-        <Header title="Salas" />
+        <Header title="Estações" />
         <Section>
           {userType === "ADMIN" && (
             <>
               <AddButton
                 id="addButton"
                 click={() => setOpen(!open)}
-                text="Nova Sala"
+                text="Nova Estação"
                 img={plus}
               />
-              <NewRoomModal isOpen={open} setOpen={setOpen} />
+              <NewStationModal isOpen={open} setOpen={setOpen} />
             </>
           )}
           <Table
-            type="MeetingRoom"
-            dataTable={room}
+            type="station"
+            dataTable={station}
             dataColumns={columns}
             url={
-              "https://workstation-management.onrender.com/meetingRoom/delete"
+              "https://workstation-management.onrender.com/station/delete"
             }
           />
         </Section>

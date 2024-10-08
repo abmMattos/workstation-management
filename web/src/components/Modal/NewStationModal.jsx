@@ -1,19 +1,18 @@
-import { BackgroundModal, Form } from "./NewRoomModalStyle"
+import { BackgroundModal, Form, Select } from "./NewStationModalStyle"
 import axios from "axios"
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-export function NewRoomModal({ isOpen, setOpen }) {
-
-    const navigate = useNavigate();
+export function NewStationModal({ isOpen, setOpen }) {
 
     const [data, setData] = useState({
         name: "",
         capacity: 0,
-        description: ""
+        description: "",
+        status: "active",
+        type: ""
     });
 
     const handleChange = (e) => {
@@ -31,16 +30,16 @@ export function NewRoomModal({ isOpen, setOpen }) {
 
     const add = (e) => {
         e.preventDefault();
-        if (data.name.trim().length <= 3 || data.capacity == null || data.description.trim().length <= 3) {
+        if (data.name.trim().length <= 3 || data.capacity == null) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        const meetingRoom = {
+        const station = {
             name: data.name,
             capacity: parseInt(data.capacity),
             description: data.description
         };
-        axios.post("https://workstation-management.onrender.com/meetingRoom/create", meetingRoom)
+        axios.post("https://workstation-management.onrender.com/station/create", station)
             .then((response) => {
                 setOpen(!isOpen);
                 window.location.reload();
@@ -53,7 +52,12 @@ export function NewRoomModal({ isOpen, setOpen }) {
         return (
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Criar Sala" />
+                    <HeaderModal click={fecharModal} titulo="Criar Estação" />
+                    <label htmlFor="type">Tipo:</label>
+                    <Select name="type" onChange={handleChange}>
+                        <option value={"workstation"} selected>Estação de trabalho</option>
+                        <option value={"meetingRoom"}>Sala de reunião</option>
+                    </Select>
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
                     <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
                     <CardModal text="Equipamentos:" type="text" name="description" change={handleChange} required={true} />

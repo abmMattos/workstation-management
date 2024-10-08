@@ -1,4 +1,4 @@
-import { BackgroundModal, Form } from "./NewRoomModalStyle"
+import { BackgroundModal, Form } from "./NewStationModalStyle"
 import axios from "axios"
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";

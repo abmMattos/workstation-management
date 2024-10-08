@@ -37,3 +37,9 @@ export const Spinner = styled.span`
   box-sizing: border-box;
   animation: ${rotation} 1s linear infinite;
 `;
+
+export const SubTitle = styled.h3`
+    font-size: 1.5em;
+    color: ${theme.COLORS.BACKGROUND};
+    margin-top: 50px;
+`

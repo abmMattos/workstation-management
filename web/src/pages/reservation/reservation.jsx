@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Header } from "../../components/Header/Header";
 import { Side } from "../../components/Side/side";
-import { Center, Spinner, Main, Section } from "./reservationStyle";
+import { Center, Spinner, Main, Section, SubTitle } from "./reservationStyle";
 import { Cards } from "../../components/Cards/card";
 import './date-picker.css';
 
@@ -73,7 +73,7 @@ export function Reservation() {
           {filteredItems.length > 0 ? (
             <Cards filteredItems={filteredItems} date={selectedDate} />
           ) : (
-            <Center>No available items for the selected date</Center>
+            <SubTitle>Não há opções de reservas disponíveis para esta data.</SubTitle>
           )}
         </Section>
       </Section>

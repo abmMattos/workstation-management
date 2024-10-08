@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { equal } = require("assert");
 
 
 
@@ -86,6 +87,27 @@ class ReservationController {
                     },
                     dateReserve: {
                         equals: date
+                    }
+                }
+            });
+            return response.json(reservation)
+        } catch (err) {
+            return response.status(409).send()
+        }
+    }
+    
+    async findReservationByUserId(request, response) {
+        const { user_id } = request.query;
+        const currentDate = new Date();
+        const currentDateWithoutHours = new Date(currentDate.setHours(0, 0, 0, 0));
+        try {
+            const reservation = await prisma.reservation.findMany({
+                where: {
+                    user_id: {
+                        equal: user_id
+                    },
+                    dateReserve: {
+                        gte: currentDateWithoutHours
                     }
                 }
             });

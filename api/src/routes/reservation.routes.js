@@ -11,6 +11,7 @@ reservationRoutes.put('/update', reservationController.update)
 reservationRoutes.get('/', reservationController.findMany)
 reservationRoutes.delete('/delete', reservationController.delete)
 reservationRoutes.get('/findReservedByDate', reservationController.findReservedByDate)
+reservationRoutes.get('/findReservationByUserId', reservationController.findReservationByUserId)
 
 
 module.exports = reservationRoutes

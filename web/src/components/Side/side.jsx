@@ -25,7 +25,7 @@ export function Side() {
                     </UnitLink>
                 </NavLink>
             )}
-            {userType === "ADMIN" && (
+            {userType === "USER" && (
                 <NavLink to="/reservas">
                     <UnitLink className="link">
                         <img src={chair} alt="Reservas" />
@@ -33,12 +33,14 @@ export function Side() {
                     </UnitLink>
                 </NavLink>
             )}
+            {userType === "ADMIN" && (
             <NavLink to="/estacoes">
                 <UnitLink className="link" >
                     <img src={computer} alt="Computador" />
                     <p>ESTAÇÕES</p>
                 </UnitLink>
             </NavLink>
+            )}
             <NavLink to="/mensagens">
                 <UnitLink className="link" >
                     <img src={chat} alt="Chat" />

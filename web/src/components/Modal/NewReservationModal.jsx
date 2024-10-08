@@ -13,7 +13,6 @@ export function NewReservationModal({ isOpen, setOpen, id, date }) {
     const idUser = localStorage.getItem('idUser');
 
     const [data, setData] = useState({
-        dateReserve: new Date(date.setHours(0,0,0,0)).toISOString(),
         guests: "",
         motive: ""
     });
@@ -39,12 +38,12 @@ export function NewReservationModal({ isOpen, setOpen, id, date }) {
         }
         
         var reservation = {
-            dateReserve: data.dateReserve,
-            guests: data.guests,
+            dateReserve: new Date(date.setHours(0,0,0,0)).toISOString(),
             motive: data.motive,
-            station_id: id,
-            user_id: idUser
-        };
+            guests: data.guests,
+            user_id: idUser,
+            station_id: id
+        };      
 
         try {
             const response = await axios.post(

@@ -38,7 +38,7 @@ export function Reservation() {
     const dateString = format(selectedDate, "yyyy-MM-dd");
     const filtered = items.filter(item => {
       const isReserved = reservedItems.some(reserved => {
-        return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString; // mudar query de id após atualização do back
+        return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString;
       });
       return !isReserved;
     });

@@ -55,12 +55,6 @@ export function Side() {
                     <p>MENSAGENS</p>
                 </UnitLink>
             </NavLink>
-            <NavLink to="/configuracoes">
-                <UnitLink className="link" >
-                    <img src={config} alt="Engrenagem" />
-                    <p>CONFIGURAÇÕES</p>
-                </UnitLink>
-            </NavLink>
             <NavLink to="/ajuda">
                 <UnitLink className="link" >
                     <img src={help} alt="Interrogação" />

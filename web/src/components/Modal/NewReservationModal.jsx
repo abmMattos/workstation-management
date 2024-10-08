@@ -5,6 +5,7 @@ import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import routes from "../../endpoints/routes";
 
 export function NewReservationModal({ isOpen, setOpen, id, date }) {
 
@@ -47,7 +48,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date }) {
 
         try {
             const response = await axios.post(
-                "https://workstation-management.onrender.com/reservation/reserveStation",
+                routes.RESERVATION.MAKE_RESERVATION,
                 reservation
             );
             setOpen(!isOpen)

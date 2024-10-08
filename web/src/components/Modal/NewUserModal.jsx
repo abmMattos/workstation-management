@@ -4,6 +4,7 @@ import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
+import routes from "../../endpoints/routes";
 
 export function NewUserModal({ isOpen, setOpen }) {
 
@@ -34,7 +35,7 @@ export function NewUserModal({ isOpen, setOpen }) {
         }
         try {
             const response = await axios.post(
-                `https://workstation-management.onrender.com/user/create`,
+                routes.USER.CREATE_USER,
                 data,
             );
             setOpen(!isOpen)

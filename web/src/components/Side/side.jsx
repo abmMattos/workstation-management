@@ -26,10 +26,18 @@ export function Side() {
                 </NavLink>
             )}
             {userType === "USER" && (
+                <NavLink to="/reservar">
+                    <UnitLink className="link">
+                        <img src={chair} alt="Reservas" />
+                        <p>RESERVAR</p>
+                    </UnitLink>
+                </NavLink>
+            )}
+            {userType === "USER" && (
                 <NavLink to="/reservas">
                     <UnitLink className="link">
                         <img src={chair} alt="Reservas" />
-                        <p>RESERVAS</p>
+                        <p>MINHAS RESERVAS</p>
                     </UnitLink>
                 </NavLink>
             )}

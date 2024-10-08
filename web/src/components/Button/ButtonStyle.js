@@ -99,3 +99,18 @@ border-radius: 6px;
 border: solid 1.5px;
 align-self: center;
 `
+
+export const DeleteButtonComponent = styled.button`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 109px;
+height: 32px;
+padding: 15px;
+font-weight: bold;
+background-color: ${theme.COLORS.RED};
+color: ${theme.COLORS.WHITE};
+border-radius: 6px;
+border: solid 1.5px;
+align-self: center;
+`

@@ -1,30 +1,27 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { Header } from "../../components/Header/Header";
 import { Side } from "../../components/Side/side";
-import { Center, Spinner, Main, Section, SubTitle } from "./reservationStyle";
+import { Center, Spinner, Main, Section, SubTitle } from "./myReservesStyle";
 import { Cards } from "../../components/Cards/card";
-import './date-picker.css';
+import { format } from "date-fns";
 import routes from "../../endpoints/routes";
 
-export function Reservation() {
+export function MyReserves() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [items, setItems] = useState([]);
+  const [stations, setStations] = useState([]);
   const [reservedItems, setReservedItems] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [filteredItems, setFilteredItems] = useState([]);
+
+  const idUser = localStorage.getItem('idUser');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const stations = await axios.get(routes.STATION.GET_ALL_STATIONS);
-        const reservations = await axios.get(routes.RESERVATION.GET_ALL_RESERVATIONS);
-        setItems([...stations.data]);
+        const reservations = await axios.get(routes.RESERVATION.GET_BY_USER_ID);
+        setStations([...stations.data]);
         setReservedItems([...reservations.data]);
         setLoading(false);
       } catch (error) {
@@ -36,15 +33,23 @@ export function Reservation() {
   }, []);
 
   useEffect(() => {
-    const dateString = format(selectedDate, "yyyy-MM-dd");
-    const filtered = items.filter(item => {
-      const isReserved = reservedItems.some(reserved => {
-        return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString;
-      });
-      return !isReserved;
-    });
-    setFilteredItems(filtered);
-  }, [selectedDate, items, reservedItems]);
+    const incrementReserve = reservedItems.map(reserve => {
+        const station = stations.find(station => station.id === reserve.station_id);
+        return {
+            dateReserve: format(reserve.dateReserve, "dd/MM/yyyy"),
+            capacity: station.capacity,
+            hardwares: station.hardwares,
+            id: station.id,
+            name: station.name,
+            status: 'Reserved',
+            type: station.type,
+            reservation_id: reserve.id,
+            user_id: reserve.user_id,
+        }
+    });    
+    const filteredByUser = incrementReserve.filter(item => item.user_id === idUser)
+    setFilteredItems(filteredByUser);
+  }, [stations, reservedItems]);
 
   if (loading) {
     return (
@@ -62,17 +67,10 @@ export function Reservation() {
     <Main>
       <Side />
       <Section>
-        <Header title="Fazer Reserva" />
+        <Header title="Minhas Reservas" />
         <Section>
-          <DatePicker
-            id="data-picker"
-            selected={selectedDate}
-            onChange={date => setSelectedDate(date)}
-            dateFormat="dd/MM/yyyy"
-            locale={ptBR}
-          />
           {filteredItems.length > 0 ? (
-            <Cards filteredItems={filteredItems} date={selectedDate} />
+            <Cards filteredItems={filteredItems} type='my-reserves' />
           ) : (
             <SubTitle>Não há opções de reservas disponíveis para esta data.</SubTitle>
           )}

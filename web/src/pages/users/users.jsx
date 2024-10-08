@@ -9,6 +9,7 @@ import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
 import axios from "axios";
 import { Center, Spinner } from "../stations/stationsStyle";
+import routes from "../../endpoints/routes";
 
 export function Users() {
   const [data, setData] = useState([]);
@@ -44,7 +45,7 @@ export function Users() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://workstation-management.onrender.com/user"
+          routes.USER.GET_ALL_USERS
         );
         setData(response.data);
         setLoading(false);
@@ -85,7 +86,7 @@ export function Users() {
             img={plus}
           />
           <NewUserModal isOpen={open} setOpen={setOpen} />
-          <Table dataTable={data} dataColumns={columns} url={'https://workstation-management.onrender.com/user/delete'} />
+          <Table dataTable={data} dataColumns={columns} url={routes.USER.DELETE_USER} />
         </Section>
       </Section>
     </Main>

@@ -4,6 +4,7 @@ import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
+import routes from "../../endpoints/routes";
 
 export function NewStationModal({ isOpen, setOpen }) {
 
@@ -39,7 +40,7 @@ export function NewStationModal({ isOpen, setOpen }) {
             capacity: parseInt(data.capacity),
             description: data.description
         };
-        axios.post("https://workstation-management.onrender.com/station/create", station)
+        axios.post(routes.STATION.CREATE_STATION, station)
             .then((response) => {
                 setOpen(!isOpen);
                 window.location.reload();

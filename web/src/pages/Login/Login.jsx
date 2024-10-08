@@ -4,6 +4,7 @@ import { LoginButton } from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import routes from "../../endpoints/routes";
 
 
 export function Login() {
@@ -38,7 +39,7 @@ export function Login() {
         try {
             if (userType === 'ADMIN') {
                 const response = await axios.get(
-                    `https://workstation-management.onrender.com/admin/login`,
+                    routes.ADMIN.LOGIN,
                     {
                         params: {
                             email: data.email,
@@ -54,7 +55,7 @@ export function Login() {
 
             if (userType === 'USER') {
                 const response = await axios.get(
-                    `https://workstation-management.onrender.com/user/login`, {
+                    routes.USER.LOGIN, {
                     params: {
                         email: data.email,
                         password: data.password

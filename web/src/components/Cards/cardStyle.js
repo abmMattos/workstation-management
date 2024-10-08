@@ -17,6 +17,13 @@ export const Card = styled.div`
   width: 30%;
 `;
 
+export const Row = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+`
+
 export const Title = styled.h3`
   font-size: 1.5em;
   margin-bottom: 15px;
@@ -25,6 +32,12 @@ export const Title = styled.h3`
 export const SubTitle = styled.h4`
   font-size: 1.1em;
   margin-bottom: 10px;
+`
+
+export const Date = styled.h4`
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: ${theme.COLORS.RED};
 `
 
 export const Description = styled.p`

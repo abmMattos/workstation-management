@@ -8,6 +8,7 @@ import { NewStationModal } from "../../components/Modal/NewStationModal";
 import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
+import routes from "../../endpoints/routes";
 
 export function Stations() {
   const userType = localStorage.getItem("userType");
@@ -49,7 +50,7 @@ export function Stations() {
     const fetchData = async () => {
       try {
         const station = await axios.get(
-          "https://workstation-management.onrender.com/station/"
+          routes.STATION.GET_ALL_STATIONS
         );
         setStation(station.data);
         setLoading(false);
@@ -92,7 +93,7 @@ export function Stations() {
             dataTable={station}
             dataColumns={columns}
             url={
-              "https://workstation-management.onrender.com/station/delete"
+              routes.STATION.DELETE_STATION
             }
           />
         </Section>

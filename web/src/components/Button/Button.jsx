@@ -1,4 +1,4 @@
-import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent } from "./ButtonStyle"
+import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent } from "./ButtonStyle"
 import arrow from "../../img/arrow-down.png"
 import user from "../../img/userGray.png"
 import axios from "axios"
@@ -53,6 +53,21 @@ export function SmallButton(props) {
         <SmallButtonComponent onClick={props.click} >
             <img src={props.img} alt="" />
         </SmallButtonComponent>
+    )
+}
+
+export function CancelReservationButton(props) {
+
+    async function deleteData(id, url) {
+        const response = await axios.delete("" + url + "", { data: { id: id } });
+        window.location.reload();
+        return response.data;
+    }
+
+    return (
+        <DeleteButtonComponent onClick={() => deleteData(props.id, props.url)} >
+            {props.text}
+        </DeleteButtonComponent>
     )
 }
 

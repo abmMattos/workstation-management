@@ -5,6 +5,7 @@ import { Users } from "./pages/users/users";
 import { Reservation } from "./pages/reservation/reservation"
 import { Stations } from "./pages/stations/stations";
 import { MyReserves } from "./pages/my-reserves/myReserves";
+import { Help } from "./pages/help/help";
 
 export default function App() {
     return(
@@ -16,6 +17,7 @@ export default function App() {
                 <Route path="/usuarios" element={<Users />} />
                 <Route path="/reservar" element={<Reservation />} />
                 <Route path="/reservas" element={<MyReserves />} />
+                <Route path="/ajuda" element={<Help />} />
             </Routes>
         </>
     )

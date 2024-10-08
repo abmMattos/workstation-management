@@ -1,4 +1,4 @@
-import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent } from "./ButtonStyle"
+import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
 import arrow from "../../img/arrow-down.png"
 import user from "../../img/userGray.png"
 import axios from "axios"
@@ -114,3 +114,23 @@ export function SubmitButton(props) {
         </SubmitButtonComponent>
     )
 }
+
+
+export function StationPicker(props) {
+    const [selected, setSelected] = useState(false);
+  
+    const handleClick = () => {
+      setSelected(prev => !prev);
+      props.onSelect();
+    };
+  
+    return (
+      <StationPickerButton
+        selected={selected}
+        onClick={handleClick}
+      >
+        {props.text}
+      </StationPickerButton>
+    );
+  }
+  

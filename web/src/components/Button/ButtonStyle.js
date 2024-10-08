@@ -71,46 +71,61 @@ export const UserButtonComponent = styled.button`
 `
 
 export const AddButtonComponent = styled.button`
-display: flex;
-justify-content: flex-start;
-align-items: center;
-width: fit-content;
-padding: 15px 15px;
-font-size: 1.5em;
-font-weight: bold;
-background-color: ${theme.COLORS.WHITE};
-color: ${theme.COLORS.BACKGROUND};
-border-radius: 5px;
-border: 2px solid ${theme.COLORS.GRAY};
-gap: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: fit-content;
+    padding: 15px 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: ${theme.COLORS.WHITE};
+    color: ${theme.COLORS.BACKGROUND};
+    border-radius: 5px;
+    border: 2px solid ${theme.COLORS.GRAY};
+    gap: 15px;
 `
 
 export const SubmitButtonComponent = styled.button`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 109px;
-height: 32px;
-padding: 15px;
-font-weight: bold;
-background-color: ${theme.COLORS.GREEN};
-color: black;
-border-radius: 6px;
-border: solid 1.5px;
-align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 109px;
+    height: 32px;
+    padding: 15px;
+    font-weight: bold;
+    background-color: ${theme.COLORS.GREEN};
+    color: black;
+    border-radius: 6px;
+    border: solid 1.5px;
+    align-self: center;
 `
 
 export const DeleteButtonComponent = styled.button`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 109px;
-height: 32px;
-padding: 15px;
-font-weight: bold;
-background-color: ${theme.COLORS.RED};
-color: ${theme.COLORS.WHITE};
-border-radius: 6px;
-border: solid 1.5px;
-align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 109px;
+    height: 32px;
+    padding: 15px;
+    font-weight: bold;
+    background-color: ${theme.COLORS.RED};
+    color: ${theme.COLORS.WHITE};
+    border-radius: 6px;
+    border: solid 1.5px;
+    align-self: center;
+`
+
+export const StationPickerButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 109px;
+    height: 32px;
+    padding: 15px;
+    font-weight: bold;
+    background-color: ${props => (props.selected ? theme.COLORS.GREEN : theme.COLORS.WHITE)};
+    color: ${props => (props.selected ? theme.COLORS.WHITE : theme.COLORS.BACKGROUND)};
+    border-radius: 6px;
+    border: solid 1.5px ${props => (props.selected ? theme.COLORS.WHITE : theme.COLORS.BACKGROUND)};
+    align-self: center;
 `

@@ -72,7 +72,7 @@ export function MyReserves() {
           {filteredItems.length > 0 ? (
             <Cards filteredItems={filteredItems} type='my-reserves' />
           ) : (
-            <SubTitle>Não há opções de reservas disponíveis para esta data.</SubTitle>
+            <SubTitle>Você não possui nenhuma reserva.</SubTitle>
           )}
         </Section>
       </Section>

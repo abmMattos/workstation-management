@@ -6,10 +6,11 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Header } from "../../components/Header/Header";
 import { Side } from "../../components/Side/side";
-import { Center, Spinner, Main, Section, SubTitle } from "./reservationStyle";
+import { Center, Spinner, Main, Section, SubTitle, Row, Label } from "./reservationStyle";
 import { Cards } from "../../components/Cards/card";
 import './date-picker.css';
 import routes from "../../endpoints/routes";
+import { StationPicker } from "../../components/Button/Button";
 
 export function Reservation() {
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ export function Reservation() {
   const [reservedItems, setReservedItems] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [filteredItems, setFilteredItems] = useState([]);
+  const [filterTypes, setFilterTypes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,10 +43,21 @@ export function Reservation() {
       const isReserved = reservedItems.some(reserved => {
         return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString;
       });
-      return !isReserved;
+      const matchesFilter = filterTypes.length === 0 || filterTypes.includes(item.type);
+      return !isReserved && matchesFilter;
     });
     setFilteredItems(filtered);
-  }, [selectedDate, items, reservedItems]);
+  }, [selectedDate, items, reservedItems, filterTypes]);
+
+  const handleFilterChange = (type) => {
+    setFilterTypes(prev => {
+      if (prev.includes(type)) {
+        return prev.filter(t => t !== type);
+      } else {
+        return [...prev, type];
+      }
+    });
+  };
 
   if (loading) {
     return (
@@ -64,13 +77,18 @@ export function Reservation() {
       <Section>
         <Header title="Fazer Reserva" />
         <Section>
-          <DatePicker
-            id="data-picker"
-            selected={selectedDate}
-            onChange={date => setSelectedDate(date)}
-            dateFormat="dd/MM/yyyy"
-            locale={ptBR}
-          />
+          <Row>
+            <DatePicker
+              id="data-picker"
+              selected={selectedDate}
+              onChange={date => setSelectedDate(date)}
+              dateFormat="dd/MM/yyyy"
+              locale={ptBR}
+            />
+            <Label>Selecione:</Label>
+            <StationPicker text='Salas' onSelect={() => handleFilterChange('room')} />
+            <StationPicker text='Estações' onSelect={() => handleFilterChange('workstation')} />
+          </Row>
           {filteredItems.length > 0 ? (
             <Cards filteredItems={filteredItems} date={selectedDate} />
           ) : (

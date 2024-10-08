@@ -43,3 +43,15 @@ export const SubTitle = styled.h3`
     color: ${theme.COLORS.BACKGROUND};
     margin-top: 50px;
 `
+
+export const Row = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 25px;
+`
+
+export const Label = styled.h4`
+    font-size: 1.2em;
+    color: ${theme.COLORS.BACKGROUND};
+    font-weight: 400;
+`

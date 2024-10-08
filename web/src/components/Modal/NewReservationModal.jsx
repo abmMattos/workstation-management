@@ -6,18 +6,17 @@ import { CardModal } from "./CardModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function NewReservationModal({ isOpen, setOpen, type, id }) {
+export function NewReservationModal({ isOpen, setOpen, id, date }) {
 
     const navigate = useNavigate();
 
     const idUser = localStorage.getItem('idUser');
 
     const [data, setData] = useState({
-        dateReserve: "",
+        dateReserve: new Date(date.setHours(0,0,0,0)).toISOString(),
         guests: "",
         motive: ""
     });
-
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -38,37 +37,9 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        var dataA = new Date();
-        var dataAtual = new Date(dataA.getTime() - (dataA.getTimezoneOffset() * 60000));
-        dataAtual.setUTCHours(0,0,0,0);
-        var dataReserva = new Date(data.dateReserve).toJSON();
-        if (dataReserva < dataAtual.toJSON()) {
-            alert("Data inválida! A data de agendamento tem que ser posterior a data atual!");
-            return;
-        }
-        try {
-            const response = await axios.get(
-                `https://workstation-management.onrender.com/reservation/findReservedDate` + 
-                {
-                    params: {
-                        id: id,
-                        date: dataReserva,
-                    }
-                }
-            );
-            if (response.data.length) {
-                alert("Data inválida! Esta " + (type === "Workstation" ? 'estação de trabalho' : 'sala') + " já está agendada para data selecionada!");
-                return;
-            }
-           
-        } catch (error) {
-            console.error(error);
-            alert('Erro ao Reservar!');
-            return;
-        }
         
         var reservation = {
-            dateReserve: new Date(data.dateReserve).toISOString(),
+            dateReserve: data.dateReserve,
             guests: data.guests,
             motive: data.motive,
             station_id: id,
@@ -77,8 +48,8 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
 
         try {
             const response = await axios.post(
-                `https://workstation-management.onrender.com/reservation/reserveStation` +
-                reservation,
+                "https://workstation-management.onrender.com/reservation/reserveStation",
+                reservation
             );
             setOpen(!isOpen)
             window.location.reload();
@@ -93,7 +64,6 @@ export function NewReservationModal({ isOpen, setOpen, type, id }) {
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
-                    <CardModal text="Data de agendamento:" type="date" name="dateReserve" change={handleChange} required={true} />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
                     <CardModal text="Convidados:" type="text" name="guests" change={handleChange} required={true} />
                     <small>Separe os emails por virgula</small>

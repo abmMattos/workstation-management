@@ -40,7 +40,7 @@ export function ReservationButton(props) {
 
     return (
         <>
-            <NewReservationModal id={props.id} type={props.type} isOpen={open} setOpen={setOpen} />
+            <NewReservationModal id={props.id} date={props.date} type={props.type} isOpen={open} setOpen={setOpen} />
             <SubmitButtonComponent onClick={abrirModal} >
                 <h4>{props.text}</h4>
             </SubmitButtonComponent>

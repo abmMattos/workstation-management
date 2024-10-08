@@ -18,9 +18,14 @@ export const Card = styled.div`
 `;
 
 export const Title = styled.h3`
-  font-size: 1.2em;
+  font-size: 1.5em;
   margin-bottom: 15px;
 `;
+
+export const SubTitle = styled.h4`
+  font-size: 1.1em;
+  margin-bottom: 10px;
+`
 
 export const Description = styled.p`
 font-size: 1em;

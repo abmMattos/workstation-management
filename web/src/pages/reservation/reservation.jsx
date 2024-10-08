@@ -71,7 +71,7 @@ export function Reservation() {
             locale={ptBR}
           />
           {filteredItems.length > 0 ? (
-            <Cards filteredItems={filteredItems} />
+            <Cards filteredItems={filteredItems} date={selectedDate} />
           ) : (
             <Center>No available items for the selected date</Center>
           )}

@@ -65,7 +65,7 @@ export function Login() {
                 localStorage.setItem('userType', userType);
                 localStorage.setItem('idUser', response.data.id);
                 localStorage.setItem('nameUser', response.data.name);
-                navigate('/salas');
+                navigate('/reservar');
             }
         } catch (error) {
             console.error(error);

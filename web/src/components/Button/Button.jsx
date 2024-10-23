@@ -1,9 +1,10 @@
-import { HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
+import { Menu, MenuItem, HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
 import arrow from "../../img/arrow-down.png"
 import user from "../../img/userGray.png"
 import axios from "axios"
 import { useState } from "react"
 import { NewReservationModal } from "../Modal/NewReservationModal"
+import { NavLink } from "react-router-dom"
 
 
 export function HomeButton(props) {
@@ -86,16 +87,36 @@ export function DeleteButton(props) {
 }
 
 export function UserButton(props) {
-    return (
-        <UserButtonComponent>
-            <div>
-                <img src={user} alt="" />
-                <p>{props.text}</p>
-            </div>
-            <img src={arrow} alt="" />
+    const [menuVisible, setMenuVisible] = useState(false);
 
-        </UserButtonComponent>
-    )
+    const toggleMenu = () => {
+        setMenuVisible(!menuVisible);
+    };
+
+    const handleLogout = () => {
+    };
+
+    return (
+        <div>
+            <UserButtonComponent onClick={toggleMenu}>
+                <div>
+                    <img src={user} alt="" />
+                    <p>{props.text}</p>
+                </div>
+                <img src={arrow} alt="" />
+            </UserButtonComponent>
+            {menuVisible && (
+                <Menu>
+                    <NavLink to='/login'>
+                        <MenuItem onClick={handleLogout}>
+                            <img src={props.img} alt="Sair" />
+                            Sair
+                        </MenuItem>
+                    </NavLink>
+                </Menu>
+            )}
+        </div>
+    );
 }
 
 export function AddButton(props) {

@@ -1,5 +1,6 @@
 import { Title, LineDiv } from "./HeaderStyle"
 import notification from "../../img/notification.png"
+import logout from "../../img/logout.png"
 import { SmallButton, UserButton } from "../../components/Button/Button"
 import mail from "../../img/mail.png"
 
@@ -15,7 +16,7 @@ export function Header(props) {
             <LineDiv>
                 <SmallButton img={notification} />
                 <SmallButton img={mail} />
-                <UserButton text={nameUser} />
+                <UserButton text={nameUser} img={logout} />
             </LineDiv>
         </LineDiv>
     )

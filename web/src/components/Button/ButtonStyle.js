@@ -56,19 +56,42 @@ export const UserButtonComponent = styled.button`
     width: fit-content;
     height: 40px;
     color: ${theme.COLORS.BACKGROUND};
-
     border: 1px solid ${theme.COLORS.GRAY};
     border-radius: 4px;
     gap: 40px;
+
     div {
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: bold;
         gap: 10px;
-
     }
-`
+`;
+
+export const Menu = styled.div`
+    position: absolute;
+    background-color: ${theme.COLORS.WHITE};
+    border: 1px solid ${theme.COLORS.GRAY};
+    border-radius: 4px;
+    margin-top: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+`;
+
+export const MenuItem = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    color: ${theme.COLORS.BACKGROUND};
+    font-size: 16px;
+    font-weight: bold;
+    &:hover {
+        background-color: ${theme.COLORS.LIGHT_GRAY};
+    }
+`;
 
 export const AddButtonComponent = styled.button`
     display: flex;

@@ -49,6 +49,14 @@ export function Side() {
                 </UnitLink>
             </NavLink>
             )}
+            {userType === "ADMIN" && (
+            <NavLink to="/equipamentos">
+                <UnitLink className="link" >
+                    <img src={computer} alt="Chave Inglesa" />
+                    <p>EQUIPAMENTOS</p>
+                </UnitLink>
+            </NavLink>
+            )}
             <NavLink to="/mensagens">
                 <UnitLink className="link" >
                     <img src={chat} alt="Chat" />

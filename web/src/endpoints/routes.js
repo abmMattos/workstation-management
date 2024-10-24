@@ -12,6 +12,12 @@ export default {
         DELETE_STATION: "https://workstation-management.onrender.com/station/delete",
     },
 
+    HARDWARE: {
+        CREATE_HARDWARE: "https://workstation-management.onrender.com/hardware/create",
+        GET_ALL_HARDWARES: "https://workstation-management.onrender.com/hardware/",
+        DELETE_HARDWARE: "https://workstation-management.onrender.com/hardware/delete",
+    },
+
     USER: {
         CREATE_USER: "https://workstation-management.onrender.com/user/create",
         LOGIN: "https://workstation-management.onrender.com/user/login",

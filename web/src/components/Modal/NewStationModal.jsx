@@ -1,10 +1,12 @@
-import { BackgroundModal, Form, Select } from "./NewStationModalStyle"
+import { BackgroundModal, Form } from "./NewStationModalStyle"
 import axios from "axios"
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import routes from "../../endpoints/routes";
+import Select from 'react-select';
+import Creatable from 'react-select/creatable';
 
 export function NewStationModal({ isOpen, setOpen }) {
 
@@ -26,8 +28,28 @@ export function NewStationModal({ isOpen, setOpen }) {
 
     const fecharModal = (e) => {
         e.preventDefault();
-        setOpen(!isOpen);
+        if (window.confirm("Tem certeza que deseja fechar?")) {
+            setOpen(!isOpen);
+        }
+        return;
     }
+
+    const [hardware, setHardware] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const hardware = await axios.get(
+              routes.HARDWARE.GET_ALL_HARDWARES
+            );
+            setHardware(hardware.data);
+          } catch (error) {
+            console.log("Erro:" + error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const add = (e) => {
         e.preventDefault();
@@ -55,13 +77,11 @@ export function NewStationModal({ isOpen, setOpen }) {
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Criar Estação" />
                     <label htmlFor="type">Tipo:</label>
-                    <Select name="type" onChange={handleChange}>
-                        <option value={"workstation"} selected>Estação de trabalho</option>
-                        <option value={"meetingRoom"}>Sala de reunião</option>
-                    </Select>
+                    <Select options={[{label:"Estação de trabalho", value:"workstation"},{label:"Sala de reunião", value:"meetingRoom"}]}/>
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
                     <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
-                    <CardModal text="Equipamentos:" type="text" name="description" change={handleChange} required={true} />
+                    <label>Equipamentos:</label>
+                    <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti/>
                     <SubmitButton text="CRIAR" />
                 </Form>
             </BackgroundModal>

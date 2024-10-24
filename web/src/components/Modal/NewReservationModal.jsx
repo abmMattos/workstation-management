@@ -28,7 +28,10 @@ export function NewReservationModal({ isOpen, setOpen, id, date }) {
 
     const fecharModal = (e) => {
         e.preventDefault();
-        setOpen(!isOpen);
+        if (window.confirm("Tem certeza que deseja fechar?")) {
+            setOpen(!isOpen);
+        }
+        return;
     }
 
     const add = async (e) => {

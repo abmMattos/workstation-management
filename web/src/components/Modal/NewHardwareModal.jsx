@@ -6,12 +6,10 @@ import { CardModal } from "./CardModal";
 import { useState } from "react";
 import routes from "../../endpoints/routes";
 
-export function NewUserModal({ isOpen, setOpen }) {
+export function NewHardwareModal({ isOpen, setOpen }) {
 
     const [data, setData] = useState({
         name: "",
-        email: "",
-        password: ""
     });
 
     const handleChange = (e) => {
@@ -30,34 +28,31 @@ export function NewUserModal({ isOpen, setOpen }) {
         return;
     }
 
-    const add = async (e) => {
+    const add = (e) => {
         e.preventDefault();
-        if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3) {
+        if (data.name.trim().length <= 3) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
-        try {
-            const response = await axios.post(
-                routes.USER.CREATE_USER,
-                data,
-            );
-            setOpen(!isOpen)
-            window.location.reload();
-        } catch (error) {
-            console.error(error);
-            alert('Erro criar usuário!');
-        }
+        const hardware = {
+            name: data.name,
+        };
+        axios.post(routes.HARDWARE.CREATE_HARDWARE, hardware)
+            .then((response) => {
+                setOpen(!isOpen);
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error("ops! ocorreu um erro" + err);
+            });
     };
-
     if (isOpen) {
         return (
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Cadastrar Usuário" />
+                    <HeaderModal click={fecharModal} titulo="Criar Equipamento" />
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
-                    <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} />
-                    <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} />
-                    <SubmitButton text="CADASTRAR" />
+                    <SubmitButton text="CRIAR" />
                 </Form>
             </BackgroundModal>
         )

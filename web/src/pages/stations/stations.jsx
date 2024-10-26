@@ -35,13 +35,13 @@ export function Stations() {
       header: () => <strong>Nome</strong>,
     }),
     columnHelper.accessor("status", {
-      header: () => <strong>Status</strong>,
+      header: () => <strong>Ativo</strong>,
       cell: (info) => info.renderValue(),
     }),
     columnHelper.accessor("capacity", {
       header: () => <strong>Capacidade</strong>,
     }),
-    columnHelper.accessor("hardware", {
+    columnHelper.accessor("hardwares", {
       header: () => <strong>Equipamentos</strong>,
     }),
   ];

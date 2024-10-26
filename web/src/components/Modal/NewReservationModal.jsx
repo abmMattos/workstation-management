@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import routes from "../../endpoints/routes";
 
-export function NewReservationModal({ isOpen, setOpen, id, date }) {
+export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
 
     const navigate = useNavigate();
 
@@ -68,7 +68,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date }) {
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    <CardModal text="Convidados:" type="text" name="guests" change={handleChange} required={true} />
+                    {type === "room" && (<CardModal text="Convidados:" type="text" name="guests" change={handleChange} required={true} />)}
                     <small>Separe os emails por virgula</small>
                     <SubmitButton text="AGENDAR" />
                 </Form>

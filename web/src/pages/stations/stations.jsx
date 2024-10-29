@@ -13,14 +13,41 @@ import routes from "../../endpoints/routes";
 export function Stations() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
-  const [station, setStation] = useState([]);
+  const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null);  
 
-  if (open === true) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(routes.STATION.GET_ALL_STATIONS);
+        const data = response.data.map((station, index) => ({
+          index: index + 1, // Adiciona um índice para a tabela
+          id: station.id,
+          name: station.name,
+          status: station.status,
+          capacity: station.capacity,
+          hardwares: station.hardwares.map(({ name }) => name).join(", ") // Junte os nomes dos hardwares em uma string
+        }));
+        setStations(data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [open]); // Adiciona `open` como dependência se a função de fetch depender dela.
+
+  if (loading) {
+    return <Center><Spinner /></Center>;
+  }
+
+  if (error) {
+    return <div>Ocorreu um erro: {error.message}</div>; // Mensagem de erro mais amigável
   }
 
   const columnHelper = createColumnHelper();
@@ -40,36 +67,13 @@ export function Stations() {
     }),
     columnHelper.accessor("capacity", {
       header: () => <strong>Capacidade</strong>,
+      cell: (info) => info.renderValue(), // Certifique-se de que o valor de `capacity` seja retornado aqui.
     }),
     columnHelper.accessor("hardwares", {
       header: () => <strong>Equipamentos</strong>,
+      cell: (info) => info.renderValue(), // Certifique-se de que o valor de `hardwares` seja retornado aqui.
     }),
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const station = await axios.get(
-          routes.STATION.GET_ALL_STATIONS
-        );
-        setStation(station.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <Center><Spinner /></Center>;
-  }
-
-  if (error) {
-    return <div>Erro</div>;
-  }
 
   return (
     <Main>
@@ -90,11 +94,9 @@ export function Stations() {
           )}
           <Table
             type="station"
-            dataTable={station}
+            dataTable={stations} // Renomeado para `stations` para manter a clareza.
             dataColumns={columns}
-            url={
-              routes.STATION.DELETE_STATION
-            }
+            url={routes.STATION.DELETE_STATION}
           />
         </Section>
       </Section>

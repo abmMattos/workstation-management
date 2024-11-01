@@ -47,13 +47,6 @@ export const Select = styled.select`
     font-size: 1.25em;
     width: 350px;    
 `
-
-export const Label = styled.label`
-    font-size: 1em;
-    font-weight: bold;
-    color: ${theme.COLORS.BACKGROUND};
-`
-
 export const ButtonArea = styled.div`
     display: flex;
     flex-direction: row;

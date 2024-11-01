@@ -24,12 +24,12 @@ export function Stations() {
       try {
         const response = await axios.get(routes.STATION.GET_ALL_STATIONS);
         const data = response.data.map((station, index) => ({
-          index: index + 1, // Adiciona um índice para a tabela
+          index: index + 1, 
           id: station.id,
           name: station.name,
-          status: station.status,
+          status: (station.status == "active") ? "Ativo"  : "Inativo",
           capacity: station.capacity,
-          hardwares: station.hardwares.map(({ name }) => name).join(", ") // Junte os nomes dos hardwares em uma string
+          hardwares: station.hardwares.map(({ name }) => name).join(", ") 
         }));
         setStations(data);
       } catch (err) {
@@ -40,14 +40,14 @@ export function Stations() {
     };
 
     fetchData();
-  }, [open]); // Adiciona `open` como dependência se a função de fetch depender dela.
+  }, [open]); 
 
   if (loading) {
     return <Center><Spinner /></Center>;
   }
 
   if (error) {
-    return <div>Ocorreu um erro: {error.message}</div>; // Mensagem de erro mais amigável
+    return <div>Ocorreu um erro: {error.message}</div>; 
   }
 
   const columnHelper = createColumnHelper();
@@ -67,11 +67,11 @@ export function Stations() {
     }),
     columnHelper.accessor("capacity", {
       header: () => <strong>Capacidade</strong>,
-      cell: (info) => info.renderValue(), // Certifique-se de que o valor de `capacity` seja retornado aqui.
+      cell: (info) => info.renderValue(), 
     }),
     columnHelper.accessor("hardwares", {
       header: () => <strong>Equipamentos</strong>,
-      cell: (info) => info.renderValue(), // Certifique-se de que o valor de `hardwares` seja retornado aqui.
+      cell: (info) => info.renderValue(),
     }),
   ];
 
@@ -94,7 +94,7 @@ export function Stations() {
           )}
           <Table
             type="station"
-            dataTable={stations} // Renomeado para `stations` para manter a clareza.
+            dataTable={stations} 
             dataColumns={columns}
             url={routes.STATION.DELETE_STATION}
           />

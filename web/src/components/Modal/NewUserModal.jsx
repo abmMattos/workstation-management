@@ -6,7 +6,7 @@ import { CardModal } from "./CardModal";
 import { useState } from "react";
 import routes from "../../endpoints/routes";
 
-export function NewUserModal({ isOpen, setOpen }) {
+export function NewUserModal({ isOpen, setOpen, id, setId }) {
 
     const [data, setData] = useState({
         name: "",
@@ -26,6 +26,7 @@ export function NewUserModal({ isOpen, setOpen }) {
         e.preventDefault();
         if (window.confirm("Tem certeza que deseja fechar?")) {
             setOpen(!isOpen);
+            setId("");
         }
         return;
     }
@@ -38,10 +39,11 @@ export function NewUserModal({ isOpen, setOpen }) {
         }
         try {
             const response = await axios.post(
-                routes.USER.CREATE_USER,
-                data,
+                id ? routes.USER.UPDATE_USER : routes.USER.CREATE_USER ,
+                {...data, id: id},
             );
             setOpen(!isOpen)
+            setId("");
             window.location.reload();
         } catch (error) {
             console.error(error);
@@ -53,11 +55,11 @@ export function NewUserModal({ isOpen, setOpen }) {
         return (
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Cadastrar Usuário" />
+                    <HeaderModal click={fecharModal} titulo={id ? "Atualizar Usuário" : "Cadastrar Usuário"} />
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
                     <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} />
                     <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} />
-                    <SubmitButton text="CADASTRAR" />
+                    <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} />
                 </Form>
             </BackgroundModal>
         )

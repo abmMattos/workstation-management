@@ -7,7 +7,7 @@ const stationRoutes = Router()
 const stationController = new StationController()
 
 stationRoutes.post('/create', stationController.create)
-stationRoutes.put('/update', stationController.update)
+stationRoutes.post('/update', stationController.update)
 stationRoutes.get('/', stationController.findMany)
 stationRoutes.delete('/delete', stationController.delete)
 stationRoutes.get('/findunique', stationController.findUnique)

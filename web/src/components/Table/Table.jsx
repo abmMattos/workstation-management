@@ -73,7 +73,7 @@ export function Table(props) {
               ))}
               <BodyCell width={'5%'}>
                 <Actions>              
-                      <SmallButton img={pencil} event={() => (row.original.id)} />
+                      <SmallButton img={pencil} id={row.original.id} click={props.click} />
                       <DeleteButton img={trash} id={row.original.id} url={props.url} />
                 </Actions>
               </BodyCell>

@@ -13,6 +13,7 @@ import routes from "../../endpoints/routes";
 export function Hardwares() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
   const [hardware, setHardware] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,6 +22,11 @@ export function Hardwares() {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "";
+  }
+
+  const openModal = (id) => {
+    setOpen(!open);
+    setId(id);
   }
 
   const columnHelper = createColumnHelper();
@@ -76,7 +82,7 @@ export function Hardwares() {
                 text="Novo Equipamento"
                 img={plus}
               />
-              <NewHardwareModal isOpen={open} setOpen={setOpen} />
+              <NewHardwareModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />
             </>
           )}
           <Table
@@ -86,6 +92,7 @@ export function Hardwares() {
             url={
               routes.HARDWARE.DELETE_HARDWARE
             }
+            click={openModal}
           />
         </Section>
       </Section>

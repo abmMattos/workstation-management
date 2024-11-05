@@ -6,7 +6,7 @@ import { CardModal } from "./CardModal";
 import { useState } from "react";
 import routes from "../../endpoints/routes";
 
-export function NewHardwareModal({ isOpen, setOpen }) {
+export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
 
     const [data, setData] = useState({
         name: "",
@@ -24,6 +24,7 @@ export function NewHardwareModal({ isOpen, setOpen }) {
         e.preventDefault();
         if (window.confirm("Tem certeza que deseja fechar?")) {
             setOpen(!isOpen);
+            setId("");
         }
         return;
     }
@@ -36,10 +37,12 @@ export function NewHardwareModal({ isOpen, setOpen }) {
         }
         const hardware = {
             name: data.name,
+            id: id
         };
-        axios.post(routes.HARDWARE.CREATE_HARDWARE, hardware)
+        axios.post(id ? routes.HARDWARE.UPDATE_HARDWARE : routes.HARDWARE.CREATE_HARDWARE , hardware)
             .then((response) => {
                 setOpen(!isOpen);
+                setId("");
                 window.location.reload();
             })
             .catch((err) => {
@@ -50,9 +53,9 @@ export function NewHardwareModal({ isOpen, setOpen }) {
         return (
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Criar Equipamento" />
+                    <HeaderModal click={fecharModal} titulo={id ? "Atualizar Equipamento" : "Criar Equipamento"} />
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
-                    <SubmitButton text="CRIAR" />
+                    <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
                 </Form>
             </BackgroundModal>
         )

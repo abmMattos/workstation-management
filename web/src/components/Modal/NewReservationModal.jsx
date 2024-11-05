@@ -69,7 +69,6 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
                     {type === "room" && (<CardModal text="Convidados:" type="text" name="guests" change={handleChange} required={true} />)}
-                    <small>Separe os emails por virgula</small>
                     <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>

@@ -49,10 +49,10 @@ export function ReservationButton(props) {
     )
 }
 
-export function SmallButton(props) {
+export function SmallButton({img, click, id}) {
     return (
-        <SmallButtonComponent onClick={props.click} >
-            <img src={props.img} alt="" />
+        <SmallButtonComponent onClick={() => click(id)} >
+            <img src={img} alt="" />
         </SmallButtonComponent>
     )
 }

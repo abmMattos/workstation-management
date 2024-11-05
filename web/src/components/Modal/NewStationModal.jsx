@@ -8,7 +8,7 @@ import routes from "../../endpoints/routes";
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
-export function NewStationModal({ isOpen, setOpen }) {
+export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
     const [data, setData] = useState({
         name: "",
@@ -44,6 +44,7 @@ export function NewStationModal({ isOpen, setOpen }) {
         e.preventDefault();
         if (window.confirm("Tem certeza que deseja fechar?")) {
             setOpen(!isOpen);
+            setId("");
         }
         return;
     }
@@ -52,18 +53,18 @@ export function NewStationModal({ isOpen, setOpen }) {
 
     const fetchData = async () => {
         try {
-          const hardware = await axios.get(
-            routes.HARDWARE.GET_ALL_HARDWARES
-          );
-          setHardware(hardware.data);
+            const hardware = await axios.get(
+                routes.HARDWARE.GET_ALL_HARDWARES
+            );
+            setHardware(hardware.data);
         } catch (error) {
-          console.log("Erro:" + error);
+            console.log("Erro:" + error);
         }
-      };
+    };
 
     useEffect(() => {
         fetchData();
-      }, []);
+    }, []);
 
     const add = (e) => {
         e.preventDefault();
@@ -76,11 +77,13 @@ export function NewStationModal({ isOpen, setOpen }) {
             capacity: parseInt(data.capacity),
             hardwares: data.hardwares,
             type: data.type,
-            status: data.status
+            status: data.status,
+            id: id
         };
-        axios.post(routes.STATION.CREATE_STATION, station)
+        axios.post(id ? routes.STATION.UPDATE_STATION : routes.STATION.CREATE_STATION, station)
             .then((response) => {
                 setOpen(!isOpen);
+                setId("");
                 window.location.reload();
             })
             .catch((err) => {
@@ -108,14 +111,14 @@ export function NewStationModal({ isOpen, setOpen }) {
         return (
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Criar Estação" />
+                    <HeaderModal click={fecharModal} titulo={id ? "Atualizar Estação" : "Criar Estação"} />
                     <label htmlFor="type">Tipo:</label>
                     <Select options={[{label:"Estação de trabalho", value:"workstation"},{label:"Sala de reunião", value:"room"}]} placeholder="Selecione o tipo" isSearchable={false} onChange={(escolha) => handleType(escolha)} required/>
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
                     <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
                     <label>Equipamentos:</label>
-                    <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required/>
-                    <SubmitButton text="CRIAR" />
+                    <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required />
+                    <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
                 </Form>
             </BackgroundModal>
         )

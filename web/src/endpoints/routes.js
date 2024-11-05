@@ -8,18 +8,21 @@ export default {
 
     STATION: {
         CREATE_STATION: "https://workstation-management.onrender.com/station/create",
+        UPDATE_STATION: "https://workstation-management.onrender.com/station/update",
         GET_ALL_STATIONS: "https://workstation-management.onrender.com/station/",
         DELETE_STATION: "https://workstation-management.onrender.com/station/delete",
     },
 
     HARDWARE: {
         CREATE_HARDWARE: "https://workstation-management.onrender.com/hardware/create",
+        UPDATE_HARDWARE: "https://workstation-management.onrender.com/hardware/update",
         GET_ALL_HARDWARES: "https://workstation-management.onrender.com/hardware/",
         DELETE_HARDWARE: "https://workstation-management.onrender.com/hardware/delete",
     },
 
     USER: {
         CREATE_USER: "https://workstation-management.onrender.com/user/create",
+        UPDATE_USER: "https://workstation-management.onrender.com/user/update",
         LOGIN: "https://workstation-management.onrender.com/user/login",
         GET_ALL_USERS: "https://workstation-management.onrender.com/user",
         DELETE_USER: 'https://workstation-management.onrender.com/user/delete',

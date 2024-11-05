@@ -13,9 +13,15 @@ import routes from "../../endpoints/routes";
 export function Stations() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);  
+
+  const openModal = (id) => {
+    setOpen(!open);
+    setId(id);
+  }
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -89,7 +95,7 @@ export function Stations() {
                 text="Nova Estação"
                 img={plus}
               />
-              <NewStationModal isOpen={open} setOpen={setOpen} />
+              <NewStationModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />
             </>
           )}
           <Table
@@ -97,6 +103,7 @@ export function Stations() {
             dataTable={stations} 
             dataColumns={columns}
             url={routes.STATION.DELETE_STATION}
+            click={openModal}
           />
         </Section>
       </Section>

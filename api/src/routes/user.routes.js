@@ -7,7 +7,7 @@ const userRoutes = Router()
 const userController = new UserController()
 
 userRoutes.post('/create', userController.create)
-userRoutes.put('/update', userController.update)
+userRoutes.post('/update', userController.update)
 userRoutes.get('/login', userController.login)
 userRoutes.get('/', userController.findMany)
 userRoutes.delete('/delete', userController.delete)

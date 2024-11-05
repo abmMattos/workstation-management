@@ -13,6 +13,7 @@ import routes from "../../endpoints/routes";
 
 export function Users() {
   const [data, setData] = useState([]);
+  const [id, setId] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
@@ -22,6 +23,11 @@ export function Users() {
     document.body.style.overflow = "";
   }
   const columnHelper = createColumnHelper();
+
+  const openModal = (id) => {
+    setOpen(!open);
+    setId(id);
+  }
 
   const columns = [
     columnHelper.accessor("index", {
@@ -85,8 +91,8 @@ export function Users() {
             text="Cadastrar Usuário"
             img={plus}
           />
-          <NewUserModal isOpen={open} setOpen={setOpen} />
-          <Table dataTable={data} dataColumns={columns} url={routes.USER.DELETE_USER} />
+          <NewUserModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />
+          <Table dataTable={data} dataColumns={columns} url={routes.USER.DELETE_USER} click={openModal} />
         </Section>
       </Section>
     </Main>

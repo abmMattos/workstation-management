@@ -3,9 +3,10 @@ import axios from "axios"
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import routes from "../../endpoints/routes";
+import Select from 'react-select';
 
 export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
 
@@ -14,9 +15,16 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
     const idUser = localStorage.getItem('idUser');
 
     const [data, setData] = useState({
-        guests: "",
+        guests: [],
         motive: ""
     });
+
+    const handleGuest = (select) => {
+        setData({
+            ...data,
+            guests: select.map(guest => ({ id: guest["value"]}))
+        });
+    }
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -25,6 +33,23 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
             [e.target.name]: value
         });
     };
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const users = await axios.get(
+              routes.USER.GET_ALL_USERS
+            );
+            setUsers(users.data);
+          } catch (error) {
+            console.log("Erro:" + error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const fecharModal = (e) => {
         e.preventDefault();
@@ -36,7 +61,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
 
     const add = async (e) => {
         e.preventDefault();
-        if (data.motive.trim().length <= 3 || data.guests.trim().length <= 3) {
+        if (data.motive.trim().length <= 3) {
             alert("Preencha todos os dados corretamente!");
             return;
         }
@@ -68,7 +93,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    {type === "room" && (<CardModal text="Convidados:" type="text" name="guests" change={handleChange} required={true} />)}
+                    {type === "room" && (<Select options={users.map(user => ({ label: user["email"], value: user['email'] }))} placeholder="Selecione convidados" onChange={(escolha) => handleGuest(escolha)} isMulti required/>)}
                     <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>

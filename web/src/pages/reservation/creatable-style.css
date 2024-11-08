@@ -1,0 +1,13 @@
+.custom-datepicker .react-datepicker__header {
+  background-color: #007bff; /* Mudando o cabeçalho para azul */
+  color: white; /* Cor do texto no cabeçalho */
+}
+
+.custom-datepicker .react-datepicker__day--selected {
+  background-color: #007bff !important; /* Mudando a cor do dia selecionado */
+  color: white !important; /* Cor do texto do dia selecionado */
+}
+
+.custom-datepicker .react-datepicker__day:hover {
+  background-color: #f0f0f0; /* Cor de fundo quando passar o mouse */
+}

@@ -11,6 +11,7 @@ import { Cards } from "../../components/Cards/card";
 import './date-picker.css';
 import routes from "../../endpoints/routes";
 import { StationPicker } from "../../components/Button/Button";
+import Creatable from "react-select/creatable";
 
 export function Reservation() {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,16 @@ export function Reservation() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [filteredItems, setFilteredItems] = useState([]);
   const [filterTypes, setFilterTypes] = useState([]);
+  const [hardware, setHardware] = useState([]);
+  const [selectedHardwares, setSelectedHardwares] = useState([]);
+
+  const [data, setData] = useState({
+    name: "",
+    capacity: 0,
+    hardwares: [],
+    status: "active",
+    type: ""
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +40,8 @@ export function Reservation() {
         setItems([...stations.data]);
         setReservedItems([...reservations.data]);
         setLoading(false);
+        const hardware = await axios.get(routes.HARDWARE.GET_ALL_HARDWARES);
+        setHardware(hardware.data);
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -37,17 +50,28 @@ export function Reservation() {
     fetchData();
   }, []);
 
+  const handleHardwares = (select) => {
+    setSelectedHardwares(select);
+  };
+
   useEffect(() => {
     const dateString = format(selectedDate, "yyyy-MM-dd");
     const filtered = items.filter(item => {
       const isReserved = reservedItems.some(reserved => {
         return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString;
       });
+
       const matchesFilter = filterTypes.length === 0 || filterTypes.includes(item.type);
-      return !isReserved && matchesFilter;
+
+      const matchesHardware = selectedHardwares.length === 0 || selectedHardwares.every(selected => 
+        item.hardwares.some(itemHardware => itemHardware.id === selected.value)
+      );
+
+      return !isReserved && matchesFilter && matchesHardware;
     });
+
     setFilteredItems(filtered);
-  }, [selectedDate, items, reservedItems, filterTypes]);
+  }, [selectedDate, items, reservedItems, filterTypes, selectedHardwares]);
 
   const handleFilterChange = (type) => {
     setFilterTypes(prev => {
@@ -88,6 +112,14 @@ export function Reservation() {
             <Label>Selecione:</Label>
             <StationPicker text='Salas' onSelect={() => handleFilterChange('room')} />
             <StationPicker text='Estações' onSelect={() => handleFilterChange('workstation')} />
+            <Creatable
+              options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))}
+              isMulti
+              value={selectedHardwares}
+              formatCreateLabel={(valor) => "Crie o equipamento: " + valor}
+              placeholder="Selecione os equipamentos"
+              onChange={handleHardwares}
+            />
           </Row>
           {filteredItems.length > 0 ? (
             <Cards filteredItems={filteredItems} date={selectedDate} />

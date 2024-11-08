@@ -15,14 +15,14 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
     const idUser = localStorage.getItem('idUser');
 
     const [data, setData] = useState({
-        guests: [],
+        guests: "",
         motive: ""
     });
 
     const handleGuest = (select) => {
         setData({
             ...data,
-            guests: select.map(guest => ({ id: guest["value"]}))
+            guests: select.map(guest => guest["value"]).join(',')
         });
     }
 
@@ -93,7 +93,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    {type === "room" && (<Select options={users.map(user => ({ label: user["email"], value: user['email'] }))} placeholder="Selecione convidados" onChange={(escolha) => handleGuest(escolha)} isMulti required/>)}
+                    {type === "room" && (<Select options={users.map(user => ({ label: user["email"], value: user['email'] }))} placeholder="Selecione convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
                     <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>

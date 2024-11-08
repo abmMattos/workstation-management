@@ -3,16 +3,16 @@ import { FAQContainer, Question, Answer } from './FAQStyle';
 
 const FAQs = [
     {
-      question: 'O que é React?',
-      answer: 'React é uma biblioteca JavaScript para construir interfaces de usuário.',
+      question: 'Como fazer agendamento?',
+      answer: 'Acesse no menu a esquerda a opção "reservar" e selecione a data na parte superior. Todas os itens disponíveis estarão visíveis na tela. Selecione a sua de preferência e clique em "Reservar", complete o formulário e pronto, sua reserva estará feita!',
     },
     {
-      question: 'O que são Styled Components?',
-      answer: 'Styled Components é uma biblioteca para estilização de componentes em React usando CSS-in-JS.',
+      question: 'Como cancelar meu agendamento?',
+      answer: 'Acesse no menu a esquerda a opção "minhas reservas", em seguida estará disponível na tela todos os itens que foram reservados pelo seu usuário. Clique em "Cancelar" para excluir seu agendamento.',
     },
     {
-      question: 'Como instalar o Styled Components?',
-      answer: 'Você pode instalar o Styled Components usando npm ou yarn: npm install styled-components.',
+      question: 'Como solicitar troca?',
+      answer: '.',
     },
   ];
   

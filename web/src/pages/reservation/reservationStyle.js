@@ -48,6 +48,7 @@ export const Row = styled.div`
     display: flex;
     align-items: center;
     gap: 25px;
+    color: black;
 `
 
 export const Label = styled.h4`

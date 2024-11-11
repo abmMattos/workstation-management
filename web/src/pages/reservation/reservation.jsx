@@ -11,7 +11,7 @@ import { Cards } from "../../components/Cards/card";
 import './date-picker.css';
 import routes from "../../endpoints/routes";
 import { StationPicker } from "../../components/Button/Button";
-import Creatable from "react-select/creatable";
+import Select from "react-select";
 
 export function Reservation() {
   const [loading, setLoading] = useState(true);
@@ -53,16 +53,16 @@ export function Reservation() {
   const handleHardwares = (select) => {
     setSelectedHardwares(select);
   };
-
+  
   useEffect(() => {
     const dateString = format(selectedDate, "yyyy-MM-dd");
     const filtered = items.filter(item => {
       const isReserved = reservedItems.some(reserved => {
         return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString;
       });
-
+      
       const matchesFilter = filterTypes.length === 0 || filterTypes.includes(item.type);
-
+      
       const matchesHardware = selectedHardwares.length === 0 || selectedHardwares.every(selected => 
         item.hardwares.some(itemHardware => itemHardware.id === selected.value)
       );
@@ -112,14 +112,7 @@ export function Reservation() {
             <Label>Selecione:</Label>
             <StationPicker text='Salas' onSelect={() => handleFilterChange('room')} />
             <StationPicker text='Estações' onSelect={() => handleFilterChange('workstation')} />
-            <Creatable
-              options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))}
-              isMulti
-              value={selectedHardwares}
-              formatCreateLabel={(valor) => "Crie o equipamento: " + valor}
-              placeholder="Selecione os equipamentos"
-              onChange={handleHardwares}
-            />
+            <Select options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti placeholder="Selecione os equipamentos" noOptionsMessage={(valor) =>"Sem opções disponíveis"} onChange={handleHardwares}/>
           </Row>
           {filteredItems.length > 0 ? (
             <Cards filteredItems={filteredItems} date={selectedDate} />

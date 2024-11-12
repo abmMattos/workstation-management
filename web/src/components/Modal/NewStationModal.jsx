@@ -99,7 +99,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
         axios.post(routes.HARDWARE.CREATE_HARDWARE, {name : valor})
             .then((response) => {
-                console.log("deu certo");
+                alert("Novo equipamento criado");
                 fetchData()
             })
             .catch((err) => {

@@ -8,21 +8,21 @@ import { useNavigate } from "react-router-dom";
 import routes from "../../endpoints/routes";
 import Select from 'react-select';
 
-export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
+export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests }) {
 
     const navigate = useNavigate();
 
     const idUser = localStorage.getItem('idUser');
 
     const [data, setData] = useState({
-        guests: "",
+        guests: [],
         motive: ""
     });
 
     const handleGuest = (select) => {
         setData({
             ...data,
-            guests: select.map(guest => guest["value"]).join(',')
+            guests: select.map(guest => ({id: guest["value"], name:guest['name'], email: guest['email']}))
         });
     }
 
@@ -66,6 +66,13 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
             return;
         }
         
+        if(type === "room" && data.guests.length > maxGuests){
+            alert("Número de convidados selecionados superior a capacidade máxima da sala!");
+            return;
+        }
+
+        const emails = data.guests.map(guest => guest.email).join(',');
+        
         var reservation = {
             dateReserve: new Date(date.setHours(0,0,0,0)).toISOString(),
             motive: data.motive,
@@ -73,7 +80,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
             user_id: idUser,
             station_id: id
         };      
-
+        
         try {
             const response = await axios.post(
                 routes.RESERVATION.MAKE_RESERVATION,
@@ -93,7 +100,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    {type === "room" && (<Select options={users.map(user => ({ label: user["email"], value: user['email'] }))} placeholder="Selecione convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
+                    {type === "room" && (<Select options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
                     <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>

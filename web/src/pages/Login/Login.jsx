@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import routes from "../../endpoints/routes";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function Login() {
 
@@ -28,19 +29,19 @@ export function Login() {
         e.preventDefault();
 
         try {
-                const response = await axios.get(
-                    routes.USER.LOGIN,
-                    {
-                        params: {
-                            email: data.email,
-                            password: data.password
-                        }
+            const response = await axios.get(
+                routes.USER.LOGIN,
+                {
+                    params: {
+                        email: data.email,
+                        password: data.password
                     }
-                );
-                localStorage.setItem('userType', 'USER');
-                localStorage.setItem('idUser', response.data.id);
-                localStorage.setItem('nameUser', response.data.name);
-                navigate('/reservar');
+                }
+            );
+            localStorage.setItem('userType', 'USER');
+            localStorage.setItem('idUser', response.data.id);
+            localStorage.setItem('nameUser', response.data.name);
+            navigate('/reservar');
         } catch (error) {
             try {
                 const response = await axios.get(
@@ -58,7 +59,7 @@ export function Login() {
                 navigate('/usuarios');
             } catch (error) {
                 console.error(error);
-                alert('Erro ao fazer login. Verifique suas credenciais.');
+                toast.error('Erro ao fazer login. Verifique suas credenciais.');
             }
         }
     };
@@ -78,7 +79,7 @@ export function Login() {
                     </Form>
                 </Container>
             </Main>
+            <ToastContainer />
         </>
-
-    )
+    );
 }

@@ -1,10 +1,12 @@
-import { BackgroundModal, Form } from "./NewStationModalStyle"
-import axios from "axios"
+import { BackgroundModal, Form } from "./NewStationModalStyle";
+import axios from "axios";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
 import { useState } from "react";
 import routes from "../../endpoints/routes";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function NewUserModal({ isOpen, setOpen, id, setId }) {
 
@@ -24,11 +26,33 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
 
     const fecharModal = (e) => {
         e.preventDefault();
-        if (window.confirm("Tem certeza que deseja fechar?")) {
-            setOpen(!isOpen);
-            setId("");
-        }
-        return;
+        toast.info(
+            <div>
+                <span id="text">Tem certeza que deseja fechar?</span>
+                <div id="buttons">
+                    <button id="green-button-confirmation"
+                        onClick={() => {
+                            setOpen(!isOpen);
+                            setId("");
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="grey-button-confirmation"
+                        onClick={() => toast.dismiss()} 
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+                position: "top-center",
+                autoClose: false,
+                closeButton: false,
+                draggable: false,
+                pauseOnHover: false,
+                className: 'toast-confirmation',
+            });
     }
 
     const add = async (e) => {
@@ -53,6 +77,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
 
     if (isOpen) {
         return (
+            <>
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo={id ? "Atualizar Usuário" : "Cadastrar Usuário"} />
@@ -62,6 +87,8 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                     <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} />
                 </Form>
             </BackgroundModal>
+            <ToastContainer />
+            </>
         )
     }
 }

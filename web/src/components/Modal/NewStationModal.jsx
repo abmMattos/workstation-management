@@ -1,5 +1,5 @@
-import { BackgroundModal, Form } from "./NewStationModalStyle"
-import axios from "axios"
+import { BackgroundModal, Form } from "./NewStationModalStyle";
+import axios from "axios";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
@@ -7,6 +7,9 @@ import { useState, useEffect } from "react";
 import routes from "../../endpoints/routes";
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../toastify/ReactToastify.css'
 
 export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
@@ -28,7 +31,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
     const handleHardwares = (select) => {
         setData({
             ...data,
-            hardwares: select.map(hardware => ({ id: hardware["value"]}))
+            hardwares: select.map(hardware => ({ id: hardware["value"] }))
         });
     }
 
@@ -42,11 +45,33 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
     const fecharModal = (e) => {
         e.preventDefault();
-        if (window.confirm("Tem certeza que deseja fechar?")) {
-            setOpen(!isOpen);
-            setId("");
-        }
-        return;
+        toast.info(
+            <div>
+                <span id="text">Tem certeza que deseja fechar?</span>
+                <div id="buttons">
+                    <button id="green-button-confirmation"
+                        onClick={() => {
+                            setOpen(!isOpen);
+                            setId("");
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="grey-button-confirmation"
+                        onClick={() => toast.dismiss()}
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: 'toast-confirmation',
+        });
     }
 
     const [hardware, setHardware] = useState([]);
@@ -97,9 +122,8 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             return;
         }
 
-        axios.post(routes.HARDWARE.CREATE_HARDWARE, {name : valor})
+        axios.post(routes.HARDWARE.CREATE_HARDWARE, { name: valor })
             .then((response) => {
-                console.log("deu certo");
                 fetchData()
             })
             .catch((err) => {
@@ -109,18 +133,21 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
     if (isOpen) {
         return (
-            <BackgroundModal onClick={fecharModal}>
-                <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo={id ? "Atualizar Estação" : "Criar Estação"} />
-                    <label htmlFor="type">Tipo:</label>
-                    <Select options={[{label:"Estação de trabalho", value:"workstation"},{label:"Sala de reunião", value:"room"}]} placeholder="Selecione o tipo" isSearchable={false} onChange={(escolha) => handleType(escolha)} required/>
-                    <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
-                    <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
-                    <label>Equipamentos:</label>
-                    <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required />
-                    <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
-                </Form>
-            </BackgroundModal>
+            <>
+                <BackgroundModal onClick={fecharModal}>
+                    <Form onSubmit={add} onClick={e => e.stopPropagation()}>
+                        <HeaderModal click={fecharModal} titulo={id ? "Atualizar Estação" : "Criar Estação"} />
+                        <label htmlFor="type">Tipo:</label>
+                        <Select options={[{ label: "Estação de trabalho", value: "workstation" }, { label: "Sala de reunião", value: "room" }]} placeholder="Selecione o tipo" isSearchable={false} onChange={(escolha) => handleType(escolha)} required />
+                        <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
+                        <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
+                        <label>Equipamentos:</label>
+                        <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required />
+                        <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
+                    </Form>
+                </BackgroundModal>
+                <ToastContainer />
+            </>
         )
     }
 }

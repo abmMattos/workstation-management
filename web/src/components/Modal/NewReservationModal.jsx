@@ -1,5 +1,5 @@
-import { BackgroundModal, Form } from "./NewStationModalStyle"
-import axios from "axios"
+import { BackgroundModal, Form } from "./NewStationModalStyle";
+import axios from "axios";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
@@ -7,13 +7,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import routes from "../../endpoints/routes";
 import Select from 'react-select';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../toastify/ReactToastify.css';
 
 export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests }) {
 
     const navigate = useNavigate();
-
     const idUser = localStorage.getItem('idUser');
-
     const [data, setData] = useState({
         guests: [],
         motive: ""
@@ -24,7 +25,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             ...data,
             guests: select.map(guest => ({id: guest["value"], name:guest['name'], email: guest['email']}))
         });
-    }
+    };
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -53,11 +54,33 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
 
     const fecharModal = (e) => {
         e.preventDefault();
-        if (window.confirm("Tem certeza que deseja fechar?")) {
-            setOpen(!isOpen);
-        }
-        return;
-    }
+        toast.info(
+            <div>
+                <span id="text">Tem certeza que deseja fechar?</span>
+                <div id="buttons">
+                    <button id="green-button-confirmation"
+                        onClick={() => {
+                            setOpen(!isOpen);
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="red-button-confirmation"
+                        onClick={() => toast.dismiss()} 
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: 'toast-confirmation',
+        });
+    };
 
     const add = async (e) => {
         e.preventDefault();
@@ -71,7 +94,6 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             return;
         }
 
-        const emails = data.guests.map(guest => guest.email).join(',');
         
         var reservation = {
             dateReserve: new Date(date.setHours(0,0,0,0)).toISOString(),
@@ -86,7 +108,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                 routes.RESERVATION.MAKE_RESERVATION,
                 reservation
             );
-            setOpen(!isOpen)
+            setOpen(!isOpen);
             window.location.reload();
         } catch (error) {
             console.error(error);
@@ -96,14 +118,17 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
 
     if (isOpen) {
         return (
+            <>
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    {type === "room" && (<Select options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
+                    {type === "room" && (<Select options={users.map(user => ({ label: user["email"], value: user['email'] }))} placeholder="Selecione convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
                     <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>
+            <ToastContainer />
+            </>  
         )
     }
 }

@@ -5,6 +5,10 @@ import axios from "axios"
 import { useState } from "react"
 import { NewReservationModal } from "../Modal/NewReservationModal"
 import { NavLink } from "react-router-dom"
+import React from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../toastify/ReactToastify.css';
 
 
 export function HomeButton(props) {
@@ -49,7 +53,7 @@ export function ReservationButton(props) {
     )
 }
 
-export function SmallButton({img, click, id}) {
+export function SmallButton({ img, click, id }) {
     return (
         <SmallButtonComponent onClick={() => click(id)} >
             <img src={img} alt="" />
@@ -57,33 +61,147 @@ export function SmallButton({img, click, id}) {
     )
 }
 
-export function CancelReservationButton(props) {
+export function EditButton({ img, click, id }) {
 
-    async function deleteData(id, url) {
-        const response = await axios.delete("" + url + "", { data: { id: id } });
-        window.location.reload();
-        return response.data;
+    const handleClick = (id) => {
+        toast.info(
+            <div>
+                <span id="text">Tem certeza que deseja editar?</span>
+                <div id="buttons">
+                    <button id="green-button-confirmation"
+                        onClick={() => {
+                            click(id);
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="red-button-confirmation"
+                        onClick={() => toast.dismiss()}
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: 'toast-confirmation',
+        });
     }
 
     return (
-        <DeleteButtonComponent onClick={() => deleteData(props.id, props.url)} >
-            {props.text}
-        </DeleteButtonComponent>
+        <>
+            <SmallButtonComponent onClick={() => handleClick(id)} >
+                <img src={img} alt="" />
+            </SmallButtonComponent>
+            <ToastContainer />
+        </>
     )
+}
+
+export function CancelReservationButton(props) {
+
+    const handleCancelReservation = (id, url) => {
+        toast.info(
+            <div>
+                <span id="text">Tem certeza que deseja cancelar a reserva?</span>
+                <div id="buttons">
+                    <button id="red-button-confirmation"
+                        onClick={() => {
+                            deleteData(id, url);
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="grey-button-confirmation"
+                        onClick={() => toast.dismiss()}
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: 'toast-confirmation',
+        });
+    };
+
+    async function deleteData(id, url) {
+        try {
+            const response = await axios.delete(`${url}`, { data: { id: id } });
+            window.location.reload();
+            toast.success("Reserva cancelada com sucesso!");
+        } catch (error) {
+            toast.error("Ocorreu um erro ao tentar cancelar a reserva.");
+        }
+    }
+
+    return (
+        <>
+            <DeleteButtonComponent onClick={() => handleCancelReservation(props.id, props.url)} >
+                {props.text}
+            </DeleteButtonComponent>
+            <ToastContainer />
+        </>
+    );
 }
 
 export function DeleteButton(props) {
 
-    async function deleteData(id, url) {
-        const response = await axios.delete("" + url + "", { data: { id: id } });
-        window.location.reload();
-        return response.data;
-    }
+    const handleDeleteConfirmation = (id, url) => {
+        toast.info(
+            <div>
+                <span id="text">Tem certeza que deseja deletar este item?</span>
+                <div id="buttons">
+                    <button id="red-button-confirmation"
+                        onClick={async () => {
+                            await deleteData(id, url);
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="grey-button-confirmation"
+                        onClick={() => toast.dismiss()}
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: 'toast-confirmation',
+        });
+    };
+
+    const deleteData = async (id, url) => {
+        try {
+            const response = await axios.delete(`${url}`, { data: { id: id } });
+            window.location.reload();
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao deletar:", error);
+        }
+    };
+
     return (
-        <SmallButtonComponent onClick={() => deleteData(props.id, props.url)} >
-            <img src={props.img} alt="" />
-        </SmallButtonComponent>
-    )
+        <>
+            <SmallButtonComponent onClick={() => handleDeleteConfirmation(props.id, props.url)}>
+                <img src={props.img} alt="Deletar" />
+            </SmallButtonComponent>
+            <ToastContainer />
+        </>
+    );
 }
 
 export function UserButton(props) {
@@ -139,19 +257,18 @@ export function SubmitButton(props) {
 
 export function StationPicker(props) {
     const [selected, setSelected] = useState(false);
-  
+
     const handleClick = () => {
-      setSelected(prev => !prev);
-      props.onSelect();
+        setSelected(prev => !prev);
+        props.onSelect();
     };
-  
+
     return (
-      <StationPickerButton
-        selected={selected}
-        onClick={handleClick}
-      >
-        {props.text}
-      </StationPickerButton>
+        <StationPickerButton
+            selected={selected}
+            onClick={handleClick}
+        >
+            {props.text}
+        </StationPickerButton>
     );
-  }
-  
+}

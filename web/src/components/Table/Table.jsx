@@ -8,9 +8,7 @@ import {
   BodyCell,
   Actions
 } from "./TableStyle";
-import { DeleteButton, ReservationButton, SmallButton } from "../Button/Button";
-import search from "../../img/search.png";
-import clock from "../../img/clock.png";
+import { DeleteButton, EditButton } from "../Button/Button";
 import trash from "../../img/trash.png";
 import pencil from "../../img/pencil.png";
 
@@ -72,9 +70,9 @@ export function Table(props) {
                 </BodyCell>
               ))}
               <BodyCell width={'5%'}>
-                <Actions>              
-                      <SmallButton img={pencil} id={row.original.id} click={props.click} />
-                      <DeleteButton img={trash} id={row.original.id} url={props.url} />
+                <Actions>
+                  <EditButton img={pencil} id={row.original.id} click={props.click} />
+                  <DeleteButton img={trash} id={row.original.id} url={props.url} />
                 </Actions>
               </BodyCell>
             </BodyRow>

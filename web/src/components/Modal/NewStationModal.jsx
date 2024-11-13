@@ -122,7 +122,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                 window.location.reload();
             })
             .catch((err) => {
-                toast.error("Erro ao criar estação")
+                toast.error("ops! ocorreu um erro" + err);
             });
     };
 
@@ -147,7 +147,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                 fetchData()
             })
             .catch((err) => {
-                toast.error("Erro ao criar equipamento")
+                toast.error("ops! ocorreu um erro" + err);
             });
     };
 

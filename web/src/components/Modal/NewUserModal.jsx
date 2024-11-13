@@ -80,7 +80,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error("'Erro criar usuário!'")
+            toast.error('Erro criar usuário!');
         }
     };
 

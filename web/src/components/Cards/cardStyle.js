@@ -32,6 +32,7 @@ export const Title = styled.h3`
 export const SubTitle = styled.h4`
   font-size: 1.1em;
   margin-bottom: 10px;
+  color: ${theme.COLORS.RED};
 `
 
 export const Date = styled.h4`

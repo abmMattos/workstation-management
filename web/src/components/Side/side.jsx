@@ -1,12 +1,12 @@
 import { Main, Logo, UnitLink } from "./sideStyle";
 import logo from "../../img/logo.png";
 import { NavLink } from "react-router-dom";
-import chair from "../../img/chair.png";
-import chat from "../../img/chat.png";
-import config from "../../img/config.png";
-import help from "../../img/help.png";
-import computer from "../../img/computer.png";
-import user from "../../img/userGray.png";
+import { FaTools } from "react-icons/fa";
+import { RiCalendarScheduleFill } from "react-icons/ri";
+import { FaUserCircle } from "react-icons/fa";
+import { RiComputerFill } from "react-icons/ri";
+import { BiSolidHelpCircle } from "react-icons/bi";
+import { MdContentPasteSearch } from "react-icons/md";
 
 export function Side() {
     const userType = localStorage.getItem("userType");
@@ -20,7 +20,7 @@ export function Side() {
             {userType === "ADMIN" && (
                 <NavLink to="/usuarios">
                     <UnitLink className="link" >
-                        <img src={user} alt="Usuário" />
+                        <FaUserCircle style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
                         <p>USUÁRIOS</p>
                     </UnitLink>
                 </NavLink>
@@ -28,7 +28,7 @@ export function Side() {
             {userType === "USER" && (
                 <NavLink to="/reservar">
                     <UnitLink className="link">
-                        <img src={chair} alt="Reservas" />
+                        <MdContentPasteSearch style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
                         <p>RESERVAR</p>
                     </UnitLink>
                 </NavLink>
@@ -36,7 +36,7 @@ export function Side() {
             {userType === "USER" && (
                 <NavLink to="/reservas">
                     <UnitLink className="link">
-                        <img src={chair} alt="Reservas" />
+                        <RiCalendarScheduleFill style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
                         <p>MINHAS RESERVAS</p>
                     </UnitLink>
                 </NavLink>
@@ -44,7 +44,7 @@ export function Side() {
             {userType === "ADMIN" && (
             <NavLink to="/estacoes">
                 <UnitLink className="link" >
-                    <img src={computer} alt="Computador" />
+                    <RiComputerFill style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
                     <p>ESTAÇÕES</p>
                 </UnitLink>
             </NavLink>
@@ -52,20 +52,14 @@ export function Side() {
             {userType === "ADMIN" && (
             <NavLink to="/equipamentos">
                 <UnitLink className="link" >
-                    <img src={computer} alt="Chave Inglesa" />
+                    <FaTools style={{ background: 'none', padding: 0, borderRadius: 0, fontSize: 16}}/>
                     <p>EQUIPAMENTOS</p>
                 </UnitLink>
             </NavLink>
             )}
-            <NavLink to="/mensagens">
-                <UnitLink className="link" >
-                    <img src={chat} alt="Chat" />
-                    <p>MENSAGENS</p>
-                </UnitLink>
-            </NavLink>
             <NavLink to="/ajuda">
                 <UnitLink className="link" >
-                    <img src={help} alt="Interrogação" />
+                    <BiSolidHelpCircle style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 18}} />
                     <p>AJUDA</p>
                 </UnitLink>
             </NavLink>

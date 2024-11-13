@@ -43,7 +43,8 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             const users = await axios.get(
               routes.USER.GET_ALL_USERS
             );
-            setUsers(users.data);
+            const updatedUsers = users.data.filter(user => user.id !== idUser);
+            setUsers(updatedUsers);
           } catch (error) {
             toast.error("Erro:" + error);
           }

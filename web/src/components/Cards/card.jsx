@@ -22,7 +22,7 @@ export function Cards(props) {
                   {(props.type === 'my-reserves') ? 
                   <CancelReservationButton id={item.reservation_id} url={route.RESERVATION.DELETE_RESERVATION} text="Cancelar" />
                   :
-                  <ReservationButton type={item.type} id={item.id} date={date} text="Reservar" />
+                  <ReservationButton maxGuests={item.capacity} type={item.type} id={item.id} date={date} text="Reservar" />
                   }
                 </Card>
               ))

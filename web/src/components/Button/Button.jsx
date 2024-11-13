@@ -1,6 +1,4 @@
 import { Menu, MenuItem, HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
-import arrow from "../../img/arrow-down.png"
-import user from "../../img/userGray.png"
 import axios from "axios"
 import { useState } from "react"
 import { NewReservationModal } from "../Modal/NewReservationModal"
@@ -9,7 +7,8 @@ import React from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../toastify/ReactToastify.css';
-
+import { FaUserCircle } from "react-icons/fa";
+import { IoMdArrowRoundDown } from "react-icons/io";
 
 export function HomeButton(props) {
     return (
@@ -218,10 +217,10 @@ export function UserButton(props) {
         <div>
             <UserButtonComponent onClick={toggleMenu}>
                 <div>
-                    <img src={user} alt="" />
+                    <FaUserCircle style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
                     <p>{props.text}</p>
                 </div>
-                <img src={arrow} alt="" />
+                <IoMdArrowRoundDown style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
             </UserButtonComponent>
             {menuVisible && (
                 <Menu>

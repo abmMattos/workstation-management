@@ -112,7 +112,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                 window.location.reload();
             })
             .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
+                toast.error("ops! ocorreu um erro" + err);
             });
     };
 
@@ -127,7 +127,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                 fetchData()
             })
             .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
+                toast.error("ops! ocorreu um erro" + err);
             });
     };
 

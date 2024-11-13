@@ -190,7 +190,7 @@ export function DeleteButton(props) {
             window.location.reload();
             return response.data;
         } catch (error) {
-            console.error("Erro ao deletar:", error);
+            toast.error("Erro ao deletar:", error);
         }
     };
 

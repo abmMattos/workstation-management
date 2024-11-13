@@ -45,7 +45,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
             );
             setUsers(users.data);
           } catch (error) {
-            console.log("Erro:" + error);
+            toast.error("Erro:" + error);
           }
         };
     
@@ -106,7 +106,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type }) {
             window.location.reload();
         } catch (error) {
             console.error(error);
-            alert('Erro ao Reservar!');
+            toast.error('Erro ao Reservar!');
         }
     };
 

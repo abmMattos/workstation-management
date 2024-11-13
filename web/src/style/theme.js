@@ -13,7 +13,7 @@ export default {
 
         BLACK: "black",
 
-        RED: "#F4484D"
+        RED: "#B43135"
         
     }
 }

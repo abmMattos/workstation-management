@@ -80,7 +80,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                                         window.location.reload();
                                     })
                                     .catch((err) => {
-                                        console.error("ops! ocorreu um erro" + err);
+                                        toast.error("ops! ocorreu um erro" + err);
                                     });
                                 toast.dismiss();
                             }}
@@ -109,7 +109,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                     window.location.reload();
                 })
                 .catch((err) => {
-                    console.error("ops! ocorreu um erro" + err);
+                    toast.error("ops! ocorreu um erro" + err);
                 });
         }
     };

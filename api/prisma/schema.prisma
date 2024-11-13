@@ -61,7 +61,7 @@ model Reservation {
   guests String
   
   user_id String
-  fk_user_id User @relation(fields: [user_id], references: [id])
+  fk_user_id User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   station_id String
   fk_station_id Station @relation(fields: [station_id], references: [id], onDelete: Cascade)

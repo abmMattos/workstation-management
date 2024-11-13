@@ -45,7 +45,7 @@ export function Side() {
             <NavLink to="/estacoes">
                 <UnitLink className="link" >
                     <RiComputerFill style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
-                    <p>ESTAÇÕES</p>
+                    <p>SALAS / ESTAÇÕES</p>
                 </UnitLink>
             </NavLink>
             )}

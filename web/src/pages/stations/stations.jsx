@@ -85,14 +85,14 @@ export function Stations() {
     <Main>
       <Side />
       <Section>
-        <Header title="Estações" />
+        <Header title="Salas e Estações" />
         <Section>
           {userType === "ADMIN" && (
             <>
               <AddButton
                 id="addButton"
                 click={() => setOpen(!open)}
-                text="Nova Estação"
+                text="Cadastrar"
                 img={plus}
               />
               <NewStationModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />

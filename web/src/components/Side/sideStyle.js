@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import theme from "../../style/theme";
 
+export const Container = styled.div`
+    display: flex;
+    height: 100vh;
+`;
+
 export const Main = styled.div`
     background-color: ${theme.COLORS.BACKGROUND};
     display: flex;
@@ -8,16 +13,16 @@ export const Main = styled.div`
     height: 100vh;
     width: 200px;
     align-items: center;
-    position: relative;
-    left: 0px;
+    position: sticky;
+    top: 0;
 
     .link:hover {
         background-color: ${theme.COLORS.BACKGROUND2};
     }
-    .active div{
-        background-color: ${theme.COLORS.BACKGROUND2}
+    .active div {
+        background-color: ${theme.COLORS.BACKGROUND2};
     }
-`
+`;
 
 export const Logo = styled.div`
     display: flex;
@@ -31,7 +36,7 @@ export const Logo = styled.div`
         width: 131px;
         height: 35px;
     }
-`
+`;
 
 export const UnitLink = styled.div`
     color: ${theme.COLORS.WHITE};
@@ -50,4 +55,11 @@ export const UnitLink = styled.div`
         width: 16px;
         height: 16px;
     }
-`
+`;
+
+export const Content = styled.div`
+    flex-grow: 1;
+    overflow-y: auto; /* Faz o conteúdo principal rolar */
+    padding: 20px;
+    background-color: ${theme.COLORS.BACKGROUND2};
+`;

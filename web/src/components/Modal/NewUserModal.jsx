@@ -58,7 +58,16 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
     const add = async (e) => {
         e.preventDefault();
         if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3) {
-            alert("Preencha todos os dados corretamente!");
+            toast.error(
+                <div>
+                    <span id="text">Preencha todos os dados corretamente!</span>
+                </div>, {
+                    position: "top-center",
+                    autoClose: true,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                });
             return;
         }
         try {
@@ -71,7 +80,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             window.location.reload();
         } catch (error) {
             console.error(error);
-            alert('Erro criar usuário!');
+            toast.error("'Erro criar usuário!'")
         }
     };
 
@@ -87,7 +96,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                     <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} />
                 </Form>
             </BackgroundModal>
-            <ToastContainer />
+            <ToastContainer  limit={1} />
             </>
         )
     }

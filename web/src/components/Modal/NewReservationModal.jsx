@@ -80,17 +80,36 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             pauseOnHover: false,
             className: 'toast-confirmation',
         });
+        toast.clearWaitingQueue();
     };
 
     const add = async (e) => {
         e.preventDefault();
         if (data.motive.trim().length <= 3) {
-            alert("Preencha todos os dados corretamente!");
+            toast.error(
+                <div>
+                    <span id="text">Preencha todos os dados corretamente!</span>
+                </div>, {
+                    position: "top-center",
+                    autoClose: true,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                });
             return;
         }
         
         if(type === "room" && data.guests.length > maxGuests){
-            alert("Número de convidados selecionados superior a capacidade máxima da sala!");
+            toast.error(
+                <div>
+                    <span id="text">Número de convidados selecionados superior a capacidade máxima da sala!</span>
+                </div>, {
+                    position: "top-center",
+                    autoClose: true,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                });
             return;
         }
 
@@ -102,7 +121,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             user_id: idUser,
             station_id: id
         };      
-        
+
         try {
             const response = await axios.post(
                 routes.RESERVATION.MAKE_RESERVATION,
@@ -112,7 +131,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             window.location.reload();
         } catch (error) {
             console.error(error);
-            alert('Erro ao Reservar!');
+            toast.error("Erro ao reservar")
         }
     };
 
@@ -123,11 +142,10 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    {type === "room" && (<Select options={users.map(user => ({ label: user["email"], value: user['email'] }))} placeholder="Selecione convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
-                    <SubmitButton text="AGENDAR" />
+                    {type === "room" && (<Select options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}                    <SubmitButton text="AGENDAR" />
                 </Form>
             </BackgroundModal>
-            <ToastContainer />
+            <ToastContainer limit={1} />
             </>  
         )
     }

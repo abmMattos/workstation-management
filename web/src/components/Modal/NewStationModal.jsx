@@ -72,6 +72,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             pauseOnHover: false,
             className: 'toast-confirmation',
         });
+        toast.clearWaitingQueue();
     }
 
     const [hardware, setHardware] = useState([]);
@@ -94,7 +95,16 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
     const add = (e) => {
         e.preventDefault();
         if (data.name.trim().length <= 3 || data.capacity == null) {
-            alert("Preencha todos os dados corretamente!");
+            toast.error(
+                <div>
+                    <span id="text">Preencha todos os dados corretamente!</span>
+                </div>, {
+                    position: "top-center",
+                    autoClose: true,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                });
             return;
         }
         const station = {
@@ -112,23 +122,32 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                 window.location.reload();
             })
             .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
+                toast.error("Erro ao criar estação")
             });
     };
 
     const addNewHardware = (valor) => {
         if (valor.trim().length <= 3) {
-            alert("Preencha todos os dados corretamente!");
+            toast.error(
+                <div>
+                    <span id="text">Preencha todos os dados corretamente!</span>
+                </div>, {
+                    position: "top-center",
+                    autoClose: true,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                });
             return;
         }
 
         axios.post(routes.HARDWARE.CREATE_HARDWARE, { name: valor })
             .then((response) => {
-                alert("Novo equipamento criado");
+                toast.success("Novo equipamento criado")
                 fetchData()
             })
             .catch((err) => {
-                console.error("ops! ocorreu um erro" + err);
+                toast.error("Erro ao criar equipamento")
             });
     };
 
@@ -147,7 +166,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                         <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
                     </Form>
                 </BackgroundModal>
-                <ToastContainer />
+                <ToastContainer limit={1} />
             </>
         )
     }

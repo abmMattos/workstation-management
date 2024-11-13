@@ -63,38 +63,9 @@ export function SmallButton({ img, click, id }) {
 
 export function EditButton({ img, click, id }) {
 
-    const handleClick = (id) => {
-        toast.info(
-            <div>
-                <span id="text">Tem certeza que deseja editar?</span>
-                <div id="buttons">
-                    <button id="green-button-confirmation"
-                        onClick={() => {
-                            click(id);
-                            toast.dismiss();
-                        }}
-                    >
-                        Sim
-                    </button>
-                    <button id="red-button-confirmation"
-                        onClick={() => toast.dismiss()}
-                    >
-                        Não
-                    </button>
-                </div>
-            </div>, {
-            position: "top-center",
-            autoClose: false,
-            closeButton: false,
-            draggable: false,
-            pauseOnHover: false,
-            className: 'toast-confirmation',
-        });
-    }
-
     return (
         <>
-            <SmallButtonComponent onClick={() => handleClick(id)} >
+            <SmallButtonComponent onClick={() => click(id)} >
                 <img src={img} alt="" />
             </SmallButtonComponent>
             <ToastContainer />

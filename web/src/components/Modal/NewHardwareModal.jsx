@@ -35,7 +35,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                             setId("");
                             toast.dismiss();
                         }}
-                    >
+                        >
                         Sim
                     </button>
                     <button id="no-button"
@@ -52,12 +52,22 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                 pauseOnHover: false,
                 className: 'toast-confirmation',
             });
-    }
-
-    const add = (e) => {
-        e.preventDefault();
+            toast.clearWaitingQueue();
+        }
+        
+        const add = (e) => {
+            e.preventDefault();
         if (data.name.trim().length <= 3) {
-            alert("Preencha todos os dados corretamente!");
+            toast.error(
+                <div>
+                    <span id="text">Preencha todos os dados corretamente!</span>
+                </div>, {
+                    position: "top-center",
+                    autoClose: true,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                });
             return;
         }
 
@@ -80,7 +90,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                                         window.location.reload();
                                     })
                                     .catch((err) => {
-                                        console.error("ops! ocorreu um erro" + err);
+                                        toast.error("ops! ocorreu um erro" + err)
                                     });
                                 toast.dismiss();
                             }}
@@ -109,7 +119,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                     window.location.reload();
                 })
                 .catch((err) => {
-                    console.error("ops! ocorreu um erro" + err);
+                    toast.error("ops! ocorreu um erro" + err)
                 });
         }
     };
@@ -124,7 +134,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                         <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
                     </Form>
                 </BackgroundModal>
-                <ToastContainer />
+                <ToastContainer  limit={1} />
             </>
         )
     }

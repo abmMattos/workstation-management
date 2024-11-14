@@ -102,15 +102,17 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             }
             );
             setData(station.data);
-            setHardware(station.data.hardware.map(hardware => ({ id: hardware["value"] })));
+            // setHardware(station.data.hardware.map(hardware => ({ id: hardware["value"] })));
         } catch (error) {
             toast.error("Erro ao buscar Estação " + error);
         }
         };
         
-        if(id){
-            fetchHardware();       
-        }
+        useEffect(() => {
+            if (id) {
+                fetchHardware();
+            }
+          }, [id]);
 
     const add = (e) => {
         e.preventDefault();

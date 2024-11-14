@@ -25,15 +25,17 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                 }
             }
             );
-            setData(...data,user.data);
+            setData(user.data);
         } catch (error) {
             toast.error("Erro ao buscar Usuário " + error);
         }
         };
         
-        if(id){
-            fetchData();       
-        }
+        useEffect(() => {
+            if (id) {
+                fetchData();
+            }
+          }, [id]);
         
 
     const handleChange = (e) => {

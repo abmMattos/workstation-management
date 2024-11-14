@@ -102,7 +102,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             }
             );
             setData(station.data);
-            // setHardware(station.data.hardware.map(hardware => ({ id: hardware["value"] })));
+            // setHardware(station.data.hardwares.map(hardware => ({ id: hardware["value"] })));
         } catch (error) {
             toast.error("Erro ao buscar Estação " + error);
         }

@@ -77,20 +77,40 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
     const [hardware, setHardware] = useState([]);
 
-    const fetchData = async () => {
+        const fetchData = async () => {
         try {
             const hardware = await axios.get(
                 routes.HARDWARE.GET_ALL_HARDWARES
-            );
+                );
             setHardware(hardware.data);
         } catch (error) {
             console.log("Erro:" + error);
         }
     };
-
+    
     useEffect(() => {
         fetchData();
     }, []);
+    
+    const fetchHardware = async () => {
+        try {
+            const station = await axios.get(
+                routes.STATION.GET_FIND_UNIQUE, {
+                    params: {
+                    id: id,
+                }
+            }
+            );
+            setData(station.data);
+            setHardware(station.data.hardware.map(hardware => ({ id: hardware["value"] })));
+        } catch (error) {
+            toast.error("Erro ao buscar Estação " + error);
+        }
+        };
+        
+        if(id){
+            fetchHardware();       
+        }
 
     const add = (e) => {
         e.preventDefault();
@@ -159,8 +179,8 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                         <HeaderModal click={fecharModal} titulo={id ? "Atualizar Estação" : "Criar Estação"} />
                         <label htmlFor="type">Tipo:</label>
                         <Select options={[{ label: "Estação de trabalho", value: "workstation" }, { label: "Sala de reunião", value: "room" }]} placeholder="Selecione o tipo" isSearchable={false} onChange={(escolha) => handleType(escolha)} required />
-                        <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
-                        <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} />
+                        <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
+                        <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} value={data.capacity} />
                         <label>Equipamentos:</label>
                         <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required />
                         <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />

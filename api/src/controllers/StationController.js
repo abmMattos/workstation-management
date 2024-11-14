@@ -38,7 +38,7 @@ class StationController {
   
   async findUnique(request, response) {
     try {
-      const { id } = request.body;
+      const { id } = request.query;
       const station = await prisma.station.findUnique({
         where: {
           id

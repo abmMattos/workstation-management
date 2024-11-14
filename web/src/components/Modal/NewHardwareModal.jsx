@@ -14,9 +14,28 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
     const [data, setData] = useState({
         name: "",
     });
-
-    const handleChange = (e) => {
-        const value = e.target.value;
+    
+    const fetchData = async () => {
+        try {
+            const hardware = await axios.get(
+                routes.HARDWARE.GET_FIND_UNIQUE, {
+                    params: {
+                    id: id,
+                }
+            }
+            );
+            setData(hardware.data);
+        } catch (error) {
+            toast.error("Erro ao buscar Equipamento " + error);
+        }
+        };
+        
+        if(id){
+            fetchData();       
+        }
+        
+        const handleChange = (e) => {
+            const value = e.target.value;
         setData({
             ...data,
             [e.target.name]: value
@@ -130,7 +149,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                 <BackgroundModal onClick={fecharModal}>
                     <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                         <HeaderModal click={fecharModal} titulo={id ? "Atualizar Equipamento" : "Criar Equipamento"} />
-                        <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
+                        <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
                         <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
                     </Form>
                 </BackgroundModal>

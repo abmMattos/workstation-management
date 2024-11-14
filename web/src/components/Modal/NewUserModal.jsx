@@ -16,6 +16,26 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
         password: ""
     });
 
+    const fetchData = async () => {
+        try {
+            const user = await axios.get(
+                routes.USER.GET_FIND_UNIQUE, {
+                    params: {
+                    id: id,
+                }
+            }
+            );
+            setData(...data,user.data);
+        } catch (error) {
+            toast.error("Erro ao buscar Usuário " + error);
+        }
+        };
+        
+        if(id){
+            fetchData();       
+        }
+        
+
     const handleChange = (e) => {
         const value = e.target.value;
         setData({
@@ -90,8 +110,8 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo={id ? "Atualizar Usuário" : "Cadastrar Usuário"} />
-                    <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} />
-                    <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} />
+                    <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
+                    <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} value={data.email} />
                     <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} />
                     <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} />
                 </Form>

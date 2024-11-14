@@ -62,13 +62,13 @@ class HardwareController {
 
     async findUnique(request, response) {
         try {
-            const { id } = request.body
-            const workstation = await prisma.hardware.findUnique({
+            const { id } = request.query
+            const hardware = await prisma.hardware.findUnique({
                 where: {
                     id
                 },
             })
-            return response.json(workstation)
+            return response.json(hardware)
         } catch {
             return response.status(409).send()
         }

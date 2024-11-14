@@ -85,13 +85,12 @@ class UserController {
 
     async findUnique(request, response) {
         try {
-            const { email } = request.body
+            const { id } = request.query
             const users = await prisma.user.findUnique({
                 where: {
-                    email: email
+                    id: id
                 },
                 select: {
-                    id: true,
                     name: true,
                     email: true
                 }

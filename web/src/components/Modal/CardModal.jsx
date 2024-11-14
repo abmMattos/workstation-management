@@ -4,7 +4,7 @@ export function CardModal(props) {
         return (
             <Main>
                 <label htmlFor={props.name}>{props.text}</label>
-                <Input onChange={props.change} type={props.type} name={props.name} required={props.required ?? false} />
+                <Input onChange={props.change} type={props.type} name={props.name} required={props.required ?? false}  value={props.value ? props.value : ""}/>
             </Main>
         )
 }

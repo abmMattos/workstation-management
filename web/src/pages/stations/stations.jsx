@@ -19,8 +19,10 @@ export function Stations() {
   const [error, setError] = useState(null);  
 
   const openModal = (id) => {
-    setOpen(!open);
     setId(id);
+    setTimeout(() => {
+      setOpen(!open);
+    }, 250);
   }
 
   useEffect(() => {

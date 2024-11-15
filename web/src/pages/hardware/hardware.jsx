@@ -25,8 +25,10 @@ export function Hardwares() {
   }
 
   const openModal = (id) => {
-    setOpen(!open);
     setId(id);
+    setTimeout(() => {
+      setOpen(!open);
+    }, 250);
   }
 
   const columnHelper = createColumnHelper();

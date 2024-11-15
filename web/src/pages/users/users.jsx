@@ -25,8 +25,10 @@ export function Users() {
   const columnHelper = createColumnHelper();
 
   const openModal = (id) => {
-    setOpen(!open);
     setId(id);
+    setTimeout(() => {
+      setOpen(!open);
+    }, 225);
   }
 
   const columns = [

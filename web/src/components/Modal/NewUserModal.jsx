@@ -3,7 +3,7 @@ import axios from "axios";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import routes from "../../endpoints/routes";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

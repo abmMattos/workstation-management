@@ -21,20 +21,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
         type: ""
     });
 
-    const handleType = (select) => {
-        setData({
-            ...data,
-            type: select.value
-        });
-    }
-
-    const handleHardwares = (select) => {
-        setData({
-            ...data,
-            hardwares: select.map(hardware => ({ id: hardware["value"] }))
-        });
-    }
-
+    
     const handleChange = (e) => {
         const value = e.target.value;
         setData({
@@ -42,7 +29,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             [e.target.name]: value
         });
     };
-
+    
     const fecharModal = (e) => {
         e.preventDefault();
         toast.info(
@@ -55,54 +42,61 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                             setId("");
                             toast.dismiss();
                         }}
-                    >
+                        >
                         Sim
                     </button>
                     <button id="grey-button-confirmation"
                         onClick={() => toast.dismiss()}
-                    >
+                        >
                         Não
                     </button>
                 </div>
             </div>, {
-            position: "top-center",
-            autoClose: false,
-            closeButton: false,
-            draggable: false,
-            pauseOnHover: false,
-            className: 'toast-confirmation',
-        });
-        toast.clearWaitingQueue();
-    }
+                position: "top-center",
+                autoClose: false,
+                closeButton: false,
+                draggable: false,
+                pauseOnHover: false,
+                className: 'toast-confirmation',
+            });
+            toast.clearWaitingQueue();
+        }
+        
+        const [hardware, setHardware] = useState([]);
+        const [selectedHardwares, setSelectedHardwares] = useState([]);
+        const [selectedType, setType] = useState([]);
+        
+        const handleHardwares = (select) => {
+            setSelectedHardwares(select)
+        }
 
-    const [hardware, setHardware] = useState([]);
-
-        const fetchData = async () => {
+    const fetchData = async () => {
         try {
             const hardware = await axios.get(
                 routes.HARDWARE.GET_ALL_HARDWARES
                 );
-            setHardware(hardware.data);
-        } catch (error) {
-            console.log("Erro:" + error);
-        }
-    };
-    
-    useEffect(() => {
-        fetchData();
-    }, []);
-    
-    const fetchHardware = async () => {
-        try {
-            const station = await axios.get(
-                routes.STATION.GET_FIND_UNIQUE, {
-                    params: {
-                    id: id,
-                }
+                setHardware(hardware.data);
+            } catch (error) {
+                console.log("Erro:" + error);
             }
-            );
-            setData(station.data);
-            // setHardware(station.data.hardwares.map(hardware => ({ id: hardware["value"] })));
+        };
+        
+        useEffect(() => {
+            fetchData();
+        }, []);
+        
+        const fetchHardware = async () => {
+            try {
+                const station = await axios.get(
+                    routes.STATION.GET_FIND_UNIQUE, {
+                        params: {
+                            id: id,
+                        }
+                    }
+                    );
+                    setData(station.data);
+                    setSelectedHardwares(station.data.hardwares.map(hardware => ({ label: hardware["name"] , value: hardware["id"], })));
+                    setType({label : (station.data.type == "workstation" ? "Estação de trabalho" : "Sala de reunião"), value : station.data.type});
         } catch (error) {
             toast.error("Erro ao buscar Estação " + error);
         }
@@ -132,11 +126,12 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
         const station = {
             name: data.name,
             capacity: parseInt(data.capacity),
-            hardwares: data.hardwares,
-            type: data.type,
+            hardwares: selectedHardwares.map(hardware => ({id: hardware['value']})),
+            type: selectedType["value"],
             status: data.status,
             id: id
         };
+
         axios.post(id ? routes.STATION.UPDATE_STATION : routes.STATION.CREATE_STATION, station)
             .then((response) => {
                 setOpen(!isOpen);
@@ -180,11 +175,11 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                     <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                         <HeaderModal click={fecharModal} titulo={id ? "Atualizar Estação" : "Criar Estação"} />
                         <label htmlFor="type">Tipo:</label>
-                        <Select options={[{ label: "Estação de trabalho", value: "workstation" }, { label: "Sala de reunião", value: "room" }]} placeholder="Selecione o tipo" isSearchable={false} onChange={(escolha) => handleType(escolha)} required />
+                        <Select options={[{ label: "Estação de trabalho", value: "workstation" }, { label: "Sala de reunião", value: "room" }]} value={selectedType} placeholder="Selecione o tipo" isSearchable={false} onChange={(escolha) => setType(escolha)} required />
                         <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
                         <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} required={true} value={data.capacity} />
                         <label>Equipamentos:</label>
-                        <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required />
+                        <Creatable options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti formatCreateLabel={(valor) => "Crie o equipamento: " + valor} value={selectedHardwares} placeholder="Selecione os equipamentos" onCreateOption={(valor) => addNewHardware(valor)} onChange={(escolhas) => handleHardwares(escolhas)} required />
                         <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
                     </Form>
                 </BackgroundModal>

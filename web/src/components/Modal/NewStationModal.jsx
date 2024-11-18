@@ -75,6 +75,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             const hardware = await axios.get(
                 routes.HARDWARE.GET_ALL_HARDWARES
                 );
+                hardware.data.sort((a, b) => a.name.localeCompare(b.name));
                 setHardware(hardware.data);
             } catch (error) {
                 console.log("Erro:" + error);
@@ -160,8 +161,9 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
 
         axios.post(routes.HARDWARE.CREATE_HARDWARE, { name: valor })
             .then((response) => {
-                toast.success("Novo equipamento criado")
+                toast.success("Novo equipamento criado", {autoClose: 1500})
                 fetchData()
+                setSelectedHardwares(oldSelectedHardwares => [...oldSelectedHardwares,{ label: response.data["name"] , value: response.data["id"], }])
             })
             .catch((err) => {
                 toast.error("ops! ocorreu um erro" + err);

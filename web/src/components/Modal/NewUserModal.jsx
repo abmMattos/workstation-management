@@ -114,7 +114,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                     <HeaderModal click={fecharModal} titulo={id ? "Atualizar Usuário" : "Cadastrar Usuário"} />
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
                     <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} value={data.email} />
-                    <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} />
+                    <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} value={data.password} />
                     <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} />
                 </Form>
             </BackgroundModal>

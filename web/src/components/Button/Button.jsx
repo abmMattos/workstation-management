@@ -188,10 +188,10 @@ export function UserButton(props) {
         <div>
             <UserButtonComponent onClick={toggleMenu}>
                 <div>
-                    <FaUserCircle style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
+                    <FaUserCircle style={{ background: 'none', padding: 0, borderRadius: 0, fontSize: 16 }} />
                     <p>{props.text}</p>
                 </div>
-                <IoMdArrowRoundDown style={{background: 'none', padding: 0, borderRadius: 0, fontSize: 16}} />
+                <IoMdArrowRoundDown style={{ background: 'none', padding: 0, borderRadius: 0, fontSize: 16 }} />
             </UserButtonComponent>
             {menuVisible && (
                 <Menu>
@@ -217,11 +217,65 @@ export function AddButton(props) {
 }
 
 export function SubmitButton(props) {
+    const handleSubmitConfirmation = () => {
+        return new Promise((resolve, reject) => {
+            toast.info(
+                <div>
+                    <span id="text">Tem certeza que deseja criar / alterar?</span>
+                    <div id="buttons">
+                        <button 
+                            id="green-button-confirmation"
+                            onClick={() => {
+                                toast.dismiss();
+                                resolve(true);
+                            }}
+                        >
+                            Sim
+                        </button>
+                        <button 
+                            id="red-button-confirmation"
+                            onClick={() => {
+                                toast.dismiss();
+                                resolve(false); 
+                            }}
+                        >
+                            Não
+                        </button>
+                    </div>
+                </div>, {
+                    position: "top-center",
+                    autoClose: false,
+                    closeButton: false,
+                    draggable: false,
+                    pauseOnHover: false,
+                    className: 'toast-confirmation',
+                }
+            );
+        });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const isConfirmed = await handleSubmitConfirmation();
+
+        if (isConfirmed) {
+            toast.success("Formulário enviado!");
+            props.onSubmit();
+        } else {
+            toast.error("Ação cancelada.");
+        }
+    };
+
     return (
-        <SubmitButtonComponent type="submit">
+        <SubmitButtonComponent
+            type="submit"
+            onClick={handleSubmit}
+            className="submit-button"
+        >
             {props.text}
         </SubmitButtonComponent>
-    )
+    );
 }
 
 

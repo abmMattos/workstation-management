@@ -58,7 +58,7 @@ model Reservation {
   id String @id @default(uuid())
   dateReserve DateTime
   motive String
-  guests String
+  guests String?
   
   user_id String
   fk_user_id User @relation(fields: [user_id], references: [id], onDelete: Cascade)

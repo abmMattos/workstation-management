@@ -28,8 +28,4 @@ export default createGlobalStyle`
     transition: filter 0.2s;
     font-family: "Overpass Mono", sans-serif;
   }
-
-  button:hover, a:hover {
-    filter: brightness(0.9); 
-  }
 `

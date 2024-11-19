@@ -283,10 +283,13 @@ export function SubmitButton(props) {
         return new Promise((resolve, reject) => {
             toast.info(
                 <div>
-                    {props.id ?
-                    <span id="text">Tem certeza que deseja alterar?</span> 
-                    : 
-                    <span id="text">Tem certeza que deseja criar?</span>
+                    { 
+                    props.id ?
+                        <span id="text">Tem certeza que deseja alterar?</span> 
+                    : props.book ?
+                        <span id="text">Tem certeza que deseja agendar?</span>
+                    :
+                        <span id="text">Tem certeza que deseja criar?</span>
                     }
                     
                     <div id="buttons">

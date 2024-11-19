@@ -67,7 +67,9 @@ export function Reservation() {
         item.hardwares.some(itemHardware => itemHardware.id === selected.value)
       );
 
-      return !isReserved && matchesFilter && matchesHardware;
+      const activeStation = item.status === 'active'; 
+      
+      return !isReserved && matchesFilter && matchesHardware && activeStation;
     });
 
     setFilteredItems(filtered);

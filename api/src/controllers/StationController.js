@@ -66,6 +66,23 @@ class StationController {
       return response.status(409).send();
     }
   }
+  
+  async block(request, response) {
+    try {
+      const { id, stationStatus } = request.body;
+      const station = await prisma.station.update({
+        where: {
+          id
+        },
+        data: {
+          status: stationStatus
+        }
+      });
+      return response.json(station);
+    } catch (err) {
+      return response.status(409).send();
+    }
+  }
 
   async update(request, response) {
     try {

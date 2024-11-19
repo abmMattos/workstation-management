@@ -70,7 +70,7 @@ class StationController {
   async block(request, response) {
     try {
       const { id, stationStatus } = request.body;
-      const station = await prisma.station.put({
+      const station = await prisma.station.update({
         where: {
           id
         },

@@ -15,7 +15,7 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guest: guestsEmails,
+                    guests: guestsEmails,
                     user_id,
                     station_id
                 }
@@ -37,7 +37,7 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guest: guestsEmails,
+                    guests: guestsEmails,
 
                 }
             })

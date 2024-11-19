@@ -143,7 +143,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
                     <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} value={data.motive} />
                     {type === "room" && (<Select options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}                    
-                    <SubmitButton text="AGENDAR" onSubmit={add} />
+                    <SubmitButton book={true} text="AGENDAR" onSubmit={add} />
                 </Form>
             </BackgroundModal>
             <ToastContainer limit={1} />

@@ -115,7 +115,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
 
         
         var reservation = {
-            dateReserve: new Date(date.setHours(0,0,0,0)).toISOString(),
+            dateReserve: new Date(date.setHours(0,0,0,0)).toJSON(),
             motive: data.motive,
             guests: data.guests,
             user_id: idUser,

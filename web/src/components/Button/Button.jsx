@@ -174,6 +174,67 @@ export function DeleteButton(props) {
     );
 }
 
+export function BlockButton(props) {
+
+    const handleBlockConfirmation = (id, urlBlock, stationStatus) => {
+        toast.info(
+            <div>
+                { id ?
+                <span id="text">Tem certeza que deseja BLOQUEAR este item?</span>
+                : 
+                <span id="text">Tem certeza que deseja DESBLOQUEAR este item?</span>
+                }
+                <div id="buttons">
+                    <button id="red-button-confirmation"
+                        onClick={async () => {
+                            await blockStations(id, urlBlock, stationStatus);
+                            toast.dismiss();
+                        }}
+                    >
+                        Sim
+                    </button>
+                    <button id="grey-button-confirmation"
+                        onClick={() => toast.dismiss()}
+                    >
+                        Não
+                    </button>
+                </div>
+            </div>, {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: 'toast-confirmation',
+        });
+    };
+
+    const blockStations = async (id, urlBlock, stationStatus) => {
+        if (stationStatus === 'active') {
+            stationStatus = 'locked'
+        }
+        else {
+            stationStatus = 'active'
+        }
+        try {
+            const response = await axios.put(`${urlBlock}`, { data: { id: id, status: stationStatus } });
+            window.location.reload();
+            return response.data;
+        } catch (error) {
+            toast.error("Erro ao bloquear:", error);
+        }
+    };
+
+    return (
+        <>
+            <SmallButtonComponent onClick={() => handleBlockConfirmation(props.id, props.urlBlock, props.stationStatus)}>
+                <img src={props.img} alt="Deletar" />
+            </SmallButtonComponent>
+            <ToastContainer />
+        </>
+    );
+}
+
 export function UserButton(props) {
     const [menuVisible, setMenuVisible] = useState(false);
 
@@ -221,7 +282,12 @@ export function SubmitButton(props) {
         return new Promise((resolve, reject) => {
             toast.info(
                 <div>
-                    <span id="text">Tem certeza que deseja criar / alterar?</span>
+                    {props.id ?
+                    <span id="text">Tem certeza que deseja alterar?</span> 
+                    : 
+                    <span id="text">Tem certeza que deseja criar?</span>
+                    }
+                    
                     <div id="buttons">
                         <button 
                             id="green-button-confirmation"

@@ -12,6 +12,7 @@ export default {
         GET_ALL_STATIONS: "https://workstation-management.onrender.com/station/",
         GET_FIND_UNIQUE: "https://workstation-management.onrender.com/station/findunique",
         DELETE_STATION: "https://workstation-management.onrender.com/station/delete",
+        BLOCK_STATION: "https://workstation-management.onrender.com/station/block",
     },
 
     HARDWARE: {

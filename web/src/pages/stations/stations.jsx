@@ -35,7 +35,7 @@ export function Stations() {
           index: index + 1, 
           id: station.id,
           name: station.name,
-          status: (station.status == "active") ? "Ativo"  : "Inativo",
+          status: (station.status == "active") ? "Ativo"  : "Desativado",
           capacity: station.capacity,
           hardwares: station.hardwares.map(({ name }) => name).join(", ") 
         }));
@@ -70,7 +70,7 @@ export function Stations() {
       header: () => <strong>Nome</strong>,
     }),
     columnHelper.accessor("status", {
-      header: () => <strong>Ativo</strong>,
+      header: () => <strong>Status</strong>,
       cell: (info) => info.renderValue(),
     }),
     columnHelper.accessor("capacity", {
@@ -105,6 +105,7 @@ export function Stations() {
             dataTable={stations} 
             dataColumns={columns}
             url={routes.STATION.DELETE_STATION}
+            urlBlock={routes.STATION.BLOCK_STATION}
             click={openModal}
           />
         </Section>

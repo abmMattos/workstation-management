@@ -179,7 +179,7 @@ export function BlockButton(props) {
     const handleBlockConfirmation = (id, urlBlock, stationStatus) => {
         toast.info(
             <div>
-                { id ?
+                { stationStatus === 'Ativo' ?
                 <span id="text">Tem certeza que deseja BLOQUEAR este item?</span>
                 : 
                 <span id="text">Tem certeza que deseja DESBLOQUEAR este item?</span>
@@ -210,14 +210,15 @@ export function BlockButton(props) {
     };
 
     const blockStations = async (id, urlBlock, stationStatus) => {
-        if (stationStatus === 'active') {
-            stationStatus = 'locked'
+        let status;
+        if (stationStatus === 'Ativo') {
+            status = 'locked'
         }
         else {
-            stationStatus = 'active'
-        }
+            status = 'active'
+        }        
         try {
-            const response = await axios.put(`${urlBlock}`, { data: { id: id, status: stationStatus } });
+            const response = await axios.put(urlBlock, { id: id, stationStatus: status });            
             window.location.reload();
             return response.data;
         } catch (error) {
@@ -228,7 +229,7 @@ export function BlockButton(props) {
     return (
         <>
             <SmallButtonComponent onClick={() => handleBlockConfirmation(props.id, props.urlBlock, props.stationStatus)}>
-                <img src={props.img} alt="Deletar" />
+                <img src={props.img} alt="Bloquear / Desbloquear" />
             </SmallButtonComponent>
             <ToastContainer />
         </>

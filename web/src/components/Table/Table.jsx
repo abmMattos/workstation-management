@@ -72,7 +72,7 @@ export function Table(props) {
               ))}
               <BodyCell width={'5%'}>
                 <Actions>
-                  <BlockButton img={block} id={row.original.id} stationStatus={row.original.status} url={props.urlBlock} />
+                  <BlockButton img={block} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
                   <EditButton img={pencil} id={row.original.id} click={props.click} />
                   <DeleteButton img={trash} id={row.original.id} url={props.url} />
                 </Actions>

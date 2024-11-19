@@ -38,7 +38,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
             hardwareResponse.data.sort((a, b) => a.name.localeCompare(b.name));
             setHardware(hardwareResponse.data);
         } catch (error) {
-            console.log("Erro ao buscar equipamentos:", error);
+            toast.error("Erro ao buscar equipamentos:", error);
         }
     };
 

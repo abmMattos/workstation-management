@@ -15,7 +15,7 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guestsEmails,
+                    guest: guestsEmails,
                     user_id,
                     station_id
                 }

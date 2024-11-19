@@ -10,7 +10,7 @@ class ReservationController {
     async reserveStation(request, response) {
         try {
             const { dateReserve, motive, guests, user_id, station_id } = request.body
-            const guestsEmails = guests.map(guest => guest.email).join(',');
+            const guestsEmails = (guests) ? guests.map(guest => guest.email).join(',') : "";
             const reservation = await prisma.reservation.create({
                 data: {
                     dateReserve,

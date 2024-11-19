@@ -73,7 +73,7 @@ export function Table(props) {
               ))}
               <BodyCell width={'5%'}>
                 <Actions>
-                    { path === '/usuarios' ? null :
+                    { path === '/usuarios' || path === '/equipamentos' ? null :
                         row.original.status === 'Ativo' ?
                         <BlockButton img={block} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
                         :

@@ -11,6 +11,6 @@ stationRoutes.post('/update', stationController.update)
 stationRoutes.get('/', stationController.findMany)
 stationRoutes.delete('/delete', stationController.delete)
 stationRoutes.get('/findunique', stationController.findUnique)
-stationRoutes.get('/block', stationController.block)
+stationRoutes.put('/block', stationController.block)
 
 module.exports = stationRoutes

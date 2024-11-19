@@ -12,6 +12,7 @@ import { DeleteButton, EditButton, BlockButton } from "../Button/Button";
 import trash from "../../img/trash.png";
 import pencil from "../../img/pencil.png";
 import block from "../../img/block.svg";
+import activate from "../../img/activate.svg";
 
 import {
   flexRender,
@@ -72,7 +73,12 @@ export function Table(props) {
               ))}
               <BodyCell width={'5%'}>
                 <Actions>
-                  <BlockButton img={block} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
+                    { path === '/usuarios' ? null :
+                        row.original.status === 'Ativo' ?
+                        <BlockButton img={block} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
+                        :
+                        <BlockButton img={activate} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
+                    }
                   <EditButton img={pencil} id={row.original.id} click={props.click} />
                   <DeleteButton img={trash} id={row.original.id} url={props.url} />
                 </Actions>

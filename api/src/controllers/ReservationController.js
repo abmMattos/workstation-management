@@ -37,7 +37,7 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guest: guestsEmails
+                    guest: guestsEmails,
 
                 }
             })

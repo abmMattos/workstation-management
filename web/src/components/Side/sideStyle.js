@@ -59,7 +59,7 @@ export const UnitLink = styled.div`
 
 export const Content = styled.div`
     flex-grow: 1;
-    overflow-y: auto; /* Faz o conteúdo principal rolar */
+    overflow-y: auto;
     padding: 20px;
     background-color: ${theme.COLORS.BACKGROUND2};
 `;

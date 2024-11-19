@@ -26,7 +26,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
             );
             setData(hardware.data);
         } catch (error) {
-            toast.error("Erro ao buscar Equipamento " + error);
+            toast.error("Erro ao buscar Equipamento " + error, {autoClose: 1500, position: "top-center"});
         }
         };
         
@@ -76,8 +76,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
             toast.clearWaitingQueue();
         }
         
-        const add = (e) => {
-            e.preventDefault();
+        const add = () => {
         if (data.name.trim().length <= 3) {
             toast.error(
                 <div>
@@ -111,7 +110,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                                         window.location.reload();
                                     })
                                     .catch((err) => {
-                                        toast.error("ops! ocorreu um erro" + err);
+                                        toast.error("ops! ocorreu um erro" + err, {autoClose: 1500, position: "top-center"});
                                     });
                                 toast.dismiss();
                             }}
@@ -140,7 +139,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                     window.location.reload();
                 })
                 .catch((err) => {
-                    toast.error("ops! ocorreu um erro" + err);
+                    toast.error("ops! ocorreu um erro" + err, {autoClose: 1500, position: "top-center"});
                 });
         }
     };
@@ -152,7 +151,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                     <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                         <HeaderModal click={fecharModal} titulo={id ? "Atualizar Equipamento" : "Criar Equipamento"} />
                         <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
-                        <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} />
+                        <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} />
                     </Form>
                 </BackgroundModal>
                 <ToastContainer  limit={1} />

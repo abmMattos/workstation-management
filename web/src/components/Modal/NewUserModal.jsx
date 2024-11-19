@@ -27,7 +27,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             );
             setData(user.data);
         } catch (error) {
-            toast.error("Erro ao buscar Usuário " + error);
+            toast.error("Erro ao buscar Usuário " + error, {autoClose: 1500, position: "top-center"});
         }
         };
         
@@ -77,8 +77,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             });
     }
 
-    const add = async (e) => {
-        e.preventDefault();
+    const add = async () => {
         if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3) {
             toast.error(
                 <div>
@@ -102,7 +101,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error('Erro criar usuário!');
+            toast.error('Erro criar usuário!', {autoClose: 1500, position: "top-center"});
         }
     };
 
@@ -115,7 +114,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
                     <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} value={data.email} />
                     <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} value={data.password} />
-                    <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} />
+                    <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} onSubmit={add} />
                 </Form>
             </BackgroundModal>
             <ToastContainer  limit={1} />

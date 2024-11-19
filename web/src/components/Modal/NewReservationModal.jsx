@@ -46,7 +46,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             const updatedUsers = users.data.filter(user => user.id !== idUser);
             setUsers(updatedUsers);
           } catch (error) {
-            toast.error("Erro:" + error);
+            toast.error("Erro:" + error, {autoClose: 1500, position: "top-center"});
           }
         };
     
@@ -84,8 +84,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
         toast.clearWaitingQueue();
     };
 
-    const add = async (e) => {
-        e.preventDefault();
+    const add = async () => {
         if (data.motive.trim().length <= 3) {
             toast.error(
                 <div>
@@ -132,7 +131,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error('Erro ao Reservar!');
+            toast.error('Erro ao Reservar!', {autoClose: 1500, position: "top-center"});
         }
     };
 
@@ -142,8 +141,9 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             <BackgroundModal onClick={fecharModal}>
                 <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                     <HeaderModal click={fecharModal} titulo="Agendamento" />
-                    <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} />
-                    {type === "room" && (<Select options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}                    <SubmitButton text="AGENDAR" />
+                    <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} value={data.motive} />
+                    {type === "room" && (<Select options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}                    
+                    <SubmitButton text="AGENDAR" onSubmit={add} />
                 </Form>
             </BackgroundModal>
             <ToastContainer limit={1} />

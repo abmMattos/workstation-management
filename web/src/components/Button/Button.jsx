@@ -107,9 +107,9 @@ export function CancelReservationButton(props) {
         try {
             const response = await axios.delete(`${url}`, { data: { id: id } });
             window.location.reload();
-            toast.success("Reserva cancelada com sucesso!");
+            toast.success("Reserva cancelada com sucesso!", {autoClose: 1500, position: "top-center"});
         } catch (error) {
-            toast.error("Ocorreu um erro ao tentar cancelar a reserva.");
+            toast.error("Ocorreu um erro ao tentar cancelar a reserva.", {autoClose: 1500, position: "top-center"});
         }
     }
 
@@ -160,7 +160,7 @@ export function DeleteButton(props) {
             window.location.reload();
             return response.data;
         } catch (error) {
-            toast.error("Erro ao deletar:", error);
+            toast.error("Erro ao deletar: " + error, {autoClose: 1500, position: "top-center"});
         }
     };
 
@@ -260,10 +260,9 @@ export function SubmitButton(props) {
         const isConfirmed = await handleSubmitConfirmation();
 
         if (isConfirmed) {
-            toast.success("Formulário enviado!");
             props.onSubmit();
         } else {
-            toast.error("Ação cancelada.");
+            toast.error("Ação cancelada.", {autoClose: 1500, position: "top-center"});
         }
     };
 

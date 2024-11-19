@@ -10,7 +10,7 @@ class ReservationController {
     async reserveStation(request, response) {
         try {
             const { dateReserve, motive, guests, user_id, station_id } = request.body
-            const guestsEmails = (guests) ? guests.map(guest => guest.email).join(',') : "";
+            const guestsEmails = (guests.length === 0) ? guests.map(guest => guest.email).join(',') : "";
             const reservation = await prisma.reservation.create({
                 data: {
                     dateReserve,
@@ -29,7 +29,7 @@ class ReservationController {
     async update(request, response) {
         try {
             const { id, dateReserve, motive, guests } = request.body
-            const guestsEmails = guests.map(guest => guest.email).join(',');
+            const guestsEmails = (guests.length === 0) ? guests.map(guest => guest.email).join(',') : "";
             const reservation = await prisma.reservation.update({
                 where: {
                     id: id
@@ -37,7 +37,7 @@ class ReservationController {
                 data: {
                     dateReserve,
                     motive,
-                    guestsEmails
+                    guest: guestsEmails
 
                 }
             })

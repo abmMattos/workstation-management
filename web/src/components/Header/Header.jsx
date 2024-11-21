@@ -14,8 +14,6 @@ export function Header(props) {
         <LineDiv>
             <Title>{props.title}</Title>
             <LineDiv>
-                <SmallButton img={notification} />
-                <SmallButton img={mail} />
                 <UserButton text={nameUser} img={logout} />
             </LineDiv>
         </LineDiv>

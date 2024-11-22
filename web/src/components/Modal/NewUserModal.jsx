@@ -13,7 +13,8 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
     const [data, setData] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        confirmPassword: ""
     });
 
     const fetchData = async () => {
@@ -78,7 +79,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
     }
 
     const add = async () => {
-        if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3) {
+        if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3 || data.password !== data.confirmPassword) {
             toast.error(
                 <div>
                     <span id="text">Preencha todos os dados corretamente!</span>
@@ -114,6 +115,7 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
                     <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} value={data.email} />
                     <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} value={data.password} />
+                    <CardModal text="Confirmar senha:" type="password" name="confirmPassword" change={handleChange} required={true} value={data.confirmPassword} />
                     <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} onSubmit={add} />
                 </Form>
             </BackgroundModal>

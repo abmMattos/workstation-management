@@ -39,8 +39,9 @@ export function Login() {
                 }
             );
             localStorage.setItem('userType', 'USER');
-            localStorage.setItem('idUser', response.data.id);
-            localStorage.setItem('nameUser', response.data.name);
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('idUser', response.data.user.id);
+            localStorage.setItem('nameUser', response.data.user.name);
             navigate('/reservar');
         } catch (error) {
             try {
@@ -54,8 +55,9 @@ export function Login() {
                     }
                 );
                 localStorage.setItem('userType', 'ADMIN');
-                localStorage.setItem('idUser', response.data.id);
-                localStorage.setItem('nameUser', response.data.name);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('idUser', response.data.admin.id);
+                localStorage.setItem('nameUser', response.data.admin.name);
                 navigate('/usuarios');
             } catch (error) {
                 console.error(error);

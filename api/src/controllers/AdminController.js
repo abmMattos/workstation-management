@@ -35,8 +35,8 @@ class AdminController {
       }
       const token = jwt.sign({ id: admin.id }, 'chave', { expiresIn: 40000 });
       return response.status(200).json({ auth: true, token, admin });
-    } catch {
-      return response.status(401).send('Login falhou!');
+    } catch (e) {
+      return response.status(401).send('Login falhou!', e);
     }
   }
 

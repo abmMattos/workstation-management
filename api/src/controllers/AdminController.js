@@ -33,7 +33,7 @@ class AdminController {
       if (!admin) {
         return response.status(400).send('Admin não existe!');
       }
-      const token = jwt.sign({ id: admin.id }, 'chave', { expiresIn: 40000 });
+      const token = jwt.sign({ id: admin.id, email: admin.email, role: 'admin' }, 'chave', { expiresIn: 40000 });
       return response.status(200).json({ auth: true, token, admin });
     } catch (e) {
       return response.status(401).send('Login falhou!', e);

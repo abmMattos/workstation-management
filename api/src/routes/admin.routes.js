@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const verifyToken = require('../auth/authMiddleware')
 
 const AdminController = require('../controllers/AdminController')
 
@@ -8,7 +9,7 @@ const adminController = new AdminController()
 
 adminRoutes.post('/create', adminController.create)
 adminRoutes.put('/update', adminController.update)
-adminRoutes.get('/login', adminController.login)
+adminRoutes.get('/login', verifyToken, adminController.login)
 adminRoutes.get('/', adminController.findMany)
 adminRoutes.delete('/delete', adminController.delete)
 adminRoutes.get('/findunique', adminController.findUnique)

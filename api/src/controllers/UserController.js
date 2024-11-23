@@ -33,8 +33,8 @@ class UserController {
           if (!user) {
             return response.status(400).send('Usuário não existe!');
           }
-    
-          return response.status(200).send(user);
+          const token = jwt.sign({ id: user.id }, 'chave', { expiresIn: 40000 });
+          return response.status(200).json({ auth: true, token, user });
         } catch {
           return response.status(401).send('Login falhou!');
         }

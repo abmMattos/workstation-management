@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../axios/axiosConfig.js";
 import { Center, Main, Section, Spinner } from "./hardwareStyle";
 import { Side } from "../../components/Side/side";
 import { AddButton } from "../../components/Button/Button";

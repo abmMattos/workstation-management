@@ -244,6 +244,7 @@ export function UserButton(props) {
     };
 
     const handleLogout = () => {
+        localStorage.clear();
     };
 
     return (

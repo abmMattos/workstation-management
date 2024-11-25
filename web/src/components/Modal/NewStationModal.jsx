@@ -152,6 +152,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                         <CardModal text="Capacidade:" type="number" name="capacity" change={handleChange} value={data.capacity} required />
                         <label>Equipamentos:</label>
                         <Creatable
+                            styles={{control: (baseStyles) => ({...baseStyles,width:"500px"}),}}
                             options={hardware.map(h => ({ label: h.name, value: h.id }))}
                             isMulti
                             formatCreateLabel={(valor) => `Crie o equipamento: ${valor}`}

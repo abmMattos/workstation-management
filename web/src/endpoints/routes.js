@@ -1,38 +1,40 @@
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export default {
     RESERVATION: {
-        DELETE_RESERVATION: "https://workstation-management.onrender.com/reservation/delete",
-        MAKE_RESERVATION: "https://workstation-management.onrender.com/reservation/reserveStation",
-        GET_ALL_RESERVATIONS: "https://workstation-management.onrender.com/reservation/",
-        GET_BY_USER_ID: "https://workstation-management.onrender.com/reservation/findReservationByUserId"
+        DELETE_RESERVATION: `${BASE_URL}/reservation/delete`,
+        MAKE_RESERVATION: `${BASE_URL}/reservation/reserveStation`,
+        GET_ALL_RESERVATIONS: `${BASE_URL}/reservation/`,
+        GET_BY_USER_ID: `${BASE_URL}/reservation/findReservationByUserId`
     },
 
     STATION: {
-        CREATE_STATION: "https://workstation-management.onrender.com/station/create",
-        UPDATE_STATION: "https://workstation-management.onrender.com/station/update",
-        GET_ALL_STATIONS: "https://workstation-management.onrender.com/station/",
-        GET_FIND_UNIQUE: "https://workstation-management.onrender.com/station/findunique",
-        DELETE_STATION: "https://workstation-management.onrender.com/station/delete",
-        BLOCK_STATION: "https://workstation-management.onrender.com/station/block",
+        CREATE_STATION: `${BASE_URL}/station/create`,
+        UPDATE_STATION: `${BASE_URL}/station/update`,
+        GET_ALL_STATIONS: `${BASE_URL}/station/`,
+        GET_FIND_UNIQUE: `${BASE_URL}/station/findunique`,
+        DELETE_STATION: `${BASE_URL}/station/delete`,
+        BLOCK_STATION: `${BASE_URL}/station/block`,
     },
 
     HARDWARE: {
-        CREATE_HARDWARE: "https://workstation-management.onrender.com/hardware/create",
-        UPDATE_HARDWARE: "https://workstation-management.onrender.com/hardware/update",
-        GET_ALL_HARDWARES: "https://workstation-management.onrender.com/hardware/",
-        GET_FIND_UNIQUE: "https://workstation-management.onrender.com/hardware/findunique",
-        DELETE_HARDWARE: "https://workstation-management.onrender.com/hardware/delete",
+        CREATE_HARDWARE: `${BASE_URL}/hardware/create`,
+        UPDATE_HARDWARE: `${BASE_URL}/hardware/update`,
+        GET_ALL_HARDWARES: `${BASE_URL}/hardware/`,
+        GET_FIND_UNIQUE: `${BASE_URL}/hardware/findunique`,
+        DELETE_HARDWARE: `${BASE_URL}/hardware/delete`,
     },
 
     USER: {
-        CREATE_USER: "https://workstation-management.onrender.com/user/create",
-        UPDATE_USER: "https://workstation-management.onrender.com/user/update",
-        LOGIN: "https://workstation-management.onrender.com/user/login",
-        GET_ALL_USERS: "https://workstation-management.onrender.com/user",
-        GET_FIND_UNIQUE: "https://workstation-management.onrender.com/user/findunique",
-        DELETE_USER: 'https://workstation-management.onrender.com/user/delete',
+        CREATE_USER: `${BASE_URL}/user/create`,
+        UPDATE_USER: `${BASE_URL}/user/update`,
+        LOGIN: `${BASE_URL}/user/login`,
+        GET_ALL_USERS: `${BASE_URL}/user`,
+        GET_FIND_UNIQUE: `${BASE_URL}/user/findunique`,
+        DELETE_USER: '${BASE_URL}/user/delete',
     },
 
     ADMIN: {
-        LOGIN: "https://workstation-management.onrender.com/admin/login",
+        LOGIN: `${BASE_URL}/admin/login`,
     }
 }

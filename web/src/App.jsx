@@ -7,6 +7,7 @@ import { Stations } from "./pages/stations/stations";
 import { MyReserves } from "./pages/my-reserves/myReserves";
 import { Help } from "./pages/help/help";
 import { Hardwares } from "./pages/hardware/hardware";
+import { Log } from "./pages/log/log";
 
 export default function App() {
     return(
@@ -15,6 +16,7 @@ export default function App() {
                 <Route exact path="/" element={<Home />}/>
                 <Route path="/login" element={<Login />} />
                 <Route path="/estacoes" element={<Stations />} />
+                <Route path="/log" element={<Log />} />
                 <Route path="/equipamentos" element={<Hardwares />} />
                 <Route path="/usuarios" element={<Users />} />
                 <Route path="/reservar" element={<Reservation />} />

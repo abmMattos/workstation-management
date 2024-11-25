@@ -7,6 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { RiComputerFill } from "react-icons/ri";
 import { BiSolidHelpCircle } from "react-icons/bi";
 import { MdContentPasteSearch } from "react-icons/md";
+import { LuCalendarSearch } from "react-icons/lu";
 
 export function Side() {
     const userType = localStorage.getItem("userType");
@@ -52,8 +53,16 @@ export function Side() {
             {userType === "ADMIN" && (
             <NavLink to="/equipamentos">
                 <UnitLink className="link" >
-                    <FaTools style={{ background: 'none', padding: 0, borderRadius: 0, fontSize: 16}}/>
+                    <FaTools style={{ background: 'none', padding: 0, borderRadius: 0, fontSize: 14}}/>
                     <p>EQUIPAMENTOS</p>
+                </UnitLink>
+            </NavLink>
+            )}
+            {userType === "ADMIN" && (
+            <NavLink to="/log">
+                <UnitLink className="link" >
+                    <LuCalendarSearch style={{ background: 'none', padding: 0, borderRadius: 0, fontSize: 22}}/>
+                    <p>Histórico de reservas</p>
                 </UnitLink>
             </NavLink>
             )}

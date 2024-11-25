@@ -35,7 +35,7 @@ export const SubTitle = styled.h4`
   color: ${theme.COLORS.RED};
 `
 
-export const Date = styled.h4`
+export const ReserveDate = styled.h4`
   font-size: 1.5em;
   margin-bottom: 10px;
   color: ${theme.COLORS.RED};

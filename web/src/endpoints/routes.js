@@ -3,7 +3,8 @@ export default {
         DELETE_RESERVATION: "https://workstation-management.onrender.com/reservation/delete",
         MAKE_RESERVATION: "https://workstation-management.onrender.com/reservation/reserveStation",
         GET_ALL_RESERVATIONS: "https://workstation-management.onrender.com/reservation/",
-        GET_BY_USER_ID: "https://workstation-management.onrender.com/reservation/findReservationByUserId"
+        GET_BY_USER_ID: "https://workstation-management.onrender.com/reservation/findReservationByUserId",
+        GET_RESERVATIONS: "https://workstation-management.onrender.com/reservation/findReservedByDate"
     },
 
     STATION: {

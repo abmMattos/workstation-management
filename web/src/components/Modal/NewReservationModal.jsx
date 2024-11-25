@@ -99,7 +99,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             return;
         }
         
-        if(type === "room" && data.guests.length > maxGuests){
+        if(type === "room" && data.guests.length > maxGuests - 1){
             toast.error(
                 <div>
                     <span id="text">Número de convidados selecionados superior a capacidade máxima da sala!</span>
@@ -133,7 +133,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             console.error(error);
             toast.error('Erro ao Reservar!', {autoClose: 1500, position: "top-center"});
         }
-    };
+          };
 
     if (isOpen) {
         return (

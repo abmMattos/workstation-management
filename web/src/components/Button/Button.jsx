@@ -1,5 +1,5 @@
 import { Menu, MenuItem, HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
-import axios from "axios"
+import axios from "../../axios/axiosConfig.js"
 import { useState } from "react"
 import { NewReservationModal } from "../Modal/NewReservationModal"
 import { NavLink } from "react-router-dom"

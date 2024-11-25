@@ -38,11 +38,6 @@ export function Table(props) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  // function handleGetObject(id) {
-  //   const obj = data.find(obj => obj.id === id);
-  //   return obj;
-  // }
-
   return (
     <Container>
       <StyledTable>

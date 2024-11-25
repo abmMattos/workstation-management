@@ -3,7 +3,7 @@ import { Container, Form, Main, Title, Input, ButtonArea, Select, Label } from "
 import { LoginButton } from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../axios/axiosConfig.js";
 import routes from "../../endpoints/routes";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,43 +27,41 @@ export function Login() {
 
     const login = async (e) => {
         e.preventDefault();
-
+    
         try {
-            const response = await axios.get(
-                routes.USER.LOGIN,
-                {
+            const response = await axios.get(routes.USER.LOGIN, {
+                params: {
+                    email: data.email,
+                    password: data.password,
+                },
+            });
+    
+            configureLogin('USER', response.data.user, response.data.token);
+            navigate('/reservar');
+        } catch (errorUser) {
+            try {
+                const response = await axios.get(routes.ADMIN.LOGIN, {
                     params: {
                         email: data.email,
-                        password: data.password
-                    }
-                }
-            );
-            localStorage.setItem('userType', 'USER');
-            localStorage.setItem('idUser', response.data.id);
-            localStorage.setItem('nameUser', response.data.name);
-            navigate('/reservar');
-        } catch (error) {
-            try {
-                const response = await axios.get(
-                    routes.ADMIN.LOGIN,
-                    {
-                        params: {
-                            email: data.email,
-                            password: data.password
-                        }
-                    }
-                );
-                localStorage.setItem('userType', 'ADMIN');
-                localStorage.setItem('idUser', response.data.id);
-                localStorage.setItem('nameUser', response.data.name);
+                        password: data.password,
+                    },
+                });
+    
+                configureLogin('ADMIN', response.data.admin, response.data.token);
                 navigate('/usuarios');
-            } catch (error) {
-                console.error(error);
+            } catch (errorAdmin) {
+                console.error(errorAdmin);
                 toast.error('Erro ao fazer login. Verifique suas credenciais.');
             }
         }
     };
-
+    
+    const configureLogin = (userType, user, token) => {
+        localStorage.setItem('userType', userType);
+        localStorage.setItem('token', token);
+        localStorage.setItem('idUser', user.id);
+        localStorage.setItem('nameUser', user.name);
+    };
     return (
         <>
             <NavMenu text="Meeting & Work" />

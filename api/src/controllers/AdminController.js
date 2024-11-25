@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const jwt = require('jsonwebtoken');
 
 const prisma = new PrismaClient();
 
@@ -32,10 +33,10 @@ class AdminController {
       if (!admin) {
         return response.status(400).send('Admin não existe!');
       }
-
-      return response.status(200).send(admin);
-    } catch {
-      return response.status(401).send('Login falhou!');
+      const token = jwt.sign({ id: admin.id, email: admin.email, role: 'admin' }, 'chave', { expiresIn: 40000 });
+      return response.status(200).json({ auth: true, token, admin });
+    } catch (e) {
+      return response.status(401).send('Login falhou!', e);
     }
   }
 

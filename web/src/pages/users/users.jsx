@@ -7,7 +7,7 @@ import { useEffect, useState, useReducer } from "react";
 import { Table } from "../../components/Table/Table";
 import { Header } from "../../components/Header/Header";
 import { createColumnHelper } from "@tanstack/react-table";
-import axios from "axios";
+import axios from "../../axios/axiosConfig.js";
 import { Center, Spinner } from "../stations/stationsStyle";
 import routes from "../../endpoints/routes";
 

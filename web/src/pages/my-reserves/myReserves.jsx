@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../axios/axiosConfig.js";
 import { Header } from "../../components/Header/Header";
 import { Side } from "../../components/Side/side";
 import { Center, Spinner, Main, Section, SubTitle } from "./myReservesStyle";

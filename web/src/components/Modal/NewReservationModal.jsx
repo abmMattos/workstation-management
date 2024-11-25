@@ -1,5 +1,5 @@
 import { BackgroundModal, Form } from "./NewStationModalStyle";
-import axios from "axios";
+import axios from "../../axios/axiosConfig.js";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";

@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const verifyToken = require('../auth/authMiddleware')
 
 const AdminController = require('../controllers/AdminController')
 

@@ -6,7 +6,7 @@ import {
   HeaderCell,
   BodyRow,
   BodyCell,
-  Actions
+  Actions,
 } from "./TableStyle";
 import { DeleteButton, EditButton, BlockButton } from "../Button/Button";
 import trash from "../../img/trash.png";
@@ -22,16 +22,15 @@ import {
 import { useLocation } from "react-router-dom";
 
 export function Table(props) {
-
   const location = useLocation();
   const path = location.pathname;
 
-  const userType = localStorage.getItem('userType');
-
-  const dataTable = props.dataTable
-  const columns = props.dataColumns
+  const userType = localStorage.getItem("userType");
+  
+  const dataTable = props.dataTable;
+  const columns = props.dataColumns;
   const [data, setData] = React.useState(() => [...dataTable]);
-
+  
   const table = useReactTable({
     data,
     columns,
@@ -54,7 +53,13 @@ export function Table(props) {
                     )}
                 </HeaderCell>
               ))}
-              <HeaderCell />
+              { data.find(data => Object.keys(data).includes('status')) ?
+                <HeaderCell>Bloquear <br /> Ativar</HeaderCell>
+                :
+                null
+              }
+              <HeaderCell>Editar</HeaderCell>
+              <HeaderCell>Excluir</HeaderCell>
             </HeaderRow>
           ))}
         </thead>
@@ -66,15 +71,27 @@ export function Table(props) {
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </BodyCell>
               ))}
-              <BodyCell width={'5%'}>
+              {path === "/usuarios" || path === "/equipamentos" ? null : (
+              <BodyCell width={"5%"}>
                 <Actions>
-                    { path === '/usuarios' || path === '/equipamentos' ? null :
-                        row.original.status === 'Ativo' ?
-                        <BlockButton img={block} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
-                        :
-                        <BlockButton img={activate} id={row.original.id} stationStatus={row.original.status} urlBlock={props.urlBlock} />
-                    }
+                  
+                    <BlockButton
+                      img={row.original.status === "Ativo" ? activate : block}
+                      id={row.original.id}
+                      stationStatus={row.original.status}
+                      urlBlock={props.urlBlock}
+                    />
+                  
+                </Actions>
+              </BodyCell>
+              )}
+              <BodyCell width={"5%"}>
+                <Actions>
                   <EditButton img={pencil} id={row.original.id} click={props.click} />
+                </Actions>
+              </BodyCell>
+              <BodyCell width={"5%"}>
+                <Actions>
                   <DeleteButton img={trash} id={row.original.id} url={props.url} />
                 </Actions>
               </BodyCell>

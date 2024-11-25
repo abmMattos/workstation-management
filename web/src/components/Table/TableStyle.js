@@ -33,7 +33,9 @@ export const BodyCell = styled.td`
 
 export const Actions = styled.div`
   display: flex;
-  gap: 20px;
-  padding: 0px 20px;
-`
+  gap: 25px;
+  padding-left: 20px;
+  justify-content: center; 
+  align-items: center;
+`;
 

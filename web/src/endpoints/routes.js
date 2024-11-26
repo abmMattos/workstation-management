@@ -32,7 +32,7 @@ export default {
         LOGIN: `${BASE_URL}/user/login`,
         GET_ALL_USERS: `${BASE_URL}/user`,
         GET_FIND_UNIQUE: `${BASE_URL}/user/findunique`,
-        DELETE_USER: '${BASE_URL}/user/delete',
+        DELETE_USER: `${BASE_URL}/user/delete`,
     },
 
     ADMIN: {

@@ -35,7 +35,7 @@ export function Cards(props) {
                   : null}
 
                   {!isDatePast(item.dateReserve) && (props.type !== 'my-reserves') ?
-                    <ReservationButton maxGuests={item.capacity} type={item.type} id={item.id_station} date={date} text="Reservar" />
+                    <ReservationButton maxGuests={item.capacity} type={item.type} id={item.id} date={date} text="Reservar" />
                   : null}
                 </Card>
               ))

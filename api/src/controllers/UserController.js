@@ -34,7 +34,7 @@ class UserController {
           if (!user) {
             return response.status(400).send('Usuário não existe!');
           }
-          const token = jwt.sign({ id: user.id, email: user.email, role: 'user' }, 'chave', { expiresIn: 40000 });
+          const token = jwt.sign({ id: user.id, email: user.email, role: 'user' }, process.env.JWT_SECRET_KEY, { expiresIn: 40000 });
           return response.status(200).json({ auth: true, token, user });
         } catch (e) {
           return response.status(401).send('Login falhou!', e);

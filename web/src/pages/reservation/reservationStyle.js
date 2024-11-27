@@ -48,7 +48,7 @@ export const Row = styled.div`
     display: flex;
     align-items: center;
     gap: 25px;
-    color: black;
+    color: ${theme.COLORS.BLACK};
 `
 
 export const Label = styled.h4`

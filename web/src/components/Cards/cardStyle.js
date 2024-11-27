@@ -44,4 +44,9 @@ export const ReserveDate = styled.h4`
 export const Description = styled.p`
 font-size: 1em;
 margin-bottom: 20px;
+font-weight: bold;
+
+span {
+  color: ${({ isReserved }) => (isReserved ? 'red' : `${theme.COLORS.DARK_GREEN}`)};
+}
 `

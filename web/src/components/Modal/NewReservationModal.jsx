@@ -26,7 +26,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
         setData({
             ...data,
             guests: select.map(guest => guest['email'])
-        });  
+        });
     };
 
     const handleChange = (e) => {
@@ -41,46 +41,49 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const users = await axios.get(
-              routes.USER.GET_ALL_USERS
-            );
-            const updatedUsers = users.data.filter(user => user.id !== idUser);
-            setUsers(updatedUsers);
-          } catch (error) {
-            toast.error("Erro:" + error, {autoClose: 1500, position: "top-center"});
-          }
+            try {
+                const users = await axios.get(
+                    routes.USER.GET_ALL_USERS
+                );
+                const updatedUsers = users.data.filter(user => user.id !== idUser);
+                setUsers(updatedUsers);
+            } catch (error) {
+                toast.error("Erro:" + error, { autoClose: 1500, position: "top-center" });
+            }
         };
-    
-        fetchData();
-      }, []);
 
-      const sendEmail = (station_name, dateReserve, user_name, user_email, to_email, motive) => {
-        const subject = `Convidado na ${station_name} na data de ${dateReserve} a partir das 8h.`;         
+        fetchData();
+    }, []);
+
+    const sendEmail = async (station_name, dateReserve, user_name, user_email, to_email, motive,type) => {
+        const subject = `Convidado na ${station_name} na data de ${dateReserve} a partir das 8h.`;
 
         const templateParams = {
-            station_name,     
-            dateReserve,      
-            user_name,        
-            user_email,       
+            station_name,
+            dateReserve,
+            user_name,
+            user_email,
             to_email,
             motive,
-            subject     
+            subject
         };
-    
-        emailjs.send(
-            'service_8y1vjoq',   
-            'template_iif8qnq', 
-            templateParams,
-            'zZuA5PCFd33ebZls9'   
-        )
-        .then((response) => {
-            toast.success('E-mails enviado com sucesso!', {autoClose: 1500, position: "top-center"});
-            return true;
-        })
-        .catch((error) => {
-            console.error('Erro ao enviar e-mail:', error);
-        });
+        if (type == "room") {
+            await emailjs.send(
+                'service_8y1vjoq',
+                'template_iif8qnq',
+                templateParams,
+                'zZuA5PCFd33ebZls9'
+            )
+                .then((response) => {
+                    toast.success('E-mails enviado com sucesso!', { autoClose: 1500, position: "top-center" });
+                    return false;
+                })
+                .catch((error) => {
+                    console.error('Erro ao enviar e-mail:', error);
+                    return true;
+                });
+        }
+       
     };
 
     const fecharModal = (e) => {
@@ -98,7 +101,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                         Sim
                     </button>
                     <button id="red-button-confirmation"
-                        onClick={() => toast.dismiss()} 
+                        onClick={() => toast.dismiss()}
                     >
                         Não
                     </button>
@@ -120,76 +123,80 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                 <div>
                     <span id="text">Preencha todos os dados corretamente!</span>
                 </div>, {
-                    position: "top-center",
-                    autoClose: true,
-                    draggable: false,
-                    pauseOnHover: false,
-                    className: 'toast-confirmation',
-                });
+                position: "top-center",
+                autoClose: true,
+                draggable: false,
+                pauseOnHover: false,
+                className: 'toast-confirmation',
+            });
             return;
         }
-        
-        if(type === "room" && data.guests.length > maxGuests - 1){
+
+        if (type === "room" && data.guests.length > maxGuests - 1) {
             toast.error(
                 <div>
                     <span id="text">Número de convidados selecionados superior a capacidade máxima da sala!</span>
                 </div>, {
-                    position: "top-center",
-                    autoClose: true,
-                    draggable: false,
-                    pauseOnHover: false,
-                    className: 'toast-confirmation',
-                });
+                position: "top-center",
+                autoClose: true,
+                draggable: false,
+                pauseOnHover: false,
+                className: 'toast-confirmation',
+            });
             return;
         }
 
-        
+
         var reservation = {
-            dateReserve: new Date(date.setHours(0,0,0,0)).toJSON(),
+            dateReserve: new Date(date.setHours(0, 0, 0, 0)).toJSON(),
             motive: data.motive,
             guests: data.guests.join(','),
             user_id: idUser,
             station_id: id
-        };      
+        };
 
         try {
-            if (type === "room") {
-                const station = await axios.get(routes.STATION.GET_FIND_UNIQUE, {
-                    params: 
-                   { id: id}
-                });
-                const user = await axios.get(routes.USER.GET_FIND_UNIQUE, {
-                    params: 
-                   { id: idUser}
-                });
-                const email = await sendEmail(station.data['name'], format(date, "dd/MM/yyyy"), user.data['name'], user.data['email'], data.guests.join(','), data.motive)
+
+            const station = await axios.get(routes.STATION.GET_FIND_UNIQUE, {
+                params:
+                    { id: id }
+            });
+            const user = await axios.get(routes.USER.GET_FIND_UNIQUE, {
+                params:
+                    { id: idUser }
+            });
+            const emailError = await sendEmail(station.data['name'], format(date, "dd/MM/yyyy"), user.data['name'], user.data['email'], data.guests.join(','), data.motive, type)
+            if (emailError) {
+                toast.error("Erro ao enviar email", { autoClose: 1500, position: "top-center" });
+                return;
             }
+
             const response = await axios.post(
                 routes.RESERVATION.MAKE_RESERVATION,
                 reservation
-            );        
+            );
             setOpen(!isOpen);
-            toast.success((type === "room") ? 'Sala' : 'Estação de trabalho' + ' reservada!', {autoClose: 1500, position: "top-center"});
+            toast.success((type === "room") ? 'Sala' : 'Estação de trabalho' + ' reservada!', { autoClose: 1500, position: "top-center" });
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error('Erro ao Reservar!', {autoClose: 1500, position: "top-center"});
+            toast.error('Erro ao Reservar!', { autoClose: 1500, position: "top-center" });
         }
-          };
+    };
 
     if (isOpen) {
         return (
             <>
-            <BackgroundModal onClick={fecharModal}>
-                <Form onSubmit={add} onClick={e => e.stopPropagation()}>
-                    <HeaderModal click={fecharModal} titulo="Agendamento" />
-                    <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} value={data.motive} />
-                    {type === "room" && (<Select styles={{control: (baseStyles) => ({...baseStyles,width:"500px"}),}} options={users.map(user => ({ label:  user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) =>"Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}                    
-                    <SubmitButton book={true} text="AGENDAR" onSubmit={add} />
-                </Form>
-            </BackgroundModal>
-            <ToastContainer limit={1} />
-            </>  
+                <BackgroundModal onClick={fecharModal}>
+                    <Form onSubmit={add} onClick={e => e.stopPropagation()}>
+                        <HeaderModal click={fecharModal} titulo="Agendamento" />
+                        <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} value={data.motive} />
+                        {type === "room" && (<Select styles={{ control: (baseStyles) => ({ ...baseStyles, width: "500px" }), }} options={users.map(user => ({ label: user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) => "Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
+                        <SubmitButton book={true} text="AGENDAR" onSubmit={add} />
+                    </Form>
+                </BackgroundModal>
+                <ToastContainer limit={1} />
+            </>
         )
     }
 }

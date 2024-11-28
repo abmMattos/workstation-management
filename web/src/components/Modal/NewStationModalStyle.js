@@ -3,7 +3,7 @@ import theme from "../../style/theme";
 
 export const Form = styled.form`
     display: flex;
-    color: black;
+    color: ${theme.COLORS.BLACK};
     flex-direction: column;
     align-items: flex-start;
     background-color: ${theme.COLORS.WHITE};

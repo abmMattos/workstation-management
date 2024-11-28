@@ -53,26 +53,40 @@ export function Reservation() {
   const handleHardwares = (select) => {
     setSelectedHardwares(select);
   };
-  
+
   useEffect(() => {
     const dateString = format(selectedDate, "yyyy-MM-dd");
     const filtered = items.filter(item => {
       const isReserved = reservedItems.some(reserved => {
-        return reserved.station_id === item.id && reserved.dateReserve.slice(0, 10) === dateString;
+        return reserved.station_id === item.id &&
+          reserved.dateReserve.slice(0, 10) === dateString &&
+          reserved.user_id === localStorage.getItem('idUser');
       });
-      
       const matchesFilter = filterTypes.length === 0 || filterTypes.includes(item.type);
-      
-      const matchesHardware = selectedHardwares.length === 0 || selectedHardwares.every(selected => 
+
+      const matchesHardware = selectedHardwares.length === 0 || selectedHardwares.every(selected =>
         item.hardwares.some(itemHardware => itemHardware.id === selected.value)
       );
 
-      const activeStation = item.status === 'active'; 
-      
+      const activeStation = item.status === 'active';
+
       return !isReserved && matchesFilter && matchesHardware && activeStation;
     });
+    const transformItems = filtered.map(item => {
+      const isReserved = reservedItems.some(reserved => {
+        return reserved.station_id === item.id &&
+          reserved.dateReserve.slice(0, 10) === dateString
+      });
 
-    setFilteredItems(filtered);
+      if (isReserved) {
+        return {
+          ...item,
+          status: 'booked'
+        }
+      }
+      return item;
+    })
+    setFilteredItems(transformItems);
   }, [selectedDate, items, reservedItems, filterTypes, selectedHardwares]);
 
   const handleFilterChange = (type) => {
@@ -114,7 +128,7 @@ export function Reservation() {
             <Label>Selecione:</Label>
             <StationPicker text='Salas' onSelect={() => handleFilterChange('room')} />
             <StationPicker text='Estações' onSelect={() => handleFilterChange('workstation')} />
-            <Select options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti placeholder="Selecione os equipamentos" noOptionsMessage={(valor) =>"Sem opções disponíveis"} onChange={handleHardwares}/>
+            <Select options={hardware.map(hardware => ({ label: hardware["name"], value: hardware['id'] }))} isMulti placeholder="Selecione os equipamentos" noOptionsMessage={(valor) => "Sem opções disponíveis"} onChange={handleHardwares} />
           </Row>
           {filteredItems.length > 0 ? (
             <Cards filteredItems={filteredItems} date={selectedDate} />

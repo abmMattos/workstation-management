@@ -108,6 +108,21 @@ export const AddButtonComponent = styled.button`
     gap: 15px;
 `
 
+export const RequestTradeButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 32px;
+    padding: 15px;
+    font-weight: bold;
+    background-color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLACK};
+    border-radius: 6px;
+    border: solid 1.5px;
+    align-self: center;
+`
+
 export const SubmitButtonComponent = styled.button`
     display: flex;
     justify-content: center;

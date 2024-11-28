@@ -1,5 +1,9 @@
 export default {
     COLORS: {
+
+        BLUE: "#89CFF0",
+        
+        DARK_GREEN: "#088F8F",
         
         GREEN: "#65E4A3",
         

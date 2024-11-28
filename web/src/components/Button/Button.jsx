@@ -1,4 +1,4 @@
-import { Menu, MenuItem, HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
+import { Menu, MenuItem, RequestTradeButton, HomeButtonComponent, LoginButtonComponent, RegisterButtonComponent, SmallButtonComponent, UserButtonComponent, AddButtonComponent, SubmitButtonComponent, DeleteButtonComponent, StationPickerButton } from "./ButtonStyle"
 import axios from "../../axios/axiosConfig.js"
 import { useState } from "react"
 import { NewReservationModal } from "../Modal/NewReservationModal"
@@ -31,6 +31,16 @@ export function RegisterButton(props) {
         <RegisterButtonComponent>
             {props.text}
         </RegisterButtonComponent>
+    )
+}
+
+export function RequestTrade(props) {
+    return (
+        <>
+            <RequestTradeButton>
+                <h4>{props.text}</h4>
+            </RequestTradeButton>
+        </>
     )
 }
 

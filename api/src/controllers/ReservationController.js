@@ -99,7 +99,7 @@ class ReservationController {
     async findReservationByUserId(request, response) {
         const { user_id } = request.query;
         const currentDate = new Date();
-        const currentDateWithoutHours = currentDate.setHours(0, 0, 0, 0);
+        const currentDateWithoutHours = new Date(currentDate.setHours(0, 0, 0, 0));
         try {
             const reservation = await prisma.reservation.findMany({
                 where: {

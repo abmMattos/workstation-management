@@ -10,6 +10,8 @@ import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../toastify/ReactToastify.css';
+import emailjs from '@emailjs/browser';
+import { format } from "date-fns";
 
 export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests }) {
 
@@ -23,8 +25,8 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
     const handleGuest = (select) => {
         setData({
             ...data,
-            guests: select.map(guest => ({id: guest["value"], name:guest['name'], email: guest['email']}))
-        });
+            guests: select.map(guest => guest['email'])
+        });  
     };
 
     const handleChange = (e) => {
@@ -52,6 +54,33 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
     
         fetchData();
       }, []);
+
+      const sendEmail = (station_name, dateReserve, user_name, user_email, to_email, motive) => {
+        const subject = `Convidado na ${station_name} na data de ${dateReserve} a partir das 8h.`;         
+
+        const templateParams = {
+            station_name,     
+            dateReserve,      
+            user_name,        
+            user_email,       
+            to_email,
+            motive,
+            subject     
+        };
+    
+        emailjs.send(
+            'service_8y1vjoq',   
+            'template_iif8qnq', 
+            templateParams,
+            'zZuA5PCFd33ebZls9'   
+        )
+        .then((response) => {
+            toast.success('E-mails enviado com sucesso!', {autoClose: 1500, position: "top-center"});
+        })
+        .catch((error) => {
+            console.error('Erro ao enviar e-mail:', error);
+        });
+    };
 
     const fecharModal = (e) => {
         e.preventDefault();
@@ -117,7 +146,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
         var reservation = {
             dateReserve: new Date(date.setHours(0,0,0,0)).toJSON(),
             motive: data.motive,
-            guests: data.guests,
+            guests: data.guests.join(','),
             user_id: idUser,
             station_id: id
         };      
@@ -126,8 +155,20 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
             const response = await axios.post(
                 routes.RESERVATION.MAKE_RESERVATION,
                 reservation
-            );
+            );        
+            if (type === "room") {
+                const station = await axios.get(routes.STATION.GET_FIND_UNIQUE, {
+                    params: 
+                   { id: id}
+                });
+                const user = await axios.get(routes.USER.GET_FIND_UNIQUE, {
+                    params: 
+                   { id: idUser}
+                });
+                await sendEmail(station.data['name'], decodeURIComponent(format(date, "dd/MM/yyyy")), user.data['name'], user.data['email'], data.guests.join(','), data.motive)
+            }
             setOpen(!isOpen);
+            toast.success((type === "room") ? 'Sala' : 'Estação de trabalho' + ' reservada!', {autoClose: 1500, position: "top-center"});
             window.location.reload();
         } catch (error) {
             console.error(error);

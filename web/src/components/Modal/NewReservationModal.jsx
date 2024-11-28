@@ -76,6 +76,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
         )
         .then((response) => {
             toast.success('E-mails enviado com sucesso!', {autoClose: 1500, position: "top-center"});
+            return true;
         })
         .catch((error) => {
             console.error('Erro ao enviar e-mail:', error);
@@ -152,10 +153,6 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
         };      
 
         try {
-            const response = await axios.post(
-                routes.RESERVATION.MAKE_RESERVATION,
-                reservation
-            );        
             if (type === "room") {
                 const station = await axios.get(routes.STATION.GET_FIND_UNIQUE, {
                     params: 
@@ -165,8 +162,12 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                     params: 
                    { id: idUser}
                 });
-                await sendEmail(station.data['name'], decodeURIComponent(format(date, "dd/MM/yyyy")), user.data['name'], user.data['email'], data.guests.join(','), data.motive)
+                const email = await sendEmail(station.data['name'], format(date, "dd/MM/yyyy"), user.data['name'], user.data['email'], data.guests.join(','), data.motive)
             }
+            const response = await axios.post(
+                routes.RESERVATION.MAKE_RESERVATION,
+                reservation
+            );        
             setOpen(!isOpen);
             toast.success((type === "room") ? 'Sala' : 'Estação de trabalho' + ' reservada!', {autoClose: 1500, position: "top-center"});
             window.location.reload();

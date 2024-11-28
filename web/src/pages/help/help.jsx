@@ -4,6 +4,7 @@ import { Header } from "../../components/Header/Header";
 import { FAQ } from "../../components/FAQ/FAQ";
 
 export function Help() {
+    const userType = localStorage.getItem("userType");
 
     return (
         <Main>
@@ -11,7 +12,7 @@ export function Help() {
             <Section>
                 <Header title="FAQ" />
                 <Section>
-                    <FAQ />
+                    <FAQ userType={userType} />
                 </Section>
             </Section>
         </Main>

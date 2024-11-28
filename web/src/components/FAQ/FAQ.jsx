@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { FAQContainer, Question, Answer } from './FAQStyle';
 
 const userType = localStorage.getItem("userType");
@@ -37,16 +37,22 @@ const FAQsUser = [
     },
   ];
   
-  export function FAQ() {
+  export function FAQ({ userType }) {
     const [openIndex, setOpenIndex] = useState(null);
+
+    useEffect(() => {
+      setOpenIndex(null);
+    }, [userType]);
   
     const toggleAnswer = (index) => {
       setOpenIndex(openIndex === index ? null : index);
     };
   
+    const faqs = userType === "USER" ? FAQsUser : FAQsAdmin;
+
     return (
       <FAQContainer>
-        {userType === "USER" ? FAQsUser.map((faq, index) => (
+        {faqs.map((faq, index) => (
           <div key={index}>
             <Question onClick={() => toggleAnswer(index)}>
               {faq.question}
@@ -55,17 +61,7 @@ const FAQsUser = [
               {faq.answer}
             </Answer>
           </div>
-        )) : 
-        FAQsAdmin.map((faq, index) => (
-          <div key={index}>
-            <Question onClick={() => toggleAnswer(index)}>
-              {faq.question}
-            </Question>
-            <Answer isOpen={openIndex === index}>
-              {faq.answer}
-            </Answer>
-          </div>
-          ))}
+        ))}
       </FAQContainer>
     );
   };

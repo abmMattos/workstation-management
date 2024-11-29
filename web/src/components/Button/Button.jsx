@@ -10,6 +10,8 @@ import '../toastify/ReactToastify.css';
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdArrowRoundDown } from "react-icons/io";
 import emailjs from '@emailjs/browser';
+import routes from "../../endpoints/routes.js";
+
 
 export function HomeButton(props) {
     return (
@@ -35,7 +37,11 @@ export function RegisterButton(props) {
     )
 }
 
-export function RequestTrade({station_name, dateReserve, user_name, user_email, to_email, text}) {
+export async function RequestTrade({station_id, text}) {
+    const reservation = await axios.get(routes.RESERVATION.GET_BY_STATION_ID, {
+        params:
+            { station_id: station_id }
+    });
     const sendEmail = async () => {
         const subject = `Troca da ${station_name} na data de ${dateReserve}.`;
 

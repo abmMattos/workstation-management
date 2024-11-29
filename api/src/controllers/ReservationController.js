@@ -117,6 +117,27 @@ class ReservationController {
         }
     }
 
+    async findReservationByStationId(request, response) {
+        const { station_id } = request.query;
+        const currentDate = new Date();
+        const currentDateWithoutHours = new Date(currentDate.setHours(0, 0, 0, 0));
+        try {
+            const reservation = await prisma.reservation.findMany({
+                where: {
+                    station_id: {
+                        equal: station_id
+                    },
+                    dateReserve: {
+                        gte: currentDateWithoutHours
+                    }
+                }
+            });
+            return response.json(reservation)
+        } catch (err) {
+            return response.status(409).send()
+        }
+    }
+
 }
 
 module.exports = ReservationController

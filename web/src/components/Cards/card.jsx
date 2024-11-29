@@ -39,7 +39,7 @@ export function Cards(props) {
                   : null}
 
                   {!isDatePast(item.dateReserve) && (item.status === 'booked') ?
-                    <RequestTrade maxGuests={item.capacity} type={item.type} id={item.id} date={date} text="Solicitar troca" />
+                    <RequestTrade station_id={item.id} text="Solicitar troca" />
                   : null}
                 </Card>
               ))

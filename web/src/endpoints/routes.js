@@ -6,6 +6,7 @@ export default {
         MAKE_RESERVATION: `${BASE_URL}/reservation/reserveStation`,
         GET_ALL_RESERVATIONS: `${BASE_URL}/reservation/`,
         GET_BY_USER_ID: `${BASE_URL}/reservation/findReservationByUserId`,
+        GET_BY_STATION_ID: `${BASE_URL}/reservation/findReservationByStationId`,
         GET_RESERVATIONS: `${BASE_URL}/reservation/findReservedByDate`
     },
 

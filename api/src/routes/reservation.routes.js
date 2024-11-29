@@ -13,6 +13,7 @@ reservationRoutes.get('/', verifyToken(['user', 'admin']), reservationController
 reservationRoutes.delete('/delete', verifyToken(['user', 'admin']), reservationController.delete)
 reservationRoutes.get('/findReservedByDate', verifyToken(['user', 'admin']), reservationController.findReservedByDate)
 reservationRoutes.get('/findReservationByUserId', verifyToken(['user', 'admin']), reservationController.findReservationByUserId)
+reservationRoutes.get('/findReservationByStationId', verifyToken(['user', 'admin']), reservationController.findReservationByStationId)
 
 
 module.exports = reservationRoutes

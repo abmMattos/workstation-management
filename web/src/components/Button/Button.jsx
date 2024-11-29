@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../toastify/ReactToastify.css';
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdArrowRoundDown } from "react-icons/io";
+import emailjs from '@emailjs/browser';
 
 export function HomeButton(props) {
     return (
@@ -34,11 +35,40 @@ export function RegisterButton(props) {
     )
 }
 
-export function RequestTrade(props) {
+export function RequestTrade({station_name, dateReserve, user_name, user_email, to_email, text}) {
+    const sendEmail = async () => {
+        const subject = `Troca da ${station_name} na data de ${dateReserve}.`;
+
+        const content = `Para falar sobre a troca da ${station_name} em ${dateReserve}, contate ${user_name} no email abaixo:
+
+email: ${user_email}.`
+
+        const templateParams = {
+            to_email,
+            subject,
+            content
+        };
+
+        await emailjs.send(
+            'service_8y1vjoq',
+            'template_iif8qnq',
+            templateParams,
+            'zZuA5PCFd33ebZls9'
+        )
+            .then((response) => {
+                toast.success('E-mails enviado com sucesso!', { autoClose: 1500, position: "top-center" });
+                return false;
+            })
+            .catch((error) => {
+                console.error('Erro ao enviar e-mail:', error);
+                return true;
+            });
+       
+    };
     return (
         <>
-            <RequestTradeButton>
-                <h4>{props.text}</h4>
+            <RequestTradeButton onClick={async () => sendEmail}>
+                <h4>{text}</h4>
             </RequestTradeButton>
         </>
     )

@@ -19,8 +19,5 @@ export const Input = styled.input`
     width: 100%; 
     border: 0px solid ${theme.COLORS.GRAY};
     padding: 5px;
-    &:focus{
-       outline: none;
-       border: 1px solid ${theme.COLORS.GRAY};
-    }
+    border: 1px solid ${theme.COLORS.BLACK};
 `

@@ -58,14 +58,16 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
     const sendEmail = async (station_name, dateReserve, user_name, user_email, to_email, motive,type) => {
         const subject = `Convidado na ${station_name} na data de ${dateReserve}.`;
 
+        const content = `Você foi convidado para utilizar a ${station_name} em ${dateReserve}, criada por ${user_name}.
+
+Motivo e hora: ${motive}.
+
+Para mais informações, enviar email para: ${user_email}.`
+
         const templateParams = {
-            station_name,
-            dateReserve,
-            user_name,
-            user_email,
             to_email,
-            motive,
-            subject
+            subject,
+            content
         };
         if (type == "room") {
             await emailjs.send(

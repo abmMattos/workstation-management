@@ -62,17 +62,27 @@ class ReservationController {
     async findMany(request, response) {
         const currentDate = new Date();
         const currentDateWithoutHours = new Date(currentDate.setHours(0, 0, 0, 0));
+    
         try {
-            const reservation = await prisma.reservation.findMany({
+            const reservations = await prisma.reservation.findMany({
                 where: {
                     dateReserve: {
-                        gte: currentDateWithoutHours
+                        gte: currentDateWithoutHours,
+                    }
+                },
+                include: {
+                    fk_user_id: {
+                        select: {
+                            email: true,
+                        }
                     }
                 }
             });
-            return response.json(reservation)
+    
+            return response.json(reservations);
         } catch (err) {
-            return response.status(409).send()
+            console.error(err);
+            return response.status(409).send();
         }
     }
 

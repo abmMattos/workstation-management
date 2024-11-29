@@ -5,6 +5,7 @@ export const Main = styled.div`
     background-color: #E5E3E3;
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
     padding: 8px;
     color: black;

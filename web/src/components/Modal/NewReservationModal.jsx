@@ -56,7 +56,7 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
     }, []);
 
     const sendEmail = async (station_name, dateReserve, user_name, user_email, to_email, motive,type) => {
-        const subject = `Convidado na ${station_name} na data de ${dateReserve} a partir das 8h.`;
+        const subject = `Convidado na ${station_name} na data de ${dateReserve}.`;
 
         const templateParams = {
             station_name,
@@ -83,6 +83,20 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                     return true;
                 });
         }
+        await emailjs.send(
+            'service_8y1vjoq',
+            'template_0eaxbaj',
+            {to_email: user_email},
+            'zZuA5PCFd33ebZls9'
+        )
+            .then((response) => {
+                toast.success('E-mails enviado com sucesso!', { autoClose: 1500, position: "top-center" });
+                return false;
+            })
+            .catch((error) => {
+                console.error('Erro ao enviar e-mail:', error);
+                return true;
+            });
        
     };
 
@@ -190,8 +204,11 @@ export function NewReservationModal({ isOpen, setOpen, id, date, type, maxGuests
                 <BackgroundModal onClick={fecharModal}>
                     <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                         <HeaderModal click={fecharModal} titulo="Agendamento" />
-                        <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} value={data.motive} />
-                        {type === "room" && (<Select styles={{ control: (baseStyles) => ({ ...baseStyles, width: "500px" }), }} options={users.map(user => ({ label: user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) => "Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti />)}
+                        <CardModal text="Motivo do agendamento:" type="text" name="motive" change={handleChange} required={true} value={data.motive}  hasGuests={type === "room" ? true : false}/>
+                        {type === "room" && (<>
+                        <label><strong>Convidados</strong>:</label>
+                            <Select styles={{ control: (baseStyles) => ({ ...baseStyles, width: "500px" }), }} options={users.map(user => ({ label: user["name"] + ": " + user["email"], email: user['email'], name: user['name'], value: user['id'] }))} isSearchable noOptionsMessage={(valor) => "Sem convidados disponíveis"} placeholder="Selecione os convidados" onChange={(escolha) => handleGuest(escolha)} isMulti /></>
+                            )}
                         <SubmitButton book={true} text="AGENDAR" onSubmit={add} />
                     </Form>
                 </BackgroundModal>

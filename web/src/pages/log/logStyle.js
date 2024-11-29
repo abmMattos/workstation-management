@@ -9,7 +9,7 @@ export const Main = styled.div`
 export const Section = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 60px 20px 0px 20px;
+    padding: 60px 20px 60px 20px;
     width: 100%;
 `
 export const rotation = keyframes`

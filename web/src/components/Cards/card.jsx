@@ -38,9 +38,11 @@ export function Cards(props) {
                     <ReservationButton maxGuests={item.capacity} type={item.type} id={item.id} date={date} text="Reservar" />
                   : null}
 
-                  {!isDatePast(item.dateReserve) && (item.status === 'booked') ?
-                    <RequestTrade maxGuests={item.capacity} type={item.type} id={item.id} date={date} text="Solicitar troca" />
+                  {!isDatePast(item.dateReserve) && (item.status === 'booked') ?                    
+                    <RequestTrade station_name={item.name} dateReserve={item.dateReserve} user_name={localStorage.getItem('nameUser')} user_email={localStorage.getItem('userEmail')} to_email={item.email} type={item.type} text="Solicitar troca" />
                   : null}
+                  {
+                  }
                 </Card>
               ))
             ) : (

@@ -61,6 +61,7 @@ export function Login() {
         localStorage.setItem('token', token);
         localStorage.setItem('idUser', user.id);
         localStorage.setItem('nameUser', user.name);
+        localStorage.setItem('userEmail', user.email)
     };
     return (
         <>

@@ -73,19 +73,21 @@ export function Reservation() {
       return !isReserved && matchesFilter && matchesHardware && activeStation;
     });
     const transformItems = filtered.map(item => {
-      const isReserved = reservedItems.some(reserved => {
+      const isReserved = reservedItems.find(reserved => {
         return reserved.station_id === item.id &&
           reserved.dateReserve.slice(0, 10) === dateString
-      });
-
+      });     
+       
       if (isReserved) {
         return {
           ...item,
-          status: 'booked'
-        }
+          status: 'booked',
+          email: isReserved.fk_user_id.email,
+          dateReserve: isReserved.dateReserve
+        }   
       }
       return item;
-    })
+    })    
     setFilteredItems(transformItems);
   }, [selectedDate, items, reservedItems, filterTypes, selectedHardwares]);
 

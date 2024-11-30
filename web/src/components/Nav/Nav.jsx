@@ -10,10 +10,6 @@ export function NavMenu(props) {
                 {props.text}
             </DivItem>
             <DivItem>
-                <ul>
-                    <li>SERVIÇOS</li>
-                    <li>SOBRE</li>
-                </ul>
                 <Link to="/login"><RegisterButton>LOGIN</RegisterButton></Link>
             </DivItem>
         </NavItem>

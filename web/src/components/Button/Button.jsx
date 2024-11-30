@@ -40,7 +40,7 @@ export function RequestTrade(props) {
     const handleRequestTrade = (station_name, dateReserve, user_name, user_email, to_email, type) => {
         toast.info(
             <div>
-                <span id="text">Tem certeza que deseja solicitar a troca da reserva?</span>
+                <span id="text">Tem certeza que deseja solicitar a troca da reserva para {props.station_name}?</span>
                 <div id="buttons">
                     <button id="green-button-confirmation"
                         onClick={async () => {
@@ -172,7 +172,7 @@ export function CancelReservationButton(props) {
     const handleCancelReservation = (id, url) => {
         toast.info(
             <div>
-                <span id="text">Tem certeza que deseja cancelar a reserva?</span>
+                <span id="text">Tem certeza que deseja cancelar a reserva do item {props.name}?</span>
                 <div id="buttons">
                     <button id="red-button-confirmation"
                         onClick={() => {
@@ -223,7 +223,7 @@ export function DeleteButton(props) {
     const handleDeleteConfirmation = (id, url) => {
         toast.info(
             <div>
-                <span id="text">Tem certeza que deseja deletar este item?</span>
+                <span id="text">Tem certeza que deseja excluir {props.name}?</span>
                 <div id="buttons">
                     <button id="red-button-confirmation"
                         onClick={async () => {
@@ -275,9 +275,9 @@ export function BlockButton(props) {
         toast.info(
             <div>
                 { stationStatus === 'Ativo' ?
-                <span id="text">Tem certeza que deseja BLOQUEAR este item?</span>
+                <span id="text">Tem certeza que deseja BLOQUEAR {props.name}?</span>
                 : 
-                <span id="text">Tem certeza que deseja DESBLOQUEAR este item?</span>
+                <span id="text">Tem certeza que deseja DESBLOQUEAR {props.name}?</span>
                 }
                 <div id="buttons">
                     <button id="red-button-confirmation"
@@ -381,7 +381,7 @@ export function SubmitButton(props) {
                 <div>
                     { 
                     props.id ?
-                        <span id="text">Tem certeza que deseja alterar?</span> 
+                        <span id="text">Tem certeza que deseja alterar {props.name}?</span> 
                     : props.book ?
                         <span id="text">Tem certeza que deseja agendar?</span>
                     :

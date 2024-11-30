@@ -80,6 +80,7 @@ export function Table(props) {
                       id={row.original.id}
                       stationStatus={row.original.status}
                       urlBlock={props.urlBlock}
+                      name={row.original.name}
                     />
                   
                 </Actions>
@@ -87,12 +88,12 @@ export function Table(props) {
               )}
               <BodyCell width={"5%"}>
                 <Actions>
-                  <EditButton img={pencil} id={row.original.id} click={props.click} />
+                  <EditButton img={pencil} id={row.original.id} click={props.click} name={row.original.name} />
                 </Actions>
               </BodyCell>
               <BodyCell width={"5%"}>
                 <Actions>
-                  <DeleteButton img={trash} id={row.original.id} url={props.url} />
+                  <DeleteButton img={trash} id={row.original.id} url={props.url} name={row.original.name} />
                 </Actions>
               </BodyCell>
             </BodyRow>

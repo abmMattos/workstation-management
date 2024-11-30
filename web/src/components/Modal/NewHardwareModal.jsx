@@ -151,7 +151,7 @@ export function NewHardwareModal({ isOpen, setOpen, id, setId }) {
                     <Form onSubmit={add} onClick={e => e.stopPropagation()}>
                         <HeaderModal click={fecharModal} titulo={id ? "Atualizar Equipamento" : "Criar Equipamento"} />
                         <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
-                        <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} />
+                        <SubmitButton text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} name={data.name} />
                     </Form>
                 </BackgroundModal>
                 <ToastContainer  limit={1} />

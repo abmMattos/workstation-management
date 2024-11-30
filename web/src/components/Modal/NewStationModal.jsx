@@ -162,7 +162,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                             onChange={setSelectedHardwares}
                             required
                         />
-                        <SubmitButton id={id} text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} />
+                        <SubmitButton id={id} text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} name={id ? data.name : null} />
                     </Form>
                 </BackgroundModal>
                 <ToastContainer limit={1} />

@@ -31,7 +31,7 @@ export function Cards(props) {
                   {(userType == "ADMIN") && (<Description>{(item.user_name) ? 'Usuário: ' + item.user_name : "Usuário não encontrado"}</Description>)}
                   <Description>{(item.capacity) ? 'Capacidade: ' + item.capacity : null}</Description>
                   {!isDatePast(item.dateReserve) && (props.type === 'my-reserves') ?
-                    <CancelReservationButton id={item.reservation_id} url={route.RESERVATION.DELETE_RESERVATION} text="Cancelar" />
+                    <CancelReservationButton id={item.reservation_id} url={route.RESERVATION.DELETE_RESERVATION} name={item.name} text="Cancelar" />
                   : null}
 
                   {!isDatePast(item.dateReserve) && (props.type !== 'my-reserves') && (item.status === 'active') ?

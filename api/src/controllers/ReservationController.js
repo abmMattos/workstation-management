@@ -74,6 +74,7 @@ class ReservationController {
                     fk_user_id: {
                         select: {
                             email: true,
+                            name: true,
                         }
                     }
                 }

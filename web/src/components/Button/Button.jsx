@@ -45,13 +45,13 @@ export function RequestTrade(props) {
                     <button id="green-button-confirmation"
                         onClick={async () => {
                             await sendEmail(station_name, dateReserve, user_name, user_email, to_email, type);
-                            toast.dismiss(); 
+                            toast.dismiss();
                         }}
                     >
                         Sim
                     </button>
                     <button id="grey-button-confirmation"
-                        onClick={() => toast.dismiss()} 
+                        onClick={() => toast.dismiss()}
                     >
                         Não
                     </button>
@@ -66,16 +66,16 @@ export function RequestTrade(props) {
         });
     };
 
-    const sendEmail = async (station_name, dateReserve, user_name, user_email, to_email, type) => {
+    const sendEmail = async (station_name, dateReserve, user_name, user_email, to_email) => {
         dateReserve = format(dateReserve, "dd/MM/yyyy");
 
         const subject = `Solicitação de troca para a estação ${station_name} na data de ${dateReserve}`;
 
         const content = `Prezado(a),
 
-Você recebeu uma solicitação de troca de reserva para a estação ${station_name}, originalmente agendada para o dia ${dateReserve}.
+Em relação a solicitação de troca de reserva para a estação ${station_name}, originalmente agendada para o dia ${dateReserve}.
 
-Caso tenha dúvidas ou precise de mais informações, por favor entre em contato com ${user_name} pelo e-mail: ${user_email}.
+Por favor entre em contato com ${user_name} pelo e-mail: ${user_email}.
 
 Atenciosamente,
 Equipe de Reservas`;
@@ -86,13 +86,12 @@ Equipe de Reservas`;
             content
         };
 
-        if (type === "room") {
-            await emailjs.send(
-                'service_8y1vjoq',
-                'template_iif8qnq',
-                templateParams,
-                'zZuA5PCFd33ebZls9'
-            )
+        await emailjs.send(
+            'service_8y1vjoq',
+            'template_iif8qnq',
+            templateParams,
+            'zZuA5PCFd33ebZls9'
+        )
             .then((response) => {
                 toast.success('E-mail de solicitação de troca enviado com sucesso!', { autoClose: 5000, position: "top-center" });
             })
@@ -100,31 +99,17 @@ Equipe de Reservas`;
                 console.error('Erro ao enviar e-mail:', error);
                 toast.error('Erro ao enviar o e-mail. Tente novamente.', { autoClose: 1500, position: "top-center" });
             });
-        }
 
-        await emailjs.send(
-            'service_8y1vjoq',
-            'template_0eaxbaj',
-            { to_email: user_email },
-            'zZuA5PCFd33ebZls9'
+
+        return (
+            <>
+                <RequestTradeButton onClick={() => handleRequestTrade(props.station_name, props.dateReserve, props.user_name, props.user_email, props.to_email, props.type)}>
+                    <h4>{props.text}</h4>
+                </RequestTradeButton>
+                <ToastContainer />
+            </>
         )
-        .then((response) => {
-            toast.success('E-mail de confirmação enviado com sucesso!', { autoClose: 1500, position: "top-center" });
-        })
-        .catch((error) => {
-            console.error('Erro ao enviar e-mail:', error);
-            toast.error('Erro ao enviar o e-mail. Tente novamente.', { autoClose: 1500, position: "top-center" });
-        });
-    };
-
-    return (
-        <>
-            <RequestTradeButton onClick={() => handleRequestTrade(props.station_name, props.dateReserve, props.user_name, props.user_email, props.to_email, props.type)}>
-                <h4>{props.text}</h4>
-            </RequestTradeButton>
-            <ToastContainer />
-        </>
-    )
+    }
 }
 
 
@@ -202,9 +187,9 @@ export function CancelReservationButton(props) {
         try {
             const response = await axios.delete(`${url}`, { data: { id: id } });
             window.location.reload();
-            toast.success("Reserva cancelada com sucesso!", {autoClose: 1500, position: "top-center"});
+            toast.success("Reserva cancelada com sucesso!", { autoClose: 1500, position: "top-center" });
         } catch (error) {
-            toast.error("Ocorreu um erro ao tentar cancelar a reserva.", {autoClose: 1500, position: "top-center"});
+            toast.error("Ocorreu um erro ao tentar cancelar a reserva.", { autoClose: 1500, position: "top-center" });
         }
     }
 
@@ -255,7 +240,7 @@ export function DeleteButton(props) {
             window.location.reload();
             return response.data;
         } catch (error) {
-            toast.error("Erro ao deletar: " + error, {autoClose: 1500, position: "top-center"});
+            toast.error("Erro ao deletar: " + error, { autoClose: 1500, position: "top-center" });
         }
     };
 
@@ -274,10 +259,10 @@ export function BlockButton(props) {
     const handleBlockConfirmation = (id, urlBlock, stationStatus) => {
         toast.info(
             <div>
-                { stationStatus === 'Ativo' ?
-                <span id="text">Tem certeza que deseja BLOQUEAR este item?</span>
-                : 
-                <span id="text">Tem certeza que deseja DESBLOQUEAR este item?</span>
+                {stationStatus === 'Ativo' ?
+                    <span id="text">Tem certeza que deseja BLOQUEAR este item?</span>
+                    :
+                    <span id="text">Tem certeza que deseja DESBLOQUEAR este item?</span>
                 }
                 <div id="buttons">
                     <button id="red-button-confirmation"
@@ -311,9 +296,9 @@ export function BlockButton(props) {
         }
         else {
             status = 'active'
-        }        
+        }
         try {
-            const response = await axios.put(urlBlock, { id: id, stationStatus: status });            
+            const response = await axios.put(urlBlock, { id: id, stationStatus: status });
             window.location.reload();
             return response.data;
         } catch (error) {
@@ -379,17 +364,17 @@ export function SubmitButton(props) {
         return new Promise((resolve, reject) => {
             toast.info(
                 <div>
-                    { 
-                    props.id ?
-                        <span id="text">Tem certeza que deseja alterar?</span> 
-                    : props.book ?
-                        <span id="text">Tem certeza que deseja agendar?</span>
-                    :
-                        <span id="text">Tem certeza que deseja criar?</span>
+                    {
+                        props.id ?
+                            <span id="text">Tem certeza que deseja alterar?</span>
+                            : props.book ?
+                                <span id="text">Tem certeza que deseja agendar?</span>
+                                :
+                                <span id="text">Tem certeza que deseja criar?</span>
                     }
-                    
+
                     <div id="buttons">
-                        <button 
+                        <button
                             id="green-button-confirmation"
                             onClick={() => {
                                 toast.dismiss();
@@ -398,24 +383,24 @@ export function SubmitButton(props) {
                         >
                             Sim
                         </button>
-                        <button 
+                        <button
                             id="red-button-confirmation"
                             onClick={() => {
                                 toast.dismiss();
-                                resolve(false); 
+                                resolve(false);
                             }}
                         >
                             Não
                         </button>
                     </div>
                 </div>, {
-                    position: "top-center",
-                    autoClose: false,
-                    closeButton: false,
-                    draggable: false,
-                    pauseOnHover: false,
-                    className: 'toast-confirmation',
-                }
+                position: "top-center",
+                autoClose: false,
+                closeButton: false,
+                draggable: false,
+                pauseOnHover: false,
+                className: 'toast-confirmation',
+            }
             );
         });
     };
@@ -428,7 +413,7 @@ export function SubmitButton(props) {
         if (isConfirmed) {
             props.onSubmit();
         } else {
-            toast.error("Ação cancelada.", {autoClose: 1500, position: "top-center"});
+            toast.error("Ação cancelada.", { autoClose: 1500, position: "top-center" });
         }
     };
 

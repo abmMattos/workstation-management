@@ -39,7 +39,7 @@ export function Cards(props) {
                   : null}
 
                   {!isDatePast(item.dateReserve) && (item.status === 'booked') ?                    
-                    <RequestTrade station_name={item.name} dateReserve={item.dateReserve} user_name={localStorage.getItem('nameUser')} user_email={localStorage.getItem('userEmail')} to_email={item.email} type={item.type} text="Solicitar troca" />
+                    <RequestTrade station_name={item.name} dateReserve={item.dateReserve} user_name={item.userName} user_email={item.email} to_email={localStorage.getItem('userEmail')} text="Solicitar troca" />
                   : null}
                   {
                   }

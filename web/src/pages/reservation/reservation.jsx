@@ -83,13 +83,14 @@ export function Reservation() {
           ...item,
           status: 'booked',
           email: isReserved.fk_user_id.email,
+          userName: isReserved.fk_user_id.name,
           dateReserve: isReserved.dateReserve
         }   
       }
       return item;
     })    
     setFilteredItems(transformItems);
-  }, [selectedDate, items, reservedItems, filterTypes, selectedHardwares]);
+      }, [selectedDate, items, reservedItems, filterTypes, selectedHardwares]);
 
   const handleFilterChange = (type) => {
     setFilterTypes(prev => {

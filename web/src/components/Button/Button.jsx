@@ -44,7 +44,7 @@ export function RequestTrade(props) {
                 <div id="buttons">
                     <button id="green-button-confirmation"
                         onClick={async () => {
-                            await sendEmail(station_name, dateReserve, user_name, user_email, to_email, type);
+                            await sendEmail(station_name, dateReserve, user_name, user_email, to_email);
                             toast.dismiss();
                         }}
                     >
@@ -100,7 +100,7 @@ Equipe de Reservas`;
                 toast.error('Erro ao enviar o e-mail. Tente novamente.', { autoClose: 1500, position: "top-center" });
             });
 
-
+        }
         return (
             <>
                 <RequestTradeButton onClick={() => handleRequestTrade(props.station_name, props.dateReserve, props.user_name, props.user_email, props.to_email, props.type)}>
@@ -109,7 +109,7 @@ Equipe de Reservas`;
                 <ToastContainer />
             </>
         )
-    }
+    
 }
 
 

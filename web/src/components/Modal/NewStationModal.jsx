@@ -3,7 +3,7 @@ import axios from "../../axios/axiosConfig.js";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import routes from "../../endpoints/routes";
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../toastify/ReactToastify.css';
 
-export function NewStationModal({ isOpen, setOpen, id, setId }) {
+export function NewStationModal({ isOpen, setOpen, id, setId, name }) {
     const [data, setData] = useState({
         name: "",
         capacity: 0,
@@ -19,6 +19,8 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
         status: "active",
         type: ""
     });
+
+    const formRef = useRef(null);
 
     const [hardware, setHardware] = useState([]);
     const [selectedHardwares, setSelectedHardwares] = useState([]);
@@ -58,6 +60,10 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
     };
 
     const add = async () => {
+        const isFilled = formRef.current.reportValidity();
+        if(!isFilled){
+            return;
+        }
         const capacidade = Number(data.capacity)
         if (data.name.trim().length <= 3 || (isNaN(capacidade) || !Number.isFinite(capacidade) || capacidade < 0 || capacidade == 0)) {
             toast.error("Preencha todos os dados corretamente!", {autoClose: 1500, position: "top-center"});
@@ -108,6 +114,15 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                     <button id="green-button-confirmation" onClick={() => {
                         setOpen(false);
                         setId(null);
+                        setData({
+                            name: "",
+                            capacity: 0,
+                            hardwares: [],
+                            status: "active",
+                            type: ""
+                        });
+                        setSelectedHardwares([]);
+                        setType([]);
                         toast.dismiss();
                     }}>Sim</button>
                     <button id="grey-button-confirmation" onClick={() => toast.dismiss()}>Não</button>
@@ -134,7 +149,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
         return (
             <>
                 <BackgroundModal onClick={fecharModal}>
-                    <Form onSubmit={(e) => e.preventDefault()} onClick={e => e.stopPropagation()}>
+                    <Form onSubmit={(e) => e.preventDefault()} onClick={e => e.stopPropagation()} ref={formRef}>
                         <HeaderModal click={fecharModal} titulo={id ? "Atualizar Estação" : "Criar Estação"} />
                         <label htmlFor="type">Tipo:</label>
                         <Select
@@ -162,7 +177,7 @@ export function NewStationModal({ isOpen, setOpen, id, setId }) {
                             onChange={setSelectedHardwares}
                             required
                         />
-                        <SubmitButton id={id} text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} name={id ? data.name : null} />
+                        <SubmitButton id={id} text={id ? "ATUALIZAR" : "CRIAR"} onSubmit={add} name={name} />
                     </Form>
                 </BackgroundModal>
                 <ToastContainer limit={1} />

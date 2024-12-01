@@ -14,12 +14,14 @@ export function Stations() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);  
 
-  const openModal = (id) => {
+  const openModal = (id,name) => {
     setId(id);
+    setName(name);
     setTimeout(() => {
       setOpen(!open);
     }, 250);
@@ -97,7 +99,7 @@ export function Stations() {
                 text="Cadastrar"
                 img={plus}
               />
-              <NewStationModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />
+              <NewStationModal isOpen={open} setOpen={setOpen} id={id} name={name} setId={setId} />
             </>
           )}
           <Table

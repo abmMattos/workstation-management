@@ -3,12 +3,12 @@ import axios from "../../axios/axiosConfig.js";
 import { HeaderModal } from "./HeaderModal";
 import { SubmitButton } from "../Button/Button";
 import { CardModal } from "./CardModal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import routes from "../../endpoints/routes";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export function NewUserModal({ isOpen, setOpen, id, setId }) {
+export function NewUserModal({ isOpen, setOpen, id, setId, name }) {
 
     const [data, setData] = useState({
         name: "",
@@ -16,6 +16,8 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
         password: "",
         confirmPassword: ""
     });
+
+    const formRef = useRef(null);
 
     const fetchData = async () => {
         try {
@@ -57,6 +59,12 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
                         onClick={() => {
                             setOpen(!isOpen);
                             setId("");
+                            setData({
+                                name: "",
+                                email: "",
+                                password: "",
+                                confirmPassword: ""
+                            });
                             toast.dismiss();
                         }}
                     >
@@ -78,7 +86,12 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
             });
     }
 
-    const add = async () => {
+    const add = async (event) => {
+        const isFilled = formRef.current.reportValidity();
+        if(!isFilled){
+            return;
+        }
+
         if (data.name.trim().length <= 3 || data.email.trim().length <= 3 || data.password.trim().length <= 3 || data.password !== data.confirmPassword) {
             toast.error(
                 <div>
@@ -110,13 +123,13 @@ export function NewUserModal({ isOpen, setOpen, id, setId }) {
         return (
             <>
             <BackgroundModal onClick={fecharModal}>
-                <Form onSubmit={add} onClick={e => e.stopPropagation()}>
+                <Form onSubmit={add} onClick={e => e.stopPropagation()} ref={formRef}>
                     <HeaderModal click={fecharModal} titulo={id ? "Atualizar Usuário" : "Cadastrar Usuário"} />
                     <CardModal text="Nome:" type="text" name="name" change={handleChange} required={true} value={data.name} />
                     <CardModal text="Email:" type="email" name="email" change={handleChange} required={true} value={data.email} />
                     <CardModal text="Senha:" type="password" name="password" change={handleChange} required={true} value={data.password} />
                     <CardModal text="Confirmar senha:" type="password" name="confirmPassword" change={handleChange} required={true} value={data.confirmPassword} />
-                    <SubmitButton text={id ? "ATUALIZAR" : "CADASTRAR"} onSubmit={add} />
+                    <SubmitButton id={id} text={id ? "ATUALIZAR" : "CADASTRAR"} onSubmit={add} name={name} />
                 </Form>
             </BackgroundModal>
             <ToastContainer  limit={1} />

@@ -14,6 +14,7 @@ export function Hardwares() {
   const userType = localStorage.getItem("userType");
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
   const [hardware, setHardware] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,8 +25,9 @@ export function Hardwares() {
     document.body.style.overflow = "";
   }
 
-  const openModal = (id) => {
+  const openModal = (id,name) => {
     setId(id);
+    setName(name);
     setTimeout(() => {
       setOpen(!open);
     }, 250);
@@ -84,7 +86,7 @@ export function Hardwares() {
                 text="Novo Equipamento"
                 img={plus}
               />
-              <NewHardwareModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />
+              <NewHardwareModal isOpen={open} setOpen={setOpen} id={id} name={name} setId={setId} />
             </>
           )}
           <Table

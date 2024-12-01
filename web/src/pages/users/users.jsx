@@ -14,6 +14,7 @@ import routes from "../../endpoints/routes";
 export function Users() {
   const [data, setData] = useState([]);
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
@@ -24,11 +25,12 @@ export function Users() {
   }
   const columnHelper = createColumnHelper();
 
-  const openModal = (id) => {
+  const openModal = (id,name) => {
     setId(id);
+    setName(name);
     setTimeout(() => {
       setOpen(!open);
-    }, 225);
+    }, 250);
   }
 
   const columns = [
@@ -93,7 +95,7 @@ export function Users() {
             text="Cadastrar Usuário"
             img={plus}
           />
-          <NewUserModal isOpen={open} setOpen={setOpen} id={id} setId={setId} />
+          <NewUserModal isOpen={open} setOpen={setOpen} id={id} name={name} setId={setId} />
           <Table dataTable={data} dataColumns={columns} url={routes.USER.DELETE_USER} click={openModal} />
         </Section>
       </Section>

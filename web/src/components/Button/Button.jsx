@@ -140,11 +140,11 @@ export function SmallButton({ img, click, id }) {
     )
 }
 
-export function EditButton({ img, click, id }) {
+export function EditButton({ img, click, id, name }) {
 
     return (
         <>
-            <SmallButtonComponent onClick={() => click(id)} >
+            <SmallButtonComponent onClick={() => click(id,name)} >
                 <img src={img} alt="" />
             </SmallButtonComponent>
             <ToastContainer />
